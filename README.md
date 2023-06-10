@@ -1,3 +1,6 @@
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -6,6 +9,23 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+
+## Instalasi
+[Backend]
+1. Create/ Copy .Env file
+2. composer install
+3. php artisan key:generate
+4. php artisan migrate
+5. php artisan db:seed
+6. (optional dummy data) php artisan db:seed --class=FakerSeeder
+7. php artisan serve
+
+[Frontend]
+1. npm install
+2. npm run hot 
+
+- CSS Framework
+  - Tailwind
 
 ## About Laravel
 
