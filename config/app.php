@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        Laravel\Sanctum\SanctumServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
