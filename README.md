@@ -12,17 +12,20 @@
 
 ## Instalasi
 [Backend]
-1. Create/ Copy .Env file
+1. Create/ Copy BUAT DATABASE si_tugasakhir .Env file
 2. composer install
+3. composer update
+4. php artisan vendor:publish --tag="laratrust"
+5. php artisan laratrust:setup
+6. composer dump-autoload
 3. php artisan key:generate
-4. php artisan migrate
+4. php artisan migrate:refresh
 5. php artisan db:seed
-6. (optional dummy data) php artisan db:seed --class=FakerSeeder
 7. php artisan serve
 
 [Frontend]
 1. npm install
-2. npm run hot 
+2. npm run hot atau npm run dev 
 
 - CSS Framework
   - Tailwind
