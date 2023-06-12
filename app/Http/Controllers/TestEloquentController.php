@@ -13,9 +13,6 @@ class TestEloquentController extends Controller
     {
 
         $user = User::with('mahasiswa')->get();
-
-//        $mahasiswa =
-
          return response()->json($user, 200);
     }
 }
