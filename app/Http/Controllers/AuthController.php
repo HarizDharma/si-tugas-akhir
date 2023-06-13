@@ -9,11 +9,36 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AuthRequest\LoginRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 // TODO :  THROTTLE (DONE)
 //
 class AuthController extends Controller
 {
+    //index plus pengecekan login
+    public function index()
+    {
+        if (Auth::check()) {
+            // Auth berhasil
+            $user = Auth::user();
+
+            // Generate token JWT
+            $token = $this->generateSanctumToken($user);
+
+            $user->token = $token;
+
+            // Pengguna sudah login, redirect ke halaman dashboard atau halaman lain yang sesuai
+            return view('dashboard.index')->with([
+                'token' => $token,
+                'user' => $user,
+            ]);
+        } else {
+            // Pengguna belum login, redirect ke halaman login
+            return view('auth');
+        }
+    }
 
     public function login(LoginRequest $request)
     {
@@ -21,8 +46,19 @@ class AuthController extends Controller
             if (!isRequestBladeView()) {
                 return response()->json(['message' => 'Anda sudah login'], 200);
             } else {
+                // Auth berhasil
+                $user = Auth::user();
+
+                // Generate token JWT
+                $token = $this->generateSanctumToken($user);
+
+                $user->token = $token;
                 // Jika bukan permintaan JSON, redirect ke halaman login atau halaman lain yang sesuai
-                return response()->json(['message' => 'Anda sudah login'], 200);
+//                return response()->json(['message' => 'Anda sudah login'], 200);
+                return view('dashboard.index')->with([
+                    'token' => $token,
+                    'user' => $user,
+                ]);
             }
         }
 
@@ -53,7 +89,7 @@ class AuthController extends Controller
                 ]);
 
                 // Jika bukan permintaan JSON, redirect ke halaman yang sesuai
-                return view('view.auth.login')->with([
+                return view('dashboard.index')->with([
                     'token' => $token,
                     'user' => $user,
                 ]);
@@ -66,12 +102,14 @@ class AuthController extends Controller
             if ($request->wantsJson() || $request->isJson()) {
                 return response()->json(['message' => 'Username atau password salah.'], 401);
             } else {
-                session()->flash('alert', [
-                    'type' => 'danger',
-                    'message' => sprintf('Username atau password salah.'),
-                ]);
+//                session()->flash('alert', [
+//                    'type' => 'danger',
+//                    'message' => sprintf('Username atau password salah.'),
+//                ]);
+                // Menggunakan SweetAlert untuk menampilkan pesan error
+                Alert::error('Error', 'Username atau password salah.');
                 // Jika bukan permintaan JSON, redirect kembali ke halaman login dengan pesan error
-                return view('view.auth.login')->withErrors([
+                return view('auth')->withErrors([
                     'username' => 'Username atau password salah.',
                 ]);
             }
@@ -84,11 +122,21 @@ class AuthController extends Controller
             // Menghapus semua token autentikasi pengguna
             Auth::user()->tokens()->delete();
 
+            // Lakukan logout pengguna
+            Auth::logout();
+
+            // Hapus sesi pengguna
+            session()->invalidate();
+            session()->regenerateToken();
+
             if (!isRequestBladeView()) {
                 return response()->json(['message' => 'Logged out successfully'], 200);
             } else {
                 // Jika bukan permintaan JSON, redirect ke halaman login atau halaman lain yang sesuai
-                return response()->json(['message' => 'Logged out successfully'], 200);
+//                return response()->json(['message' => 'Logged out successfully'], 200);
+                return Redirect::route('auth')->with([
+                    'message' => 'Anda Berhasil Logout !',
+                ]);
             }
         }
 
