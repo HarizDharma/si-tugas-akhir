@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Requests\AuthRequest\LoginRequest;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -47,6 +48,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        // CUSTOM THORTTLING START DISINI
+        $this->configureRateLimitingLogin();
+
+        // END
     }
 
     /**
@@ -58,6 +64,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+        });
+    }
+
+    protected function configureRateLimitingLogin()
+    {
+        RateLimiter::for('login', function (LoginRequest $request) {
+            return Limit::perMinute(5)->by($request->input('username') . '|' . $request->ip());
         });
     }
 }
