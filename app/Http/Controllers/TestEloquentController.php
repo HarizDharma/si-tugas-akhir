@@ -12,7 +12,9 @@ class TestEloquentController extends Controller
     public function getUser()
     {
 
-        $user = User::with('mahasiswa')->get();
+//        $user = User::with('mahasiswa')->get();
+        $user = User::with('mahasiswa')->find(1);
+        $user->role;
          return response()->json($user, 200);
     }
 }
