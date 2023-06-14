@@ -20,7 +20,7 @@ class LoginResources extends JsonResource
     {
         return  [
             'status' => true,
-            'message' => 'Berhasil login',
+            'message' =>  sprintf('Selamat datang, %s (%s). Anda berhasil masuk.', $this->nama, $this->username),
             'data' => [
                 'id' => $this->id,
                 'nama' => $this->nama,
