@@ -19,13 +19,13 @@ use App\Http\Controllers\PanitiaController;
 */
 
 //index halaman login
-Route::get('/', [AuthController::class, 'index'])->name('auth');
+Route::get('/', [App\Http\Controllers\Web\WebAuthController::class, 'index'])->name('auth');
 
 //login action form
-Route::post('/', [AuthController::class, 'login'])->name('login');
+Route::post('/', [App\Http\Controllers\Web\WebAuthController::class, 'login'])->name('login');
 
 //logout action button
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [App\Http\Controllers\Web\WebAuthController::class, 'logout'])->name('logout');
 
 //Route::group(['middleware' => 'role:akademik'], function () {
 //    // Rute yang hanya bisa diakses oleh pengguna dengan peran "akademik"
