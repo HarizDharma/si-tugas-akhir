@@ -16,6 +16,7 @@ class WebAuthController extends Controller
     {
         $this->authRepo = $authRepo;
     }
+
     //index plus pengecekan login
     public function index()
     {
