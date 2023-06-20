@@ -101,13 +101,76 @@ class AkademikRepository implements AkademikRepositoryInterface
             return ['status' => false, 'message' => 'Unauthorized, Please Login'];
         }
     }
-    public function update(UpdateAkademikRequest $request)
+    public function update(UpdateAkademikRequest $request, $id)
     {
+        if (Auth::check()) {
+            $user = Auth::user();
 
+            // Return Jika Role bukan akademik (Panitia/Mahasiswa)
+            if(!$user->hasRole('akademik')) {
+                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+            }
+
+            try {
+                DB::beginTransaction();
+
+                // Validasi input telah dilakukan oleh UpdateAkademikRequest
+
+                $akademik = User::findOrFail($id);
+
+                $akademik->username = $request->username;
+                $akademik->password = bcrypt($request->password);
+                $akademik->nama = $request->nama;
+                $akademik->nomor_identitas = $request->nomor_identitas;
+
+                $akademik->save();
+
+                DB::commit();
+
+                return new ResponseResource(true, 'Update User Akademik Id: ' . $akademik->id);
+
+            } catch (\Exception $e) {
+                DB::rollback();
+
+                // Tangani kesalahan dan berikan respons yang sesuai
+                return new ResponseResource(false, 'Gagal mengupdate user akademik: ' . $e->getMessage());
+            }
+        }
+        else {
+            // Jika pengguna belum terautentikasi, kirim respons error
+            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+        }
     }
-
-    public function destroy()
+    public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            // Return Jika Role bukan akademik (Panitia/Mahasiswa)
+            if(!$user->hasRole('akademik')) {
+                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+            }
+
+            try {
+                DB::beginTransaction();
+
+                $akademik = User::findOrFail($id);
+                $akademik->delete();
+
+                DB::commit();
+
+                return new ResponseResource(true, 'User Akademik berhasil dihapus');
+
+            } catch (\Exception $e) {
+                DB::rollback();
+
+                // Tangani kesalahan dan berikan respons yang sesuai
+                return new ResponseResource(false, 'Gagal menghapus user akademik: ' . $e->getMessage());
+            }
+        }
+        else {
+            // Jika pengguna belum terautentikasi, kirim respons error
+            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+        }
     }
 }

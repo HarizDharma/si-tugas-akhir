@@ -11,6 +11,6 @@ interface AkademikRepositoryInterface
     public function show($id);
 
     public function store(CreateAkademikRequest $request);
-    public function update(UpdateAkademikRequest $request);
-    public function destroy();
+    public function update(UpdateAkademikRequest $request, $id);
+    public function destroy($id);
 }

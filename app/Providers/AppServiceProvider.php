@@ -17,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Auth\AuthRepositoryInterface',
             'App\Repositories\Auth\AuthRepository'
         );
+        $this->app->bind(
+            'App\Repositories\Akademik\AkademikRepositoryInterface',
+            'App\Repositories\Akademik\AkademikRepository'
+        );
     }
 
     /**
