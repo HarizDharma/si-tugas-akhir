@@ -8,6 +8,7 @@ use App\Http\Resources\ResponseResource;
 use App\Http\Resources\UserResouces;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AkademikRepository implements AkademikRepositoryInterface
 {
@@ -88,7 +89,7 @@ class AkademikRepository implements AkademikRepositoryInterface
 
                 DB::commit();
 
-                return new ResponseResource(true, 'Create User Akademik' . $akademik->id, $akademik);
+                return new ResponseResource(true, 'Create User Akademik', $akademik);
             } catch (\Exception $e) {
                 DB::rollback();
 

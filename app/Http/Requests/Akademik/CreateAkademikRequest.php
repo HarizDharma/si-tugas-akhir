@@ -24,16 +24,13 @@ class CreateAkademikRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->input('id');
         return [
-            'id' => 'required',
             'username' => 'required',
             'password' => 'required',
             'nama' => 'required',
             'nomor_identitas' => [
-                'sometimes',
                 'required',
-                Rule::unique('table_user', 'nomor_identitas')->ignore($id),
+                Rule::unique('table_user', 'nomor_identitas'),
             ],
         ];
     }
