@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\ApiMahasiswaController;
+use App\Http\Controllers\Api\ApiPanitiaController;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\ApiAkademikController;
 use Illuminate\Http\Request;
@@ -33,7 +35,7 @@ Route::middleware('auth:sanctum')
 Route::middleware('auth:sanctum')->group(function () {
     //  api/mahasiswa
     // TODO : API RESOURCES MAHASISWA
-    Route::apiResource('mahasiswa', ApiAkademikController::class)->names([
+    Route::apiResource('mahasiswa', ApiMahasiswaController::class)->names([
         'index' => 'api.mahasiswa.index',
         'show' => 'api.mahasiswa.show',
         'store' => 'api.mahasiswa.store',
@@ -49,7 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'destroy' => 'api.akademik.destroy',
     ]);
 
-    Route::apiResource('panitia', ApiAkademikController::class)->names([
+    Route::apiResource('panitia', ApiPanitiaController::class)->names([
         'index' => 'api.panitia.index',
         'show' => 'api.panitia.show',
         'store' => 'api.panitia.store',
