@@ -13,4 +13,6 @@ interface MahasiswaRepositoryInterface
     public function store(CreateMahasiswaRequest $request);
     public function update(UpdateMahasiswaRequest $request, $id);
     public function destroy($id);
+    public function getSelf();
+    public function updateSelf(UpdateMahasiswaRequest $request);
 }
