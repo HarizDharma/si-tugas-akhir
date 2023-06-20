@@ -21,6 +21,14 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Akademik\AkademikRepositoryInterface',
             'App\Repositories\Akademik\AkademikRepository'
         );
+        $this->app->bind(
+            'App\Repositories\Mahasiswa\MahasiswaRepositoryInterface',
+            'App\Repositories\Mahasiswa\MahasiswaRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Panitia\PanitiaRepositoryInterface',
+            'App\Repositories\Panitia\PanitiaRepository'
+        );
     }
 
     /**
