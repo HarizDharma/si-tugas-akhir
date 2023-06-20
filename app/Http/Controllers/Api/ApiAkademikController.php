@@ -39,4 +39,13 @@ class ApiAkademikController extends Controller
         $akademik = $this->akademikRepo->destroy($id);
         return response()->json($akademik);
     }
+
+
+    /// CUSTOM ---
+    ///
+
+    public function getSelf() {
+        $akademik = $this->akademikRepo->getSelf();
+        return response()->json($akademik);
+    }
 }
