@@ -17,9 +17,13 @@ class Mahasiswa extends Model
         'nama_dosen2',
         'jadwal_pengambilan_ijazah',
 
+        'status_id',
+        'sidang_id',
+        'file_id',
+        'hasil_sidang_id'
+
     ];
     protected $hidden = [
-        'status_id',
         'status_id',
         'sidang_id',
         'file_id',

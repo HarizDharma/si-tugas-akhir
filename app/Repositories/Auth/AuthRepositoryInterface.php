@@ -8,6 +8,6 @@ interface AuthRepositoryInterface
 {
     public function login(LoginRequest $request);
     public function logout();
-
     public function index();
+    public function checkRole();
 }

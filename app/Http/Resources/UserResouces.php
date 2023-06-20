@@ -12,12 +12,20 @@ class UserResouces extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($messages, $request, $token, $role)
+    public function toArray($request)
     {
         return [
-            'messages' => $messages,
+            'id' => $this->id,
             'nama' => $this->nama,
-            'nomor_identitas' => $this->nama,
+            'nomor_identitas' => $this->nomor_identitas,
+            'role' => $this->role,
+            'username' => $this->username,
+            'mahasiswa_id' => $this->when($this->role == 'mahasiswa', function () {
+                return MahasiswaResources::make($this->mahasiswa);
+            }),
+            'created_at' => $this->created_at,
+            'modified_at' => $this->modified_at,
+
 
         ];
     }

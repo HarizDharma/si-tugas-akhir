@@ -130,4 +130,8 @@ class AuthRepository implements AuthRepositoryInterface
         $token = $user->createToken('api-token')->plainTextToken;
         return $token;
     }
+
+    public function checkRole() {
+
+    }
 }
