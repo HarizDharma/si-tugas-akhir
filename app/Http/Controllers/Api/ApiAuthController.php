@@ -22,7 +22,6 @@ class ApiAuthController extends Controller
             return response()->json(['message' => 'Anda sudah login'], 200);
         }
     }
-
     public function login(LoginRequest $request)
     {
         $auth = $this->authRepo->login($request);
