@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\ApiAuthController;
+use App\Http\Controllers\Api\ApiAkademikController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,22 +23,39 @@ use Illuminate\Support\Facades\Route;
 Route::get('user', [\App\Http\Controllers\TestEloquentController::class, 'getUser'])->name('api.user.penjaga');
 //
 
-Route::post('/login', [App\Http\Controllers\Api\ApiAuthController::class, 'login'])->name('api.login');
+Route::post('/login', [ApiAuthController::class, 'login'])->name('api.login');
 Route::middleware('auth:sanctum')
-    ->post('/logout', [App\Http\Controllers\Api\ApiAuthController::class, 'logout'])
+    ->post('/logout', [ApiAuthController::class, 'logout'])
     ->name('api.logout');
 
 
+//
+Route::middleware('auth:sanctum')->group(function () {
+    //  api/mahasiswa
+    // TODO : API RESOURCES MAHASISWA
+    Route::apiResource('mahasiswa', ApiAkademikController::class)->names([
+        'index' => 'api.mahasiswa.index',
+        'show' => 'api.mahasiswa.show',
+        'store' => 'api.mahasiswa.store',
+        'update' => 'api.mahasiswa.update',
+        'destroy' => 'api.mahasiswa.destroy',
+    ]);
+    //  api/akademik
+    Route::apiResource('akademik', ApiAkademikController::class)->names([
+        'index' => 'api.akademik.index',
+        'show' => 'api.akademik.show',
+        'store' => 'api.akademik.store',
+        'update' => 'api.akademik.update',
+        'destroy' => 'api.akademik.destroy',
+    ]);
 
-//Route::middleware('auth:sanctum')->group(function () {
-//    Route::apiResource('tamu', TamuController::class)->names([
-//        'index' => 'api.tamu.index',
-//        'show' => 'api.tamu.show',
-//        'store' => 'api.tamu.store',
-//        'update' => 'api.tamu.update',
-//        'destroy' => 'api.tamu.destroy',
-//    ]);
-//
-//
-//
-//});
+    Route::apiResource('panitia', ApiAkademikController::class)->names([
+        'index' => 'api.panitia.index',
+        'show' => 'api.panitia.show',
+        'store' => 'api.panitia.store',
+        'update' => 'api.panitia.update',
+        'destroy' => 'api.panitia.destroy',
+    ]);
+
+
+});
