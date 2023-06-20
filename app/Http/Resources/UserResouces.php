@@ -20,6 +20,9 @@ class UserResouces extends JsonResource
             'nomor_identitas' => $this->nomor_identitas,
             'role' => $this->role,
             'username' => $this->username,
+            'mahasiswa_id' => $this->when($this->role == 'mahasiswa', function () {
+                return MahasiswaResources::make($this->mahasiswa);
+            }),
             'created_at' => $this->created_at,
             'modified_at' => $this->modified_at,
 
