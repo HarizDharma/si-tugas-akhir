@@ -50,4 +50,8 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(HasilSidang::class);
     }
+    public function verif()
+    {
+        return $this->belongsTo(Verifikasi::class);
+    }
 }

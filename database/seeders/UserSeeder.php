@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\File;
 use App\Models\Mahasiswa;
 use App\Models\User;
+use App\Models\Verifikasi;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
@@ -20,7 +21,7 @@ class UserSeeder extends Seeder
         $faker = Faker::create();
 
         // Dummy 10 Mahasiswa
-        for($i = 0; $i < 20; $i++) {
+        for($i = 0; $i < 50; $i++) {
             $file = File::create([
                 'laporan_pkl' => null,
                 'bebas_pkl' => null,
@@ -32,6 +33,10 @@ class UserSeeder extends Seeder
                 'pengumpulan_alat' => null,
             ]);
 
+            $verifikasi = Verifikasi::create([
+               'verifikasi_panitia' => false,
+                'verifikasi_akademik' => false
+            ]);
             $mahasiswa = Mahasiswa::create([
                 'prodi' => 'D4 Jaringan Telekomunikasi Digital',
                 'judul_skripsi' =>  $faker->sentence(),
@@ -42,6 +47,7 @@ class UserSeeder extends Seeder
                 'sidang_id' => null,
                 'file_id' => $file->id,
                 'hasil_sidang_id' => null,
+                'verifikasi_id' => $verifikasi->id,
             ]);
 
             User::create([
@@ -55,15 +61,32 @@ class UserSeeder extends Seeder
 
         }
 
-        // dumy 1 panitia
-        User::create([
-            'username' => $faker->userName,
-            'password' => bcrypt('panitia'),
-            'nama' => $faker->name(),
-            'nomor_identitas' => $faker->unique()->numerify('#####################'),
-            'role' => 'panitia',
-            'mahasiswa_id' => 0,
-        ])->attachRole('panitia');
+        for ($i = 0; $i < 10; $i++) {
+
+            // dumy 1 panitia
+            User::create([
+                'username' => $faker->userName,
+                'password' => bcrypt('panitia'),
+                'nama' => $faker->name(),
+                'nomor_identitas' => $faker->unique()->numerify('#####################'),
+                'role' => 'panitia',
+                'mahasiswa_id' => 0,
+            ])->attachRole('panitia');
+
+            // dumy 1 panitia
+            User::create([
+                'username' => $faker->userName,
+                'password' => bcrypt('panitia'),
+                'nama' => $faker->name(),
+                'nomor_identitas' => $faker->unique()->numerify('#####################'),
+                'role' => 'panitia',
+                'mahasiswa_id' => 0,
+            ])->attachRole('panitia');
+
+
+        }
+
+
 // dumy 1 akademik
         User::create([
             'username' => $faker->userName,
