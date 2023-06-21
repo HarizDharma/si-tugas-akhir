@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Http\Requests\AuthRequest\LoginRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class WebAuthController extends Controller
+class WebAkademikController extends Controller
 {
     private $authRepo;
     public function __construct(AuthRepositoryInterface $authRepo)
@@ -22,7 +21,7 @@ class WebAuthController extends Controller
     {
         $auth = $this->authRepo->index();
         if ($auth) {
-            return view('dashboard.akademik.index')->with($auth);
+            return view('dashboard.akademik.profile')->with($auth);
         }
         else {
             return view('auth');
@@ -39,13 +38,7 @@ class WebAuthController extends Controller
                 'username' => 'Username atau password salah.',
             ]);
         }
-
-        Alert::success('Berhasil', $auth['message']);
-        return view('dashboard.akademik.index')->with($auth)->withErrors(
-            [
-                'Berhasil' => $auth['message'],
-            ]
-        );
+        return view('dashboard.akademik.index')->with($auth);
 
     }
     public function logout()

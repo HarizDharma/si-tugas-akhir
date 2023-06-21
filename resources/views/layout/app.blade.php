@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>@yield('title')</title>
 </head>
 <body>
 <h1 class="text-3xl font-bold text-red-400 underline">
@@ -19,6 +20,16 @@
 </main>
 
 <footer>
+
+    @push('scripts')
+        <script>
+            $('#logout-button').click(function(e) {
+                e.preventDefault();
+                $.post("{{ route('logout') }}");
+            });
+        </script>
+    @endpush
+
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('footer')
 </footer>
