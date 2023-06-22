@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>@yield('title')</title>
+{{--    tambahkan sweetalert asset--}}
 </head>
 <body>
 <h1 class="text-3xl font-bold text-red-400 underline">
@@ -16,6 +17,7 @@
 </header>
 
 <main>
+    @include('sweetalert::alert')
     @yield('main')
 </main>
 

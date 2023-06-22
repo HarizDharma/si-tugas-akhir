@@ -21,12 +21,30 @@ class WebAuthController extends Controller
     public function index()
     {
         $auth = $this->authRepo->index();
+
+        // Jika data berhasil ditemukan
         if ($auth) {
-            return view('dashboard.akademik.index')->with($auth);
-        }
-        else {
+            //buat alert untuk berhasil login
+            Alert::success('Selamat Datang');
+
+            // Cek role
+            if ($auth['user']['role'] == 'mahasiswa') {
+                //jika yang login mahasiswa
+                return view('dashboard.mahasiswa.index')->with($auth);
+            } elseif ($auth['user']['role'] == 'panitia') {
+                //jika yang login panitia
+                return view('dashboard.panitia.index')->with($auth);
+            } elseif ($auth['user']['role'] == 'akademik') {
+                //jika yang login akademik
+                return view('dashboard.akademik.index')->with($auth);
+            }
+        } else {
+            //jika tidak login
+            // Jika data tidak ditemukan atau role tidak cocok
             return view('auth');
         }
+
+
     }
 
     public function login(LoginRequest $request)
@@ -40,13 +58,7 @@ class WebAuthController extends Controller
             ]);
         }
 
-        Alert::success('Berhasil', $auth['message']);
-        return view('dashboard.akademik.index')->with($auth)->withErrors(
-            [
-                'Berhasil' => $auth['message'],
-            ]
-        );
-
+        return $this->index();
     }
     public function logout()
     {
@@ -58,6 +70,8 @@ class WebAuthController extends Controller
         session()->invalidate();
         session()->regenerateToken();
 
+        //buat alert untuk berhasil login
+        Alert::info('Logout');
         return Redirect::route('auth')->with([
             'message' => 'Anda Berhasil Logout !',
         ]);

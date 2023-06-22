@@ -18,13 +18,9 @@ use App\Http\Controllers\Web\WebAkademikController;
 Route::get('/', [WebAuthController::class, 'index'])->name('auth');
 //login action form
 Route::post('/', [WebAuthController::class, 'login'])->name('login');
-
-//role akademik
-//read profil data user
-Route::get('/profil', [WebAkademikController::class, 'index'])->name('profil');
-
-
 //logout action button
 Route::post('/logout', [WebAuthController::class, 'logout'])->name('logout');
+
+
 
 

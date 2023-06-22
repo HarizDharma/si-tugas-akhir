@@ -161,7 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        //add sweetalert2
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Laravel\Sanctum\SanctumServiceProvider::class,
 
         /*
@@ -231,6 +232,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        //add sweetalert2
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ],
 

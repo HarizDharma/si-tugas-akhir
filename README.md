@@ -16,12 +16,14 @@
 2. composer install
 3. composer update
 4. php artisan vendor:publish --tag="laratrust"
-5. php artisan laratrust:setup
-6. composer dump-autoload
-3. php artisan key:generate
-4. php artisan migrate:refresh
-5. php artisan db:seed
-7. php artisan serve
+5. php artisan vendor:publish --provider="RealRashid\SweetAlert\SweetAlertServiceProvider"
+6. php artisan vendor:publish --tag=public --provider="RealRashid\SweetAlert\SweetAlertServiceProvider"
+7. php artisan laratrust:setup
+8. composer dump-autoload
+9. php artisan key:generate
+10. php artisan migrate:refresh
+11. php artisan db:seed
+12. php artisan serve
 
 [Frontend]
 1. npm install
