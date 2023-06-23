@@ -21,6 +21,12 @@ Route::post('/', [WebAuthController::class, 'login'])->name('login');
 //logout action button
 Route::post('/logout', [WebAuthController::class, 'logout'])->name('logout');
 
+//Dashboard Akademik
+Route::get('/akademik', [WebAkademikController::class, 'index'])->name('akademik');
+//Profil akademik
+Route::get('/akademik/profile', [WebAkademikController::class, 'profile'])->name('profileakademik');
+//Profil akademik.update
+Route::post('/akademik/profile', [WebAkademikController::class, 'profileUpdate'])->name('profileakademik.update');
 
 
 

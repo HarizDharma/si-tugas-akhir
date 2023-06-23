@@ -36,7 +36,7 @@ class WebAuthController extends Controller
                 return view('dashboard.panitia.index')->with($auth);
             } elseif ($auth['user']['role'] == 'akademik') {
                 //jika yang login akademik
-                return view('dashboard.akademik.index')->with($auth);
+                return redirect()->route('akademik')->with($auth);
             }
         } else {
             //jika tidak login
@@ -71,8 +71,8 @@ class WebAuthController extends Controller
         session()->regenerateToken();
 
         //buat alert untuk berhasil login
-        Alert::info('Logout');
-        return Redirect::route('auth')->with([
+        Alert::success('Berhasil Logout');
+        return Redirect::route('auth')->withErrors([
             'message' => 'Anda Berhasil Logout !',
         ]);
     }

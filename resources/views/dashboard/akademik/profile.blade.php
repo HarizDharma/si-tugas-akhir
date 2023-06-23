@@ -2,9 +2,9 @@
 @section('title', 'Halaman Profil User')
 
 @section('main')
-    <x-navbar :nama="$user['nama']"/>
+    <x-navbar :nama="$user['nama']" :role="$user['role']"/>
     <x-sidebarakademik/>
-    <x-profile :data="$user"/>
+    <x-profileakademik :data="$user"/>
 
 
 @endsection
