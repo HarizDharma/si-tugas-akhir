@@ -11,8 +11,6 @@
                         Silahkan Masuk Ke Akun Anda
                     </h1>
 
-
-
                     <form class="space-y-4 md:space-y-6" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div>

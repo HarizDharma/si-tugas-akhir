@@ -30,18 +30,9 @@ class AkademikRepository implements AkademikRepositoryInterface
                 return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
             }
 
-            // Generate token JWT
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
-
-            return [
-                'token' => $token,
-                'user' => $user,
-            ];
-
-//            $akademik = User::whereHas('roles', function ($query) {
-//                $query->where('role', 'akademik');
-//            })->get();
+            $akademik = User::whereHas('roles', function ($query) {
+                $query->where('role', 'akademik');
+            })->first();
 
             //  Format Return Response Resource
                     //  return [
@@ -50,6 +41,7 @@ class AkademikRepository implements AkademikRepositoryInterface
                     //      'data' => $data,
                     //  ];
 //            return new ResponseResource(true, 'List User Akademik', UserResouces::collection($akademik));
+            return response()->json(new ResponseResource(true, 'List User Akademik', new UserResouces($akademik)));
 
         } else {
             // Jika pengguna belum terautentikasi, kirim respons error

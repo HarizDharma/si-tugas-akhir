@@ -3,10 +3,10 @@
 
 @section('main')
 {{--  isi props dfengan data user yang dilempar ke halaman ini  --}}
-    <x-navbar :nama="$user['nama']" :role="$user['role']"/>
-    <x-sidebarakademik/>
+    <x-common.navbar :nama="$user['nama']" :role="$user['role']"/>
+    <x-sidebar.sidebarakademik/>
 
-    {{--    Alert jika login sukses setelah itu login tidak akan muncul lagi--}}
+    {{-- Alert jika login sukses setelah itu login tidak akan muncul lagi menggunakan flash untuk session sementara setelah request otomatis dihapus --}}
     @if(session()->has('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}

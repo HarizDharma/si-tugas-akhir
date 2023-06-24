@@ -30,10 +30,12 @@ class WebAuthController extends Controller
             // Cek role
             if ($auth['user']['role'] == 'mahasiswa') {
                 //jika yang login mahasiswa
-                return view('dashboard.mahasiswa.index')->with($auth);
+                return redirect()->route('mahasiswa')->with($auth);
+
             } elseif ($auth['user']['role'] == 'panitia') {
                 //jika yang login panitia
-                return view('dashboard.panitia.index')->with($auth);
+                return redirect()->route('panitia')->with($auth);
+
             } elseif ($auth['user']['role'] == 'akademik') {
                 //jika yang login akademik
                 return redirect()->route('akademik')->with($auth);

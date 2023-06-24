@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class WebAkademikController extends Controller
+class WebPanitiaController extends Controller
 {
     private $akademikRepo;
     public function __construct(AkademikRepositoryInterface $akademikRepo)
@@ -33,45 +32,11 @@ class WebAkademikController extends Controller
             // Buat alert untuk berhasil login
             session()->flash('success', 'Selamat Datang');
 
-            return view('dashboard.akademik.index')->with([
+            return view('dashboard.panitia.index')->with([
                 'token' => $token,
                 'user' => $user,
             ]);
         } else {
-            return view('auth');
-        }
-    }
-
-
-    public function dataakademik()
-    {
-        //cek sudah login apa belum
-        if (Auth::check()){
-            //jika sudah login eksekusi
-            //get dfata return dari repo
-            // Auth berhasil
-            $user = Auth::user();
-
-            //dapatkan user dengan role akademik
-            $akademik = $this->akademikRepo->index();
-
-            // Generate token JWT
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
-
-            //pengecekan login / jika login diarahkan ke hal profile
-            if ($akademik && $user) {
-                //ke halaman daftar data akademik
-                return view('dashboard.akademik.dataakademik')->with([
-                    'token' => $token,
-                    'akademik' => $akademik,
-                    'user' => $user,
-                ]);
-            }
-        }
-        else {
-            // Buat alert untuk belum login
-            Alert::danger('Anda Belum Login !');
             return view('auth');
         }
     }
