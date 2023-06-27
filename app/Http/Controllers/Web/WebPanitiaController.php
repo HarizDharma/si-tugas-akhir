@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -10,10 +11,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class WebPanitiaController extends Controller
 {
-    private $akademikRepo;
-    public function __construct(AkademikRepositoryInterface $akademikRepo)
+    private $panitiaRepo;
+    public function __construct(AkademikRepositoryInterface $panitiaRepo)
     {
-        $this->akademikRepo = $akademikRepo;
+        $this->panitiaRepo = $panitiaRepo;
     }
 
     //index plus pengecekan login
@@ -41,7 +42,7 @@ class WebPanitiaController extends Controller
         }
     }
 
-    public function datapanitia()
+    public function konfirmasipanitia()
     {
         //cek sudah login apa belum
         if (Auth::check()){
@@ -51,18 +52,18 @@ class WebPanitiaController extends Controller
             $user = Auth::user();
 
             //dapatkan user dengan role akademik
-            $akademik = $this->akademikRepo->index();
+            $panitia = $this->panitiaRepo->index();
 
             // Generate token JWT
             $token = $this->generateSanctumToken($user);
             $user->token = $token;
 
             //pengecekan login / jika login diarahkan ke hal profile
-            if ($akademik && $user) {
+            if ($panitia && $user) {
                 //ke halaman daftar data panitia
-                return view('dashboard.akademik.datapanitia')->with([
+                return view('dashboard.panitia.datakonfirmasi')->with([
                     'token' => $token,
-                    'akademik' => $akademik,
+                    'panitia' => $panitia,
                     'user' => $user,
                 ]);
             }
@@ -74,7 +75,7 @@ class WebPanitiaController extends Controller
         }
     }
 
-    public function datamahasiswa()
+    public function mahasiswalolos()
     {
         //cek sudah login apa belum
         if (Auth::check()){
@@ -84,18 +85,18 @@ class WebPanitiaController extends Controller
             $user = Auth::user();
 
             //dapatkan user dengan role akademik
-            $akademik = $this->akademikRepo->index();
+            $panitia = $this->panitiaRepo->index();
 
             // Generate token JWT
             $token = $this->generateSanctumToken($user);
             $user->token = $token;
 
             //pengecekan login / jika login diarahkan ke hal profile
-            if ($akademik && $user) {
-                //ke halaman daftar data mahasiswa
-                return view('dashboard.akademik.datamahasiswa')->with([
+            if ($panitia && $user) {
+                //ke halaman daftar data mahasiswa lolos
+                return view('dashboard.panitia.datalolos')->with([
                     'token' => $token,
-                    'akademik' => $akademik,
+                    'panitia' => $panitia,
                     'user' => $user,
                 ]);
             }

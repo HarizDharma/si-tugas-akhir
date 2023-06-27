@@ -34,8 +34,9 @@ Route::middleware('auth:sanctum')
 //
 Route::middleware('auth:sanctum')->group(function () {
     //  api/mahasiswa
-    // TODO : API RESOURCES MAHASISWA
-
+    // TODO : COUNTING MAHASISWA
+        // TODO : COUNTING PANITIA
+        // TODO : COUNTING AKADEMIK
     Route::get('mahasiswa/self', [ApiMahasiswaController::class, 'getSelf'])->name('api.mahasiswa.get.self');
     Route::put('mahasiswa/self', [ApiMahasiswaController::class, 'updateSelf'])->name('api.mahasiswa.update.self');
     Route::apiResource('mahasiswa', ApiMahasiswaController::class)->names([
@@ -67,6 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'update' => 'api.panitia.update',
         'destroy' => 'api.panitia.destroy',
     ]);
+
 
 
 });

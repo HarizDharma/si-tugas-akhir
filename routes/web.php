@@ -33,4 +33,6 @@ Route::get('/datamahasiswa', [WebAkademikController::class, 'datamahasiswa'])->n
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
+Route::get('/datakonfirmasi', [WebPanitiaController::class, 'konfirmasipanitia'])->name('konfirmasipanitia');
+Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
 

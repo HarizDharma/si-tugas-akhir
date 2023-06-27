@@ -7,10 +7,23 @@ ini isi ata dari yang sudah login
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start">
-                <a href="{{ route('auth') }}" class="flex ml-2 md:mr-24">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
-                </a>
+                @if($role == 'akademik')
+                    {{--jika yang login akademik ganti route--}}
+                    <a href="{{ route('akademik') }}" class="flex ml-2 md:mr-24">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
+                    </a>
+                @elseif($role == 'panitia')
+                    <a href="{{ route('panitia') }}" class="flex ml-2 md:mr-24">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
+                    </a>
+                @elseif($role == 'mahasiswa')
+                    <a href="{{ route('mahasiswa') }}" class="flex ml-2 md:mr-24">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
+                    </a>
+                @endif
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ml-3">
