@@ -8,15 +8,3 @@
     <x-modal.tambahmahasiswa/>
 
 @endsection
-
-<!-- Script untuk inisialisasi modal -->
-{{--<script>--}}
-{{--    function modal() {--}}
-{{--        return {--}}
-{{--            isModalOpen: false, // Menentukan apakah modal ditampilkan atau disembunyikan--}}
-{{--            closeModal() {--}}
-{{--                this.isModalOpen = false;--}}
-{{--            }--}}
-{{--        }--}}
-{{--    }--}}
-{{--</script>--}}
