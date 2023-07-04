@@ -6,8 +6,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>@yield('title')</title>
 {{--    tambahkan sweetalert asset--}}
-    <!-- Include Alpine.js untuk mengontrol modal -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2"></script>
 </head>
 <body>
 <h1 class="text-3xl font-bold text-red-400 underline">
