@@ -12,56 +12,52 @@ use Illuminate\Support\Facades\DB;
 
 class AkademikRepository implements AkademikRepositoryInterface
 {
-    public function index()
+    public function index($platform = 'api')
     {
         // Mengecek apakah pengguna sudah terautentikasi
         if (Auth::check()) {
             // Auth berhasil
             $user = Auth::user();
+            $token = $this->generateSanctumToken($user);
+            $user->token = $token;
 
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik')) {
                 //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Unauthorized, Please Login' )
+                    : new ResponseResource(false, 'Unauthorized, Please Login');
             }
 
             $akademik = User::whereHas('roles', function ($query) {
                 $query->where('role', 'akademik');
             })->first();
 
-            //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-//            return new ResponseResource(true, 'List User Akademik', UserResouces::collection($akademik));
-            return response()->json(new ResponseResource(true, 'List User Akademik', new UserResouces($akademik)));
+            return $platform == 'web' ?
+                formatResponseResource(true, 'List User Akademik',  formatAkademikResource($akademik), $user->token )
+                : new ResponseResource(true, 'List User Akademik', UserResouces::collection($akademik));
+
 
         } else {
             // Jika pengguna belum terautentikasi, kirim respons error
-            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
-    public function show($id)
+    public function show($platform = 'api', $id)
     {
         if (Auth::check()) {
             $user = Auth::user();
+            $token = $this->generateSanctumToken($user);
+            $user->token = $token;
 
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik')) {
                 //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Unauthorized, Please Login' )
+                    : new ResponseResource(false, 'Unauthorized, Please Login');
             }
 
             // Cari pengguna dengan peran akademik berdasarkan ID
@@ -71,31 +67,24 @@ class AkademikRepository implements AkademikRepositoryInterface
 
             // Jika pengguna dengan ID yang diberikan tidak ditemukan, kirim respons error
             if (!$akademik) {
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Pengguna tidak ditemukan');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Pengguna tidak ditemukan' )
+                    : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
 
-
-            //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-            return new ResponseResource(true, 'Detail User Akademik ', UserResouces::make($akademik));
+            return $platform == 'web' ?
+                formatResponseResource(true, 'Detail User Akademik',  formatAkademikResource($akademik), $user->token )
+                : new ResponseResource(true, 'Detail User Akademik', UserResouces::collection($akademik));
 
         }
         else {
             // Jika pengguna belum terautentikasi, kirim respons error
-            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
-    public function store(CreateAkademikRequest  $request)
+    public function store($platform = 'api', CreateAkademikRequest  $request)
     {
         if (Auth::check()) {
             $user = Auth::user();
@@ -152,7 +141,7 @@ class AkademikRepository implements AkademikRepositoryInterface
             return ['status' => false, 'message' => 'Unauthorized, Please Login'];
         }
     }
-    public function update(UpdateAkademikRequest $request, $id)
+    public function update($platform = 'api', UpdateAkademikRequest $request, $id)
     {
         if (Auth::check()) {
             $user = Auth::user();
@@ -210,12 +199,12 @@ class AkademikRepository implements AkademikRepositoryInterface
             return ['status' => false, 'message' => 'Unauthorized, Please Login'];
         }
     }
-    public function updateSelf(UpdateAkademikRequest $request)
+    public function updateSelf($platform = 'api', UpdateAkademikRequest $request)
     {
         // TODO: Implement updateSelf() method.
     }
 
-    public function destroy($id)
+    public function destroy($platform = 'api', $id)
     {
         if (Auth::check()) {
             $user = Auth::user();
@@ -266,20 +255,19 @@ class AkademikRepository implements AkademikRepositoryInterface
         }
     }
 
-    public function getSelf()
+    public function getSelf($platform = 'api')
     {
         if (Auth::check()) {
             $user = Auth::user();
             $id = $user->id;
+            $token = $this->generateSanctumToken($user);
+            $user->token = $token;
+
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik') ) {
-                //  Format Return Response Resource
-                //  return [
-                //      'status' => $this->status,
-                //      'message' => $this->message,
-                //      'data' => $data,
-                //  ];
-                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Tidak Mempunyai Hak Akses' )
+                    : new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
             }
 
             // Cari pengguna dengan peran akademik berdasarkan ID
@@ -289,28 +277,19 @@ class AkademikRepository implements AkademikRepositoryInterface
 
             // Jika pengguna dengan ID yang diberikan tidak ditemukan, kirim respons error
             if (!$akademik) {
-                //  Format Return Response Resource
-                //  return [
-                //      'status' => $this->status,
-                //      'message' => $this->message,
-                //      'data' => $data,
-                //  ];
-                return new ResponseResource(false, 'Pengguna tidak ditemukan');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Pengguna tidak ditemukan' )
+                    : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
 
-
-            //  Format Return Response Resource
-            //  return [
-            //      'status' => $this->status,
-            //      'message' => $this->message,
-            //      'data' => $data,
-            //  ];
-            return new ResponseResource(true, 'Detail User Akademik ', UserResouces::make($akademik));
-
+            return $platform == 'web' ?
+                formatResponseResource(true, 'Detail User Akademik ',  formatAkademikResource($akademik), $user->token)
+                : new ResponseResource(true, 'Detail User Akademik  ', UserResouces::make($akademik));
         }
         else {
-            // Jika pengguna belum terautentikasi, kirim respons error
-            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
 }
