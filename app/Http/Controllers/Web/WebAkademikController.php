@@ -5,16 +5,25 @@ namespace App\Http\Controllers\Web;
 use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
+use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
+use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class WebAkademikController extends Controller
 {
+    //deklarasi untuk menmpung repository mahasiswa,panitia dan akademik
     private $akademikRepo;
-    public function __construct(AkademikRepositoryInterface $akademikRepo)
+    private $panitiaRepo;
+    private $mahasiswaRepo;
+
+    public function __construct(AkademikRepositoryInterface $akademikRepo, PanitiaRepositoryInterface $panitiaRepo, MahasiswaRepositoryInterface $mahasiswaRepo)
     {
+        //manggil repo lalu dimasukkan ke var private diatas
         $this->akademikRepo = $akademikRepo;
+        $this->panitiaRepo = $panitiaRepo;
+        $this->mahasiswaRepo = $mahasiswaRepo;
     }
 
     //index plus pengecekan login
@@ -119,18 +128,18 @@ class WebAkademikController extends Controller
             $user = Auth::user();
 
             //dapatkan user dengan role akademik
-            $akademik = $this->akademikRepo->index();
+            $mahasiswa = $this->mahasiswaRepo->index();
 
             // Generate token JWT
             $token = $this->generateSanctumToken($user);
             $user->token = $token;
 
             //pengecekan login / jika login diarahkan ke hal profile
-            if ($akademik && $user) {
+            if ($mahasiswa && $user) {
                 //ke halaman daftar data mahasiswa
                 return view('dashboard.akademik.datamahasiswa')->with([
                     'token' => $token,
-                    'akademik' => $akademik,
+                    'mahasiswa' => $mahasiswa,
                     'user' => $user,
                 ]);
             }

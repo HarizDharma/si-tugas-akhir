@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "private": true,
     "scripts": {
         "dev": "npm run development",
