@@ -6,13 +6,19 @@
 {{--    <x-navbar :nama="$user['nama']" :role="$user['role']"/>--}}
 {{--    <x-sidebarakademik/>--}}
 
-<pre>
-{{--      Cek Response--}}
-    {{ htmlspecialchars_decode(json_encode($user)) }}
+{{--    isi content main--}}
+    <div class="p-4 sm:ml-64">
+        <div class="rounded-lg dark:border-gray-700 mt-14">
+            <x-cardview.cardviewakademik/>
+        </div>
+    </div>
 
-{{--      Tes Response--}}
-    {{ $user['role'] }}
-    {{ $user['mahasiswa_id']['status_id']['nama_status'] }}
-</pre>
+    {{-- Alert jika login sukses setelah itu login tidak akan muncul lagi menggunakan flash untuk session sementara setelah request otomatis dihapus --}}
+    @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+    @endif
+
 
 @endsection

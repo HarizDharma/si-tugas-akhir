@@ -4,6 +4,8 @@
 @section('main')
     <x-common.navbar :nama="$user['nama']" :role="$user['role']"/>
     <x-sidebar.sidebarakademik/>
-    <x-table.tablemahasiswa/>
+    <x-table.tablemahasiswa :mahasiswa="$mahasiswa"/>
+    <x-modal.tambahmahasiswa/>
+    <x-modal.editmahasiswa/>
 
 @endsection
