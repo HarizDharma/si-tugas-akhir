@@ -45,7 +45,7 @@ class AkademikRepository implements AkademikRepositoryInterface
                 $query->where('role', 'akademik');
             })->get();
 
-            return $platform == 'api' ?
+            return $platform == 'web' ?
                 formatResponseResource(true, 'List User Akademik',  formatAkademikResource($akademik), $user->token)
                 : new ResponseResource(true, 'List User Akademik', UserResouces::make($akademik));
         }
@@ -83,7 +83,7 @@ class AkademikRepository implements AkademikRepositoryInterface
                     : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
 
-            return $platform == 'api' ?
+            return $platform == 'web' ?
                 formatResponseResource(true, 'Detail User Akademik',  $akademik, $user->token )
                 : new ResponseResource(true, 'Detail User Akademik', UserResouces::make($akademik));
 
