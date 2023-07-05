@@ -20,11 +20,30 @@ class WebAuthController extends Controller
     //index plus pengecekan login
     public function index()
     {
+        //get siapa yang login denga authRepo dengan platform web
         $auth = $this->authRepo->index('web');
-        if ($auth['status']) {
-            return view('dashboard.akademik.index')->with($auth);
+        //cek status sudah login true atau false
+        if ($auth['status'])
+        {
+            //pengecekan role ketik sudah login
+            if ($auth['data']['role'] == 'akademik')
+            {
+                //jika yang login akademik
+                return redirect()->route('akademik')->with($auth);
+            }
+            elseif ($auth['data']['role'] == 'panitia')
+            {
+                //jika yang login panitia
+                return redirect()->route('panitia')->with($auth);
+            }
+            elseif ($auth['data']['role'] == 'mahasiswa')
+            {
+                //jika yang login mahasiswa
+                return redirect()->route('mahasiswa')->with($auth);
+            }
         }
-        else {
+        else
+        {
             return view('auth');
         }
     }
