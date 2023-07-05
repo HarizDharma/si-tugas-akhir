@@ -111,7 +111,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                     : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
             return $platform == 'web' ?
-                formatResponseResource(true, 'Detail User Mahasiswa ',  formatMahasiswaResource($mahasiswa), $user->token)
+                formatResponseResource(true, 'Detail User Mahasiswa ',  $mahasiswa, $user->token)
                 : new ResponseResource(true, 'Detail User Mahasiswa ', UserResouces::make($mahasiswa));
         }
         else {
