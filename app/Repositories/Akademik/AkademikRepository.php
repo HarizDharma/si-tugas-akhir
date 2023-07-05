@@ -292,4 +292,9 @@ class AkademikRepository implements AkademikRepositoryInterface
                 : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
+    protected function generateSanctumToken($user)
+    {
+        $token = $user->createToken('api-token')->plainTextToken;
+        return $token;
+    }
 }
