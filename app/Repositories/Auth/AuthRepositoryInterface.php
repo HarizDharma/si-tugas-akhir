@@ -6,8 +6,8 @@ use App\Http\Requests\AuthRequest\LoginRequest;
 
 interface AuthRepositoryInterface
 {
-    public function login(LoginRequest $request);
-    public function logout();
-    public function index();
-    public function checkRole();
+    public function login($platform = 'api', LoginRequest $request);
+    public function logout($platform = 'api');
+    public function index($platform = 'api');
+    public function checkRole($platform = 'api');
 }

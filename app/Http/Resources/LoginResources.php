@@ -32,6 +32,6 @@ class LoginResources extends JsonResource
                 })
             ],
             'token' => $this->token,
-            ];
+        ];
         }
 }

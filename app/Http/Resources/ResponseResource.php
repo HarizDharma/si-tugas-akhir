@@ -33,6 +33,7 @@ class ResponseResource extends JsonResource
             'status' => $this->status,
             'message' => $this->message,
             'data' => $data,
+            'token' => $this->token ?? '',
         ];
     }
 }

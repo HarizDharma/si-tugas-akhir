@@ -2,9 +2,9 @@
 @section('title', 'Halaman Dashboard Akademik')
 
 @section('main')
-{{--  isi props dfengan data user yang dilempar ke halaman ini  --}}
-    <x-common.navbar :nama="$user['nama']" :role="$user['role']"/>
-    <x-sidebar.sidebarakademik/>
+{{--  isi props dfengan data user yang dilempar ke halaman ini--}}
+{{--    <x-navbar :nama="$user['nama']" :role="$user['role']"/>--}}
+{{--    <x-sidebarakademik/>--}}
 
 {{--    isi content main--}}
     <div class="p-4 sm:ml-64">
@@ -19,5 +19,6 @@
             {{ session()->get('success') }}
         </div>
     @endif
+
 
 @endsection

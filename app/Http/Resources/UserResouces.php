@@ -25,8 +25,6 @@ class UserResouces extends JsonResource
             }),
             'created_at' => $this->created_at,
             'modified_at' => $this->modified_at,
-
-
         ];
     }
 }

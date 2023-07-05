@@ -16,7 +16,7 @@ class Mahasiswa extends Model
         'nama_dosen1',
         'nama_dosen2',
         'jadwal_pengambilan_ijazah',
-
+        'verifikasi_id',
         'status_id',
         'sidang_id',
         'file_id',
