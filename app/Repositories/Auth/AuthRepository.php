@@ -5,6 +5,8 @@ namespace App\Repositories\Auth;
 use App\Http\Requests\AuthRequest\LoginRequest;
 use App\Http\Resources\LoginResources;
 use App\Http\Resources\MahasiswaResources;
+use App\Http\Resources\ResponseResource;
+use App\Http\Resources\UserResouces;
 use App\Models\File;
 use App\Models\HasilSidang;
 use App\Models\Mahasiswa;
@@ -31,31 +33,29 @@ class AuthRepository implements AuthRepositoryInterface
 
             $data = [];
 
-            if ($platform == 'web') {
-                $data = [
-                    'token' => $token,
-                    'user' => formatLoginResource($user),
-                ];
-            }
-
-            if ($platform == 'api') {
-                $data = [
-                    'token' => $token,
-                    'user' => LoginResources::make($user),
-                ];
-            }
-            return $data ;
+            return $platform == 'web' ?
+                formatResponseResource(true, 'User Sudah Login', formatLoginResource($user), $user->token )
+                :  new ResponseResource(true, 'User Sudah Login', UserResouces::make($user) );
 
         } else {
             // Pengguna belum login, redirect ke halaman login
-            return false;
+            return $platform == 'web' ?
+                formatResponseResource(false, 'User Belum Login')
+                :  new ResponseResource(false, 'User Belum Login');
+
         }
     }
 
     public function login($platform = 'api', LoginRequest $request)
     {
         if (Auth::check()) { // Cek Sudah Login
-            return response()->json(['message' => 'Anda sudah login'], 200);
+            $user = Auth::user();
+            $token = $this->generateSanctumToken($user);
+            $user->token = $token;
+
+            return $platform == 'web' ?
+                formatResponseResource(true, 'Anda sudah login',  formatLoginResource($user), $user->token )
+                :  new ResponseResource(true, 'Anda sudah login', UserResouces::make($user) );
         }
 
         // Cek apakah ada terlalu banyak percobaan login yang gagal dari alamat IP ini
@@ -74,26 +74,19 @@ class AuthRepository implements AuthRepositoryInterface
             $token = $this->generateSanctumToken($user);
             $user->token = $token;
 
-            $data = [];
-            if ($platform == 'web') {
-                $data = [
-                    'token' => $token,
-                    'user' => formatLoginResource($user),
-                ];
-            }
+            return $platform == 'web' ?
+                formatResponseResource(true, 'User Berhasil Login',  formatLoginResource($user), $user->token )
+                :  new ResponseResource(true, 'User Berhasil Login', UserResouces::make($user) );
 
-            if ($platform == 'api') {
-                $data = [
-                    'token' => $token,
-                    'user' => LoginResources::make($user),
-                ];
-            }
-            return $data ;
         }
         else {
             // Auth gagal
             $this->incrementLoginAttempts($request);
-            return false;
+            // Pengguna belum login, redirect ke halaman login
+            return $platform == 'web' ?
+                formatResponseResource(false, 'User Auth gagal')
+                :  new ResponseResource(false, 'User Auth gagal');
+
         }
 
     }
