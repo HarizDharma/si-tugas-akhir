@@ -47,7 +47,7 @@ class AkademikRepository implements AkademikRepositoryInterface
 
             return $platform == 'web' ?
                 formatResponseResource(true, 'List User Akademik',  formatAkademikResource($akademik), $user->token)
-                : new ResponseResource(true, 'List User Akademik', UserResouces::make($akademik));
+                : new ResponseResource(true, 'List User Akademik', UserResouces::make($akademik[0]));
         }
         else {
             // Jika pengguna belum terautentikasi, kirim respons error
