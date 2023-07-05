@@ -20,38 +20,18 @@ class WebAuthController extends Controller
     //index plus pengecekan login
     public function index()
     {
-        $auth = $this->authRepo->index();
-
-        // Jika data berhasil ditemukan
-        if ($auth) {
-            //buat alert untuk berhasil login
-            Alert::success('Selamat Datang');
-
-            // Cek role
-            if ($auth['user']['role'] == 'mahasiswa') {
-                //jika yang login mahasiswa
-                return redirect()->route('mahasiswa')->with($auth);
-
-            } elseif ($auth['user']['role'] == 'panitia') {
-                //jika yang login panitia
-                return redirect()->route('panitia')->with($auth);
-
-            } elseif ($auth['user']['role'] == 'akademik') {
-                //jika yang login akademik
-                return redirect()->route('akademik')->with($auth);
-            }
-        } else {
-            //jika tidak login
-            // Jika data tidak ditemukan atau role tidak cocok
+        $auth = $this->authRepo->index('web');
+        if ($auth['status']) {
+            return view('dashboard.akademik.index')->with($auth);
+        }
+        else {
             return view('auth');
         }
-
-
     }
 
     public function login(LoginRequest $request)
     {
-        $auth = $this->authRepo->login($request);
+        $auth = $this->authRepo->login('web',$request);
         if (!$auth) {
 
             Alert::error('Error', 'Username atau password salah.');
@@ -59,12 +39,17 @@ class WebAuthController extends Controller
                 'username' => 'Username atau password salah.',
             ]);
         }
+        Alert::success('Berhasil', $auth['message']);
+        return view('dashboard.akademik.index')->with($auth)->withErrors(
+            [
+                'Berhasil' => $auth['message'],
+            ]
+        );
 
-        return $this->index();
     }
     public function logout()
     {
-        $auth = $this->authRepo->logout();
+        $auth = $this->authRepo->logout('web');
         if (!$auth) {
             return response()->json(['message' => 'Failed to Logout'], 401);
         }
@@ -72,9 +57,7 @@ class WebAuthController extends Controller
         session()->invalidate();
         session()->regenerateToken();
 
-        //buat alert untuk berhasil login
-        Alert::success('Berhasil Logout');
-        return Redirect::route('auth')->withErrors([
+        return Redirect::route('auth')->with([
             'message' => 'Anda Berhasil Logout !',
         ]);
     }
