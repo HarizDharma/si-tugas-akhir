@@ -7,12 +7,12 @@ use App\Http\Requests\Mahasiswa\UpdateMahasiswaRequest;
 
 interface MahasiswaRepositoryInterface
 {
-    public function index();
-    public function show($id);
+    public function index($platform = 'api');
+    public function show($platform = 'api', $id);
 
-    public function store(CreateMahasiswaRequest $request);
-    public function update(UpdateMahasiswaRequest $request, $id);
-    public function destroy($id);
-    public function getSelf();
-    public function updateSelf(UpdateMahasiswaRequest $request);
+    public function store($platform = 'api', CreateMahasiswaRequest $request);
+    public function update($platform = 'api', UpdateMahasiswaRequest $request, $id);
+    public function destroy($platform = 'api', $id);
+    public function getSelf($platform = 'api');
+    public function updateSelf($platform = 'api', UpdateMahasiswaRequest $request);
 }
