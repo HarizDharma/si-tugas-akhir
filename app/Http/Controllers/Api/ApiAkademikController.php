@@ -20,11 +20,11 @@ class ApiAkademikController extends Controller
     }
 
     public function  index() {
-        $akademik = $this->akademikRepo->index();
+        $akademik = $this->akademikRepo->index('api');
         return response()->json($akademik);
     }
     public function  show($id) {
-        $akademik = $this->akademikRepo->show($id);
+        $akademik = $this->akademikRepo->show('api', $id);
         return response()->json($akademik);
     }
     public function  store(CreateAkademikRequest $request) {

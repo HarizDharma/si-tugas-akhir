@@ -9,12 +9,24 @@ use App\Http\Resources\UserResouces;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AuthRequest\LoginRequest;
+use App\Http\Resources\LoginResources;
+use App\Http\Resources\MahasiswaResources;
+use App\Models\File;
+use App\Models\HasilSidang;
+use App\Models\Mahasiswa;
+use App\Models\Status;
+use App\Models\TahapSidang;
+use App\Models\Verifikasi;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 
 class AkademikRepository implements AkademikRepositoryInterface
 {
     public function index($platform = 'api')
     {
         // Mengecek apakah pengguna sudah terautentikasi
+
         if (Auth::check()) {
             // Auth berhasil
             $user = Auth::user();
@@ -33,12 +45,11 @@ class AkademikRepository implements AkademikRepositoryInterface
                 $query->where('role', 'akademik');
             })->first();
 
-            return $platform == 'web' ?
-                formatResponseResource(true, 'List User Akademik',  formatAkademikResource($akademik), $user->token )
-                : new ResponseResource(true, 'List User Akademik', UserResouces::collection($akademik));
-
-
-        } else {
+            return $platform == 'api' ?
+                formatResponseResource(true, 'List User Akademik',  formatAkademikResource($akademik))
+                : new ResponseResource(true, 'List User Akademik', UserResouces::make($akademik));
+        }
+        else {
             // Jika pengguna belum terautentikasi, kirim respons error
             return $platform == 'web' ?
                 formatResponseResource(false, 'Unauthorized, Please Login' )
@@ -72,9 +83,9 @@ class AkademikRepository implements AkademikRepositoryInterface
                     : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
 
-            return $platform == 'web' ?
-                formatResponseResource(true, 'Detail User Akademik',  formatAkademikResource($akademik), $user->token )
-                : new ResponseResource(true, 'Detail User Akademik', UserResouces::collection($akademik));
+            return $platform == 'api' ?
+                formatResponseResource(true, 'Detail User Akademik',  formatAkademikResource([$akademik]), $user->token )
+                : new ResponseResource(true, 'Detail User Akademik', UserResouces::make($akademik));
 
         }
         else {
