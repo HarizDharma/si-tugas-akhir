@@ -28,7 +28,7 @@ class ApiAuthController extends Controller
         if (!$auth) {
             return response()->json(['message' => 'Username atau password salah.'], 401);
         }
-        return response()->json(['user' => $auth], 200);
+        return response()->json($auth, 200);
 
     }
     public function logout()

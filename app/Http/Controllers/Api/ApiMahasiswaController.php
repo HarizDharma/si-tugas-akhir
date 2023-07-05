@@ -19,35 +19,35 @@ class ApiMahasiswaController extends Controller
     }
 
     public function  index() {
-        $mahasiswa = $this->mahasiswaRepository->index();
+        $mahasiswa = $this->mahasiswaRepository->index('api');
         return response()->json($mahasiswa);
     }
     public function  show($id) {
-        $mahasiswa = $this->mahasiswaRepository->show($id);
+        $mahasiswa = $this->mahasiswaRepository->show('api',$id);
         return response()->json($mahasiswa);
     }
     public function getSelf() {
-        $mahasiswa = $this->mahasiswaRepository->getSelf();
+        $mahasiswa = $this->mahasiswaRepository->getSelf('api');
         return response()->json($mahasiswa);
     }
 
     public function store(CreateMahasiswaRequest $request) {
-        $mahasiswa = $this->mahasiswaRepository->store($request);
+        $mahasiswa = $this->mahasiswaRepository->store('api', $request);
         return response()->json($mahasiswa);
 
     }
     public function update(UpdateMahasiswaRequest $request, $id) {
-        $mahasiswa = $this->mahasiswaRepository->update($request, $id);
+        $mahasiswa = $this->mahasiswaRepository->update('api', $request, $id);
         return response()->json($mahasiswa);
     }
     public function updateSelf(UpdateMahasiswaRequest $request) {
 
-        $mahasiswa = $this->mahasiswaRepository->updateSelf($request);
+        $mahasiswa = $this->mahasiswaRepository->updateSelf('api', $request);
         return response()->json($mahasiswa);
     }
 
     public function destroy($id) {
-        $mahasiswa = $this->mahasiswaRepository->destroy($id);
+        $mahasiswa = $this->mahasiswaRepository->destroy('api', $id);
         return response()->json($mahasiswa);
     }
 }
