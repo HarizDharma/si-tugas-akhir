@@ -4,6 +4,13 @@ namespace App\Repositories\Auth;
 
 use App\Http\Requests\AuthRequest\LoginRequest;
 use App\Http\Resources\LoginResources;
+use App\Http\Resources\MahasiswaResources;
+use App\Models\File;
+use App\Models\HasilSidang;
+use App\Models\Mahasiswa;
+use App\Models\Status;
+use App\Models\TahapSidang;
+use App\Models\Verifikasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -11,7 +18,7 @@ use Illuminate\Support\Str;
 class AuthRepository implements AuthRepositoryInterface
 {
 
-    public function index()
+    public function index($platform = 'api')
     {
         // TODO: Implement index() method.
         if (Auth::check()) {
@@ -22,10 +29,22 @@ class AuthRepository implements AuthRepositoryInterface
             $token = $this->generateSanctumToken($user);
             $user->token = $token;
 
-            return [
-                'token' => $token,
-                'user' => $user,
-            ];
+            $data = [];
+
+            if ($platform == 'web') {
+                $data = [
+                    'token' => $token,
+                    'user' => formatLoginResource($user),
+                ];
+            }
+
+            if ($platform == 'api') {
+                $data = [
+                    'token' => $token,
+                    'user' => LoginResources::make($user),
+                ];
+            }
+            return $data ;
 
         } else {
             // Pengguna belum login, redirect ke halaman login
@@ -33,7 +52,7 @@ class AuthRepository implements AuthRepositoryInterface
         }
     }
 
-    public function login(LoginRequest $request)
+    public function login($platform = 'api', LoginRequest $request)
     {
         if (Auth::check()) { // Cek Sudah Login
             return response()->json(['message' => 'Anda sudah login'], 200);
@@ -55,11 +74,21 @@ class AuthRepository implements AuthRepositoryInterface
             $token = $this->generateSanctumToken($user);
             $user->token = $token;
 
-            return [
-                'token' => $token,
-                'user' => $user,
-            ];
+            $data = [];
+            if ($platform == 'web') {
+                $data = [
+                    'token' => $token,
+                    'user' => formatLoginResource($user),
+                ];
+            }
 
+            if ($platform == 'api') {
+                $data = [
+                    'token' => $token,
+                    'user' => LoginResources::make($user),
+                ];
+            }
+            return $data ;
         }
         else {
             // Auth gagal
@@ -69,7 +98,7 @@ class AuthRepository implements AuthRepositoryInterface
 
     }
 
-    public function logout()
+    public function logout($platform = 'api')
     {
         if (Auth::check()) {
             // Lakukan logout pengguna
@@ -131,7 +160,9 @@ class AuthRepository implements AuthRepositoryInterface
         return $token;
     }
 
-    public function checkRole() {
+    public function checkRole($platform = 'api') {
 
     }
-}
+
+
+ }

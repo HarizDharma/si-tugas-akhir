@@ -24,12 +24,11 @@ class ApiAuthController extends Controller
     }
     public function login(LoginRequest $request)
     {
-        $auth = $this->authRepo->login($request);
+        $auth = $this->authRepo->login('api', $request);
         if (!$auth) {
             return response()->json(['message' => 'Username atau password salah.'], 401);
         }
-        $user = $auth['user'];
-        return response()->json(new LoginResources($user), 200);
+        return response()->json(['user' => $auth], 200);
 
     }
     public function logout()
