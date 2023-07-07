@@ -23,14 +23,21 @@ Route::post('/', [WebAuthController::class, 'login'])->name('login');
 //logout action button
 Route::post('/logout', [WebAuthController::class, 'logout'])->name('logout');
 
+
 //Dashboard Akademik
 Route::get('/akademik', [WebAkademikController::class, 'index'])->name('akademik');
 //Data akademik
 Route::get('/dataakademik', [WebAkademikController::class, 'dataakademik'])->name('dataakademik');
+//tambahAkademik
+Route::post('/dataakademik', [WebAkademikController::class, 'tambahAkademik'])->name('tambahAkademik');
+//deleteAkademik
+Route::delete('/dataakademik/{id}', [WebAkademikController::class, 'deleteAkademik'])->name('deleteAkademik');
+
 //Data Panitia
 Route::get('/datapanitia', [WebAkademikController::class, 'datapanitia'])->name('datapanitia');
 //Data Mahasiswa
 Route::get('/datamahasiswa', [WebAkademikController::class, 'datamahasiswa'])->name('datamahasiswa');
+
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');

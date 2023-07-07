@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Akademik\CreateAkademikRequest;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
@@ -52,6 +53,64 @@ class WebAkademikController extends Controller
         if ($auth['status']) {
             // Redirect to the academic dashboard and pass the data using compact()
             return view('dashboard.akademik.dataakademik', compact('auth', 'akademik'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    public function tambahAkademik(CreateAkademikRequest $request)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil dataakademik store dari repository
+            $akademik = $this->akademikRepo->store('api', $request);
+
+            // Pengecekan apakah data berhasil disimpan
+            if ($akademik) {
+                // Buat session flash untuk notifikasi sukses
+                Alert::success("Berhasil", "Create User Akademik");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataakademik');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Create User Akademik");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataakademik');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    public function deleteAkademik($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil dataakademik delete dari repository
+            $akademik = $this->akademikRepo->destroy('api', $id);
+
+            // Pengecekan apakah data berhasil didelete
+            if ($akademik) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Delete User Akademik");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataakademik');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Delete User Akademik");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataakademik');
+            }
         } else {
             return view('auth');
         }
