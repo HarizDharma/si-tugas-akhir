@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Akademik\CreateAkademikRequest;
+use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
 //use App\Repositories\Panitia\PanitiaRepositoryInterface;
+use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -19,11 +21,11 @@ class WebAkademikController extends Controller
     private $authRepo;
     private $mahasiswaRepo;
 
-    public function __construct(AkademikRepositoryInterface $akademikRepo, MahasiswaRepositoryInterface $mahasiswaRepo, AuthRepositoryInterface $authRepo)
+    public function __construct(AkademikRepositoryInterface $akademikRepo, PanitiaRepositoryInterface $panitiaRepo, MahasiswaRepositoryInterface $mahasiswaRepo, AuthRepositoryInterface $authRepo)
     {
         //manggil repo lalu dimasukkan ke var private diatas
         $this->akademikRepo = $akademikRepo;
-//        $this->panitiaRepo = $panitiaRepo;
+        $this->panitiaRepo = $panitiaRepo;
         $this->mahasiswaRepo = $mahasiswaRepo;
         $this->authRepo = $authRepo;
     }
@@ -43,6 +45,7 @@ class WebAkademikController extends Controller
     }
 
 
+    //getall data akademik
     public function dataakademik()
     {
         $auth = $this->authRepo->index('web');
@@ -58,6 +61,7 @@ class WebAkademikController extends Controller
         }
     }
 
+    //method tambah data akademik
     public function tambahAkademik(CreateAkademikRequest $request)
     {
         //ambil data siapa yang login
@@ -87,6 +91,7 @@ class WebAkademikController extends Controller
         }
     }
 
+    //method delete data akademik
     public function deleteAkademik($id)
     {
         //ambil data siapa yang login
@@ -116,35 +121,48 @@ class WebAkademikController extends Controller
         }
     }
 
+    //edit data akademik method
+    public function updateAkademik(UpdateAkademikRequest $request, $id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil dataakademik update dari repository
+            $akademik = $this->akademikRepo->update('api',$request, $id);
+
+            // Pengecekan apakah data berhasil di update
+            if ($akademik) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Update User Akademik");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataakademik');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Update User Akademik");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataakademik');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data panitia
     public function datapanitia()
     {
-        //cek sudah login apa belum
-        if (Auth::check()){
-            //jika sudah login eksekusi
-            //get dfata return dari repo
-            // Auth berhasil
-            $user = Auth::user();
+        $auth = $this->authRepo->index('web');
+        //ambil datapanitia get all dari repository
+        $panitia = $this->panitiaRepo->index('web');
 
-            //dapatkan user dengan role akademik
-            $akademik = $this->akademikRepo->index();
-
-            // Generate token JWT
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
-
-            //pengecekan login / jika login diarahkan ke hal profile
-            if ($akademik && $user) {
-                //ke halaman daftar data panitia
-                return view('dashboard.akademik.datapanitia')->with([
-                    'token' => $token,
-                    'akademik' => $akademik,
-                    'user' => $user,
-                ]);
-            }
-        }
-        else {
-            // Buat alert untuk belum login
-            Alert::error('Anda Belum Login !');
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the datapanitia and pass the data using compact()
+            return view('dashboard.akademik.datapanitia', compact('auth', 'panitia'));
+        } else {
             return view('auth');
         }
     }

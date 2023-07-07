@@ -1,5 +1,5 @@
 {{--isi props yang dilempar dari hal utama dataakademik di view--}}
-@props(['akademik'])
+@props(['akademik', 'login'])
 
 <div class="p-4 sm:ml-64">
     <div class="p-4 rounded-lg mt-14 bg-gray-50">
@@ -51,10 +51,31 @@
                             {{ $dataakademik['role'] }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <a href="edit" class="font-medium text-blue-600 dark:text-blue-500">
-                                <i class="fas fa-edit fa-lg inline-block mr-1 p-3 transform hover:scale-105"></i>
-                            </a>
-{{--                            import untuk tombol delete akademik --}}
+                            {{--tombol detail data akademik--}}
+                            <button data-modal-target="detailAkademik{{ $dataakademik['id'] }}" data-modal-toggle="detailAkademik{{ $dataakademik['id'] }}" class="font-medium text-primary-800" type="button">
+                                <i class="fas fa-info-circle fa-lg inline-block mr-1 p-3 transform hover:scale-105"></i>
+                            </button>
+
+                            {{--panggil modal update akademik component--}}
+                            <x-modal.detailakademik :dataakademik="$dataakademik" />
+
+                            {{--pengecekan untuk yang update hanya bisa akunnya sendiri--}}
+                            @if($dataakademik['id'] == $login['id'])
+                                {{--tombol edit update akademik--}}
+                                <button data-modal-target="updateAkademik{{ $dataakademik['id'] }}" data-modal-toggle="updateAkademik{{ $dataakademik['id'] }}" class="font-medium text-yellow-300" type="button">
+                                    <i class="fas fa-edit fa-lg inline-block mr-1 p-3 transform hover:scale-105"></i>
+                                </button>
+
+                                {{--panggil modal update akademik component--}}
+                                <x-modal.updateakademik :dataakademik="$dataakademik" />
+                            {{--jika id yang login tidak sama disable button update data--}}
+                            @elseif($dataakademik['id'] != $login['id'])
+                                <button class="font-medium text-gray-300" type="button">
+                                    <i class="fas fa-edit fa-lg inline-block mr-1 p-3 transform hover:scale-105"></i>
+                                </button>
+                            @endif
+
+                            {{--                            import untuk tombol delete akademik --}}
                             <x-delete.deleteakademik :dataakademik="$dataakademik"/>
                         </td>
                     </tr>
@@ -63,3 +84,4 @@
             </table>
     </div>
 </div>
+

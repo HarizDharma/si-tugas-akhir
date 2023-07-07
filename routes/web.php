@@ -32,6 +32,8 @@ Route::get('/dataakademik', [WebAkademikController::class, 'dataakademik'])->nam
 Route::post('/dataakademik', [WebAkademikController::class, 'tambahAkademik'])->name('tambahAkademik');
 //deleteAkademik
 Route::delete('/dataakademik/{id}', [WebAkademikController::class, 'deleteAkademik'])->name('deleteAkademik');
+//updateAkademik
+Route::put('/dataakademik/{id}', [WebAkademikController::class, 'updateAkademik'])->name('updateAkademik');
 
 //Data Panitia
 Route::get('/datapanitia', [WebAkademikController::class, 'datapanitia'])->name('datapanitia');
