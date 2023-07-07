@@ -33,22 +33,22 @@
                 </thead>
                 <tbody>
 {{--                show data disini--}}
-{{--                @php--}}
-{{--                    $counter = 1;--}}
-{{--                @endphp--}}
-{{--                @foreach ($akademik as $user)--}}
+                @php
+                    $counter = 1;
+                @endphp
+                @foreach ($akademik as $dataakademik)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-6 py-4">
-                            1
+                            {{ $counter++ }}
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                            2
+                            {{ $dataakademik['nama'] }}
                         </th>
                         <td class="px-6 py-4">
-                            3
+                            {{ $dataakademik['nomor_identitas'] }}
                         </td>
                         <td class="px-6 py-4">
-                            4
+                            {{ $dataakademik['role'] }}
                         </td>
                         <td class="px-6 py-4 text-center">
                             <a href="edit" class="font-medium text-blue-600 dark:text-blue-500">
@@ -59,7 +59,7 @@
                             </a>
                         </td>
                     </tr>
-{{--                @endforeach--}}
+                @endforeach
                 </tbody>
             </table>
     </div>

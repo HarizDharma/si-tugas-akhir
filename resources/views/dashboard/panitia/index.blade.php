@@ -13,6 +13,11 @@
         </div>
     </div>
 
+    <script src="http://127.0.0.1:8000/vendor/sweetalert/sweetalert.all.js"></script>
+    <script>
+
+        Swal.fire({"title":"Berhasil","text":"Berhasil Logout !","timer":5000,"background":"#fff","width":"32rem","heightAuto":true,"padding":"1.25rem","showConfirmButton":true,"showCloseButton":false,"timerProgressBar":false,"customClass":{"container":null,"popup":null,"header":null,"title":null,"closeButton":null,"icon":null,"image":null,"content":null,"input":null,"actions":null,"confirmButton":null,"cancelButton":null,"footer":null},"icon":"success"});
+    </script>
     {{-- Alert jika login sukses setelah itu login tidak akan muncul lagi menggunakan flash untuk session sementara setelah request otomatis dihapus --}}
     @if(session()->has('success'))
         <div class="alert alert-success">
