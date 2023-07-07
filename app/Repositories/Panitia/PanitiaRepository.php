@@ -24,9 +24,9 @@ class PanitiaRepository implements PanitiaRepositoryInterface
     {
         // TODO: update data jika mahasiswa terkonfirmasi dan berkasnya sudah di cek
     }
-    public function updateSelf()
+    public function updateSelf(UpdatePanitiaRequest $request)
     {
-        // TODO: Implement updateSelf() method.
+        // Implementation of the updateSelf method
     }
 
     public function destroy($id)
@@ -37,4 +37,8 @@ class PanitiaRepository implements PanitiaRepositoryInterface
     //TODO: buat counting mahasiswa yang belum terverifikasi
     //TODO: buat counting mahasiswa yang sudah lolos verifikasi sempro
     //TODO: buat counting data panitia
+    public function getSelf()
+    {
+        // TODO: Implement getSelf() method.
+    }
 }
