@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //  api/akademik
     Route::get('akademik/self', [ApiAkademikController::class, 'getSelf'])->name('api.akademik.get.self');
-    Route::get('akademik/self', [ApiAkademikController::class, 'updateSelf'])->name('api.akademik.update.self');
+    Route::put('akademik/self', [ApiAkademikController::class, 'updateSelf'])->name('api.akademik.update.self');
     Route::apiResource('akademik', ApiAkademikController::class)->names([
         'index' => 'api.akademik.index',
         'show' => 'api.akademik.show',
@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // panitia
     Route::get('panitia/self', [ApiPanitiaController::class, 'getSelf'])->name('api.panitia.get.self');
-    Route::get('panitia/self', [ApiPanitiaController::class, 'updateSelf'])->name('api.panitia.update.self');
+    Route::put('panitia/self', [ApiPanitiaController::class, 'updateSelf'])->name('api.panitia.update.self');
     Route::apiResource('panitia', ApiPanitiaController::class)->names([
         'index' => 'api.panitia.index',
         'show' => 'api.panitia.show',

@@ -47,7 +47,7 @@ class AkademikRepository implements AkademikRepositoryInterface
 
             return $platform == 'web' ?
                 formatResponseResource(true, 'List User Akademik',  formatAkademikResource($akademik), $user->token)
-                : new ResponseResource(true, 'List User Akademik', UserResouces::make($akademik[0]));
+                : new ResponseResource(true, 'List User Akademik', UserResouces::collection($akademik));
         }
         else {
             // Jika pengguna belum terautentikasi, kirim respons error
@@ -103,12 +103,9 @@ class AkademikRepository implements AkademikRepositoryInterface
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik')) {
                 //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Unauthorized, Please Login' )
+                    : new ResponseResource(false, 'Unauthorized, Please Login');
             }
             try {
                 DB::beginTransaction();
@@ -126,30 +123,23 @@ class AkademikRepository implements AkademikRepositoryInterface
                 $akademik->attachRole('akademik');
 
                 DB::commit();
+                return $platform == 'web' ?
+                    formatResponseResource(true, 'Create User Akademik',  $akademik, $user->token )
+                    : new ResponseResource(true, 'Create User Akademik', UserResouces::make($akademik));
 
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(true, 'Create User Akademik', $akademik);
             } catch (\Exception $e) {
                 DB::rollback();
 
-                // Tangani kesalahan dan berikan respons yang sesuai
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Gagal membuat user akademik: ' . $e->getMessage());
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Gagal membuat user akademik: ' . $e->getMessage())
+                    : new ResponseResource(false, 'Gagal membuat user akademik: ' . $e->getMessage());
             }
         }
         else {
             // Jika pengguna belum terautentikasi, kirim respons error
-            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
     public function update($platform = 'api', UpdateAkademikRequest $request, $id)
@@ -159,13 +149,9 @@ class AkademikRepository implements AkademikRepositoryInterface
 
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik')) {
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Unauthorized, Please Login' )
+                    : new ResponseResource(false, 'Unauthorized, Please Login');
             }
 
             try {
@@ -184,35 +170,36 @@ class AkademikRepository implements AkademikRepositoryInterface
 
                 DB::commit();
 
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(true, 'Update User Akademik ',$akademik );
+                return $platform == 'web' ?
+                    formatResponseResource(true, 'Update User Akademik ', $akademik, $user->token )
+                    : new ResponseResource(true, 'Update User Akademik ', UserResouces::make($akademik) );
 
             } catch (\Exception $e) {
                 DB::rollback();
 
-                // Tangani kesalahan dan berikan respons yang sesuai
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Gagal mengupdate user akademik: ' . $e->getMessage());
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Gagal mengupdate user akademik: ' . $e->getMessage())
+                    :  new ResponseResource(false, 'Gagal mengupdate user akademik: ' . $e->getMessage());
             }
         }
         else {
-            // Jika pengguna belum terautentikasi, kirim respons error
-            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
     public function updateSelf($platform = 'api', UpdateAkademikRequest $request)
     {
-        // TODO: Implement updateSelf() method.
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $id = $user->id;
+
+            return $this->update('api', $request, $id);
+        }
+        else  return $platform == 'web' ?
+            formatResponseResource(false, 'Unauthorized, Please Login' )
+            : new ResponseResource(false, 'Unauthorized, Please Login');
     }
 
     public function destroy($platform = 'api', $id)
@@ -222,13 +209,9 @@ class AkademikRepository implements AkademikRepositoryInterface
 
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik')) {
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Unauthorized, Please Login' )
+                    : new ResponseResource(false, 'Unauthorized, Please Login');
             }
 
             try {
@@ -239,30 +222,22 @@ class AkademikRepository implements AkademikRepositoryInterface
 
                 DB::commit();
 
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(true, 'User Akademik berhasil dihapus', $akademik);
+                return $platform == 'web' ?
+                    formatResponseResource(true, 'User Akademik berhasil dihapus', $akademik )
+                    :  new ResponseResource(true, 'User Akademik berhasil dihapus', $akademik);
 
             } catch (\Exception $e) {
                 DB::rollback();
 
-                // Tangani kesalahan dan berikan respons yang sesuai
-                //  Format Return Response Resource
-                    //  return [
-                    //      'status' => $this->status,
-                    //      'message' => $this->message,
-                    //      'data' => $data,
-                    //  ];
-                return new ResponseResource(false, 'Gagal menghapus user akademik: ' . $e->getMessage());
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Gagal menghapus user akademik: ' . $e->getMessage())
+                    : new ResponseResource(false, 'Gagal menghapus user akademik: ' . $e->getMessage());
             }
         }
         else {
-            // Jika pengguna belum terautentikasi, kirim respons error
-            return ['status' => false, 'message' => 'Unauthorized, Please Login'];
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
 
@@ -271,8 +246,6 @@ class AkademikRepository implements AkademikRepositoryInterface
         if (Auth::check()) {
             $user = Auth::user();
             $id = $user->id;
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
 
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('akademik') ) {

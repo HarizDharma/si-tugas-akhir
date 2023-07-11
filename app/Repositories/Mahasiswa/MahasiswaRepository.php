@@ -23,14 +23,12 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
         // Mengecek apakah pengguna sudah terautentikasi
         if (Auth::check()) {
             $user = Auth::user();
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
 
             // Return Jika Role bukan akademik atau Panita (ROLE == MAHASISWA)
             if($user->hasRole('mahasiswa')) {
                 return $platform == 'web' ?
-                    formatResponseResource(false, 'Tidak Mempunyai Hak Akses' )
-                    : new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+                    formatResponseResource(false, 'Unauthorized, Please Login' )
+                    : new ResponseResource(false, 'Unauthorized, Please Login');
             }
 
             $mahasiswa = User::whereHas('roles', function ($query) {
@@ -90,8 +88,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
+
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if($user->hasRole('mahasiswa')) {
                 return $platform == 'web' ?
@@ -125,8 +122,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
+
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if($user->hasRole('mahasiswa')) {
                 return $platform == 'web' ?
@@ -202,8 +198,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
+
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if($user->hasRole('mahasiswa')) {
                 return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
@@ -260,8 +255,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
         if (Auth::check()) {
             $user = Auth::user();
             $id = $user->id;
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
+
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
             if(!$user->hasRole('mahasiswa')) {
                 return new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
@@ -316,8 +310,6 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
 
             // Return Jika Role mahasiswa
             if($user->hasRole('mahasiswa')) {
