@@ -28,15 +28,15 @@ class ApiAkademikController extends Controller
         return response()->json($akademik);
     }
     public function  store(CreateAkademikRequest $request) {
-        $akademik = $this->akademikRepo->store($request);
+        $akademik = $this->akademikRepo->store('api', $request);
         return response()->json($akademik);
     }
     public function  update(UpdateAkademikRequest $request, $id) {
-        $akademik = $this->akademikRepo->update($request, $id);
+        $akademik = $this->akademikRepo->update('api', $request, $id);
         return response()->json($akademik);
     }
     public function  destroy($id) {
-        $akademik = $this->akademikRepo->destroy($id);
+        $akademik = $this->akademikRepo->destroy('api', $id);
         return response()->json($akademik);
     }
 
