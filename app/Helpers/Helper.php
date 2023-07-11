@@ -65,6 +65,7 @@ if (!function_exists('formatResponseResource')) {
 
     }
 }
+
 if (!function_exists('formatMahasiswaResource')) {
     function  formatMahasiswaResource($user) {
         if (count($user) === 0) {

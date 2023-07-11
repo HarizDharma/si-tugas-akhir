@@ -3,8 +3,8 @@
 
 @section('main')
 {{--  isi props dfengan data user yang dilempar ke halaman ini--}}
-{{--    <x-navbar :nama="$user['nama']" :role="$user['role']"/>--}}
-{{--    <x-sidebarakademik/>--}}
+    <x-common.navbar :nama="$data['nama']" :role="$data['role']"/>
+    <x-sidebar.sidebarakademik/>
 
 {{--    isi content main--}}
     <div class="p-4 sm:ml-64">
@@ -13,12 +13,15 @@
         </div>
     </div>
 
-    {{-- Alert jika login sukses setelah itu login tidak akan muncul lagi menggunakan flash untuk session sementara setelah request otomatis dihapus --}}
-    @if(session()->has('success'))
-        <div class="alert alert-success">
-            {{ session()->get('success') }}
-        </div>
+{{--     Alert jika login sukses setelah itu login tidak akan muncul lagi menggunakan flash untuk session sementara setelah request otomatis dihapus--}}
+    @if(session()->has('Berhasil'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session()->get('success') }}',
+            });
+        </script>
     @endif
-
 
 @endsection

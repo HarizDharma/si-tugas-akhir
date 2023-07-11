@@ -6,7 +6,6 @@ use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Http\Requests\AuthRequest\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class WebAuthController extends Controller
@@ -25,21 +24,22 @@ class WebAuthController extends Controller
         //cek status sudah login true atau false
         if ($auth['status'])
         {
+
             //pengecekan role ketik sudah login
             if ($auth['data']['role'] == 'akademik')
             {
-                //jika yang login akademik
-                return redirect()->route('akademik')->with($auth);
+                //jika yang sudah login akademik
+                return redirect()->route('akademik');
             }
             elseif ($auth['data']['role'] == 'panitia')
             {
-                //jika yang login panitia
-                return redirect()->route('panitia')->with($auth);
+                //jika yang sudah login panitia
+                return redirect()->route('panitia');
             }
             elseif ($auth['data']['role'] == 'mahasiswa')
             {
-                //jika yang login mahasiswa
-                return redirect()->route('mahasiswa')->with($auth);
+                //jika yang sudah login mahasiswa
+                return redirect()->route('mahasiswa');
             }
         }
         else
@@ -51,20 +51,34 @@ class WebAuthController extends Controller
     public function login(LoginRequest $request)
     {
         $auth = $this->authRepo->login('web',$request);
-        if (!$auth) {
+        //pengecekan status apakah true login
+        if ($auth['status']) {
+            // Buat session flash untuk alert berhasil login
+            // Flash the success message
+            alert()->success('Berhasil', 'Selamat Datang !');
 
-            Alert::error('Error', 'Username atau password salah.');
-            return view('auth')->withErrors([
-                'username' => 'Username atau password salah.',
-            ]);
+            //jika nilai $auth status true
+            if ($auth['data']['role'] == "akademik")
+            {
+                //jika yang login akademik
+                return redirect()->route('akademik');
+            }
+            elseif ($auth['data']['role'] == "panitia")
+            {
+                //jika yang login panitia
+                return redirect()->route('panitia');
+            }
+            elseif ($auth['data']['role'] == "mahasiswa")
+            {
+                //jika yang login mahasiswa
+                return redirect()->route('mahasiswa');
+            }
+        } else
+        {
+            //jika status not true/false
+            Alert::error('Error', 'Userame dan Password Salah !');
+            return view('auth');
         }
-        Alert::success('Berhasil', $auth['message']);
-        return view('dashboard.akademik.index')->with($auth)->withErrors(
-            [
-                'Berhasil' => $auth['message'],
-            ]
-        );
-
     }
     public function logout()
     {
@@ -73,12 +87,13 @@ class WebAuthController extends Controller
             return response()->json(['message' => 'Failed to Logout'], 401);
         }
         // Hapus sesi pengguna
+        Auth::logout(); // Logout the user
         session()->invalidate();
         session()->regenerateToken();
 
-        return Redirect::route('auth')->with([
-            'message' => 'Anda Berhasil Logout !',
-        ]);
+        Alert::success("Berhasil", "Berhasil Logout !");
+        //jika logout route ke auth login halaman
+        return redirect()->route('auth');
     }
 
 }

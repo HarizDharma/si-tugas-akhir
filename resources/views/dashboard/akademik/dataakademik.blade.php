@@ -2,8 +2,9 @@
 @section('title', 'Halaman Data Akademik')
 
 @section('main')
-    <x-common.navbar :nama="$user['nama']" :role="$user['role']"/>
+    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
     <x-sidebar.sidebarakademik/>
-    <x-table.tableakademik/>
+    <x-table.tableakademik :akademik="$akademik['data']" :login="$auth['data']"/>
+    <x-modal.tambahakademik/>
 
 @endsection
