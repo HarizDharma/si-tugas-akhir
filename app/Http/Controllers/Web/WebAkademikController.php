@@ -7,6 +7,8 @@ use App\Http\Requests\Akademik\CreateAkademikRequest;
 use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Http\Requests\Mahasiswa\CreateMahasiswaRequest;
 use App\Http\Requests\Mahasiswa\UpdateMahasiswaRequest;
+use App\Http\Requests\Panitia\CreatePanitiaRequest;
+use App\Http\Requests\Panitia\UpdatePanitiaRequest;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
@@ -164,6 +166,96 @@ class WebAkademikController extends Controller
         if ($auth['status']) {
             // Redirect to the datapanitia and pass the data using compact()
             return view('dashboard.akademik.datapanitia', compact('auth', 'panitia'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method tambah data panitia
+    public function tambahPanitia(CreatePanitiaRequest $request)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil data panitia store dari repository
+            $panitia = $this->panitiaRepo->store('api', $request);
+
+            // Pengecekan apakah data berhasil disimpan
+            if ($panitia) {
+                // Buat session flash untuk notifikasi sukses
+                Alert::success("Berhasil", "Create User Panitia");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapanitia');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Create User Panitia");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapanitia');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method delete data panitia
+    public function deletePanitia($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datapanitia delete dari repository
+            $panitia = $this->panitiaRepo->destroy('api', $id);
+
+            // Pengecekan apakah data berhasil didelete
+            if ($panitia) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Delete User Panitia");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapanitia');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Delete User Panitia");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapanitia');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //edit data panitia method
+    public function updatePanitia(UpdatePanitiaRequest $request, $id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil data panitia update dari repository
+            $panitia = $this->panitiaRepo->update('api',$request, $id);
+
+            // Pengecekan apakah data berhasil di update
+            if ($panitia) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Update User Panitia");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapanitia');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Update User Panitia");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapanitia');
+            }
         } else {
             return view('auth');
         }

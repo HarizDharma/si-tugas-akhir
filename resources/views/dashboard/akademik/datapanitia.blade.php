@@ -2,10 +2,10 @@
 @section('title', 'Halaman Data Panitia')
 
 @section('main')
-{{--    <x-common.navbar :nama="$auth['nama']" :role="$auth['role']"/>--}}
+    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
     <x-sidebar.sidebarakademik/>
     <x-table.tablepanitia :panitia="$panitia['data']"/>
 
-    <x-modal.tambahakademik/>
+    <x-modal.tambahpanitia/>
 
 @endsection

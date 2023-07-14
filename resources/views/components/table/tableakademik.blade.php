@@ -56,7 +56,7 @@
                                 <i class="fas fa-info-circle fa-lg inline-block mr-1 p-3 transform hover:scale-105"></i>
                             </button>
 
-                            {{--panggil modal update akademik component--}}
+                            {{--panggil modal detail akademik component--}}
                             <x-modal.detailakademik :dataakademik="$dataakademik" />
 
                             {{--pengecekan untuk yang update hanya bisa akunnya sendiri--}}

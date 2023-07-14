@@ -35,8 +35,16 @@ Route::delete('/dataakademik/{id}', [WebAkademikController::class, 'deleteAkadem
 //updateAkademik
 Route::put('/dataakademik/{id}', [WebAkademikController::class, 'updateAkademik'])->name('updateAkademik');
 
+
 //Data Panitia
 Route::get('/datapanitia', [WebAkademikController::class, 'datapanitia'])->name('datapanitia');
+//deletePanitia
+Route::delete('/datapanitia/{id}', [WebAkademikController::class, 'deletePanitia'])->name('deletePanitia');
+//tambahPanitia
+Route::post('/datapanitia', [WebAkademikController::class, 'tambahPanitia'])->name('tambahPanitia');
+//updatePanitia
+Route::put('/datapanitia/{id}', [WebAkademikController::class, 'updatePanitia'])->name('updatePanitia');
+
 
 //Data Mahasiswa
 Route::get('/datamahasiswa', [WebAkademikController::class, 'datamahasiswa'])->name('datamahasiswa');
@@ -47,6 +55,8 @@ Route::put('/datamahasiswa/{id}', [WebAkademikController::class, 'updateMahasisw
 //deleteMahasiswa
 Route::delete('/datamahasiswa/{id}', [WebAkademikController::class, 'deleteMahasiswa'])->name('deleteMahasiswa');
 
+//Verifikasi Mahasiswa
+Route::get('/verifikasimahasiswa', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
