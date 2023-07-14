@@ -187,7 +187,7 @@ class PanitiaRepository implements PanitiaRepositoryInterface
             if (!$panitia) {
                 return $platform == 'web' ?
                     formatResponseResource(false, 'Pengguna tidak ditemukan')
-                    : new ResponseResource(false, 'Pengguna tidak ditemukan' );
+                    : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
             return $platform == 'web' ?
                 formatResponseResource(true, 'Detail User Panitia ', $panitia, $user->token)
@@ -198,7 +198,7 @@ class PanitiaRepository implements PanitiaRepositoryInterface
                 formatResponseResource(false, 'Unauthorized, Please Login')
                 : new ResponseResource(false, 'Unauthorized, Please Login');
         }
-
+    }
 
     public function updateSelf($platform = 'api', UpdatePanitiaRequest $request)
     {
@@ -288,8 +288,4 @@ class PanitiaRepository implements PanitiaRepositoryInterface
     //TODO: buat counting mahasiswa yang belum terverifikasi
     //TODO: buat counting mahasiswa yang sudah lolos verifikasi sempro
     //TODO: buat counting data panitia
-    public function getSelf()
-    {
-        // TODO: Implement getSelf() method.
-    }
 }
