@@ -367,6 +367,52 @@ class WebAkademikController extends Controller
         }
     }
 
+    //getall data mahasiswa tidak verifikasi
+    public function dataverifikasimahasiswa()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the datamahasiswa and pass the data using compact()
+            return view('dashboard.akademik.dataverifikasi', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method verifikasi data mahasiswa
+    public function verifikasimahasiswa($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $mahasiswa = $this->mahasiswaRepo->destroy('api', $id);
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Verifikasi Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataverifikasimahasiswa');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Verifikasi Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataverifikasimahasiswa');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
     protected function generateSanctumToken($user)
     {
         $token = $user->createToken('api-token')->plainTextToken;

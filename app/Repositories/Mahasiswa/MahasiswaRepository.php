@@ -177,7 +177,6 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                     formatResponseResource(true, 'Create User Mahasiswa', formatMahasiswaResource($user))
                     : new ResponseResource(true, 'Create User Mahasiswa', UserResouces::make($user));
 
-
             } catch (\Exception $e) {
                 DB::rollback();
 

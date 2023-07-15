@@ -55,8 +55,10 @@ Route::put('/datamahasiswa/{id}', [WebAkademikController::class, 'updateMahasisw
 //deleteMahasiswa
 Route::delete('/datamahasiswa/{id}', [WebAkademikController::class, 'deleteMahasiswa'])->name('deleteMahasiswa');
 
-//Verifikasi Mahasiswa
-Route::get('/verifikasimahasiswa', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
+//Data Verifikasi Mahasiswa
+Route::get('/dataverifikasimahasiswa', [WebAkademikController::class, 'dataverifikasimahasiswa'])->name('dataverifikasimahasiswa');
+//Action Verifikasi Mahasiswa
+Route::post('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
