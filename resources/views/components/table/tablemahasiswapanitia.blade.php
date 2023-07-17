@@ -6,11 +6,6 @@
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                 Data Mahasiswa
-                <div class="mt-5">
-                    <button data-modal-target="tambahMahasiswa" data-modal-toggle="tambahMahasiswa" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                        Tambah Mahasiswa
-                    </button>
-                </div>
             </caption>
 
             <tbody>
@@ -34,11 +29,11 @@
                     Aksi
                 </th>
             </tr>
-{{--             show data disini --}}
-             @php
-                 $counter = 1;
-             @endphp
-             @foreach ($mahasiswa as $datamahasiswa)
+            {{--             show data disini --}}
+            @php
+                $counter = 1;
+            @endphp
+            @foreach ($mahasiswa as $datamahasiswa)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td class="px-3 py-4">
                         {{ $counter++ }}
@@ -64,20 +59,9 @@
 
                         {{--panggil modal detail mahasiswa component--}}
                         <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
-
-                        {{--tombol edit update mahasiswa--}}
-                        <button data-modal-target="updateMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="updateMahasiswa{{ $datamahasiswa['id'] }}" class="font-medium text-yellow-300" type="button">
-                            <i class="fas fa-edit fa-lg inline-block mr-1 p-3 transform hover:scale-105"></i>
-                        </button>
-
-                        {{--panggil modal update mahasiswa component--}}
-                        <x-modal.updatemahasiswa :datamahasiswa="$datamahasiswa" />
-
-                        {{--import untuk tombol delete mahasiswa --}}
-                        <x-delete.deletemahasiswa :datamahasiswa="$datamahasiswa"/>
                     </td>
                 </tr>
-             @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>

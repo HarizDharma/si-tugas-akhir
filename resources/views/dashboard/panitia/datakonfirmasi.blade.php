@@ -2,8 +2,8 @@
 @section('title', 'Halaman Data Konfirmasi Mahasiswa')
 
 @section('main')
-    <x-common.navbar :nama="$user['nama']" :role="$user['role']"/>
+    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
     <x-sidebar.sidebarpanitia/>
-    <x-table.tableverifikasipanitia/>
+    <x-table.tableverifikasipanitia :datakonfirmasi="$mahasiswa['data']"/>
 
 @endsection

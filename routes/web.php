@@ -47,7 +47,7 @@ Route::put('/datapanitia/{id}', [WebAkademikController::class, 'updatePanitia'])
 
 
 //Data Mahasiswa
-Route::get('/datamahasiswa', [WebAkademikController::class, 'datamahasiswa'])->name('datamahasiswa');
+Route::get('/datamahasiswa', [WebAkademikController::class, 'datamahasiswa'])->name('datamahasiswaakademik');
 //tambahMahasiswa
 Route::post('/datamahasiswa', [WebAkademikController::class, 'tambahMahasiswa'])->name('tambahMahasiswa');
 //updateMahasiswa
@@ -60,10 +60,25 @@ Route::get('/dataverifikasimahasiswa', [WebAkademikController::class, 'dataverif
 //Action Verifikasi Mahasiswa
 Route::post('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
 
+//Data Gagal Sidang Mahasiswa
+Route::get('/datagagalsidang', [WebAkademikController::class, 'datagagalsidang'])->name('datagagalsidang');
+
+//Data Lolos Sidang Mahasiswa
+Route::get('/datalolossidang', [WebAkademikController::class, 'datalolossidang'])->name('datalolossidang');
+
+//Data Pengambilan Ijazah Mahasiswa
+Route::get('/pengambilanijazah', [WebAkademikController::class, 'datapengambilanijazah'])->name('datapengambilanijazah');
+//Action jadwal pengambilan ijazah Mahasiswa
+Route::post('/pengambilanijazah/{id}', [WebAkademikController::class, 'pengambilanijazah'])->name('pengambilanijazah');
+
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
 Route::get('/datakonfirmasi', [WebPanitiaController::class, 'konfirmasipanitia'])->name('konfirmasipanitia');
 Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
+Route::get('/datamahasiswapanitia', [WebPanitiaController::class, 'datamahasiswa'])->name('datamahasiswapanitia');
+
+//jadwal tahap sidang
+Route::get('/jadwalsidang', [WebPanitiaController::class, 'jadwalsidang'])->name('jadwalsidang');
 
 
 //Dashboard Mahasiswa

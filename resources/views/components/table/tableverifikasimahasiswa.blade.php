@@ -5,7 +5,10 @@
     <div class="p-4 rounded-lg mt-14 bg-gray-50">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                Verifikasi Data Mahasiswa
+                Verifikasi Data Mahasiswa Yang Lolos Sempro
+                <div class="text-left text-sm">
+                    <p>Catatan : Disini data mahasiswa yang sudah sempro dan verifikasi mahasiswa apakah sudah sidang tidak mengulangi atau mengulangi</p>
+                </div>
             </caption>
 
             <tbody>
@@ -26,7 +29,7 @@
                     Hasil Sidang
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Verifikasi Penitia
+                    Verifikasi Panitia
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Verifikasi Akademik
@@ -40,8 +43,8 @@
                 $counter = 1;
             @endphp
             @foreach ($mahasiswa as $datamahasiswa)
-{{--                jika status mahasiswa belum progrss tidak usah ditampikan--}}
-            @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] != 'Belum Progress')
+{{--                tampilkan data mahasiswa yang sudah sempro dan sudah di acc panitia ditampikan--}}
+            @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sempro' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] != null)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td class="px-3 py-4">
                         {{ $counter++ }}
@@ -74,7 +77,7 @@
                             <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
                                 Belum Verifikasi
                             </span>
-                        @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] !== null)
+                        @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] !== null)
                             <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
                                 Sudah Verifikasi
                             </span>
@@ -89,15 +92,13 @@
                         {{--panggil modal detail mahasiswa component--}}
                         <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
 
-                        {{--tombol cek file mahasiswa--}}
-                        <button data-modal-target="cekFile{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFile{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">
-                            <i class="fas fa-file fa-lg inline-block p-1 transform hover:scale-105"></i> Cek File
+                        {{--tombol untuk ganti status dan set hasil sidang data mahasiswa--}}
+                        <button type="button" data-modal-target="detailMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="detailMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onclick="event.preventDefault(); deleteConfirmation('{{ $datamahasiswa['id'] }}');">
+                            <i class="fas fa-check fa-lg inline-block p-1 transform hover:scale-105"></i> Hasil Sidang
                         </button>
 
-                        {{--panggil modal cek file mahasiswa component--}}
-                        <x-modal.cekfile :datamahasiswa="$datamahasiswa" />
-
-                        <x-verifikasi.verifikasiakademik :datamahasiswa="$datamahasiswa"/>
+                        {{--panggil modal untuk hasil sidang mahasiswa component--}}
+                        <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
                     </td>
                 </tr>
             @endif

@@ -413,6 +413,54 @@ class WebAkademikController extends Controller
         }
     }
 
+    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
+    public function datagagalsidang()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datagagalsidang and pass the data using compact()
+            return view('dashboard.akademik.datagagalsidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa untuk halaman data lolos sidang mahasiswa
+    public function datalolossidang()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datalolossidang and pass the data using compact()
+            return view('dashboard.akademik.datalolossidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa untuk halaman jadwal pengambilan ijazah
+    public function datapengambilanijazah()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datamahasiswa and pass the data using compact()
+            return view('dashboard.akademik.datapengambilanijazah', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
     protected function generateSanctumToken($user)
     {
         $token = $user->createToken('api-token')->plainTextToken;
