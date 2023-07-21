@@ -79,7 +79,13 @@ Route::get('/datamahasiswapanitia', [WebPanitiaController::class, 'datamahasiswa
 
 //jadwal tahap sidang
 Route::get('/jadwalsidang', [WebPanitiaController::class, 'jadwalsidang'])->name('jadwalsidang');
+//Panitia lihat maahsiswa yang gagal sidang
+Route::get('/gagalsidang', [WebPanitiaController::class, 'gagalsidang'])->name('panitiagagalsidang');
 
 
 //Dashboard Mahasiswa
 Route::get('/mahasiswa', [WebMahasiswaController::class, 'index'])->name('mahasiswa');
+//get halaman pendaftaran sidang
+Route::get('/pendaftaranmahasiswa', [WebMahasiswaController::class, 'pendaftaranmahasiswa'])->name('pendaftaranmahasiswa');
+//get halaman form bebas tanggungan
+Route::get('/formbebastanggungan', [WebMahasiswaController::class, 'bebastanggungan'])->name('bebastanggungan');

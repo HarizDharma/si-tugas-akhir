@@ -3,13 +3,13 @@
 
 @section('main')
     {{--  isi props dfengan data user yang dilempar ke halaman ini  --}}
-    <x-common.navbar :nama="$user['nama']" :role="$user['role']"/>
-    <x-sidebar.sidebarmahasiswa/>
+    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
+    <x-sidebar.sidebarmahasiswa :datamahasiswa="$auth['data']"/>
 
     {{--    isi content main--}}
     <div class="p-4 sm:ml-64">
         <div class="rounded-lg dark:border-gray-700 mt-14">
-            <x-cardview.cardviewmahasiswa/>
+            <x-cardview.cardviewmahasiswa :auth="$auth['data']"/>
         </div>
     </div>
 

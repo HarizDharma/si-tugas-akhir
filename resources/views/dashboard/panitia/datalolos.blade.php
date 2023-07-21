@@ -6,4 +6,6 @@
     <x-sidebar.sidebarpanitia/>
     <x-table.mahasiswalolos :datamahasiswalolos="$mahasiswa['data']"/>
 
+    <x-modal.aturjadwalsidang/>
+
 @endsection

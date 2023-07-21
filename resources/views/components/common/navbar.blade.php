@@ -11,17 +11,17 @@ ini isi ata dari yang sudah login
                     {{--jika yang login akademik ganti route--}}
                     <a href="{{ route('akademik') }}" class="flex ml-2 md:mr-24">
                         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
-                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Sistem Informasi Manajemen Sidang</span>
                     </a>
                 @elseif($role == 'panitia')
                     <a href="{{ route('panitia') }}" class="flex ml-2 md:mr-24">
                         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
-                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Sistem Informasi Manajemen Sidang</span>
                     </a>
                 @elseif($role == 'mahasiswa')
                     <a href="{{ route('mahasiswa') }}" class="flex ml-2 md:mr-24">
                         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="h-8 mr-3" alt="FlowBite Logo" />
-                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">SI-TUGASAKHIR</span>
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Sistem Informasi Manajemen Sidang</span>
                     </a>
                 @endif
             </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Auth\AuthRepositoryInterface;
+use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
 use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
@@ -11,99 +13,58 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class WebMahasiswaController extends Controller
 {
+    //deklarasi untuk menmpung repository mahasiswa,panitia dan akademik
+    private $akademikRepo;
     private $panitiaRepo;
-    public function __construct(AkademikRepositoryInterface $panitiaRepo)
+    private $authRepo;
+    private $mahasiswaRepo;
+    public function __construct(AkademikRepositoryInterface $akademikRepo, PanitiaRepositoryInterface $panitiaRepo, MahasiswaRepositoryInterface $mahasiswaRepo, AuthRepositoryInterface $authRepo)
     {
+        //manggil repo lalu dimasukkan ke var private diatas
+        $this->akademikRepo = $akademikRepo;
         $this->panitiaRepo = $panitiaRepo;
+        $this->mahasiswaRepo = $mahasiswaRepo;
+        $this->authRepo = $authRepo;
     }
 
     //index plus pengecekan login
     public function index()
     {
-        //get dfata return dari repo
-        // Auth berhasil
-        $user = Auth::user();
+        $auth = $this->authRepo->index('web');
 
-        if ($user) {
-
-            // Generate token JWT
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
-
-            // Buat alert untuk berhasil login
-            session()->flash('success', 'Selamat Datang');
-
-            return view('dashboard.mahasiswa.index')->with([
-                'token' => $token,
-                'user' => $user,
-            ]);
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the academic dashboard
+            return view('dashboard.mahasiswa.index', compact('auth'));
         } else {
             return view('auth');
         }
     }
 
-    public function konfirmasipanitia()
+    //getall halama pendaftaran
+    public function pendaftaranmahasiswa()
     {
-        //cek sudah login apa belum
-        if (Auth::check()){
-            //jika sudah login eksekusi
-            //get dfata return dari repo
-            // Auth berhasil
-            $user = Auth::user();
+        $auth = $this->authRepo->index('web');
 
-            //dapatkan user dengan role akademik
-            $panitia = $this->panitiaRepo->index();
-
-            // Generate token JWT
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
-
-            //pengecekan login / jika login diarahkan ke hal profile
-            if ($panitia && $user) {
-                //ke halaman daftar data panitia
-                return view('dashboard.panitia.datakonfirmasi')->with([
-                    'token' => $token,
-                    'panitia' => $panitia,
-                    'user' => $user,
-                ]);
-            }
-        }
-        else {
-            // Buat alert untuk belum login
-            Alert::danger('Anda Belum Login !');
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the academic dashboard and pass the data using compact()
+            return view('dashboard.mahasiswa.pendaftaranmahasiswa', compact('auth'));
+        } else {
             return view('auth');
         }
     }
 
-    public function mahasiswalolos()
+    //getall halama form bebas tanggungan
+    public function bebastanggungan()
     {
-        //cek sudah login apa belum
-        if (Auth::check()){
-            //jika sudah login eksekusi
-            //get dfata return dari repo
-            // Auth berhasil
-            $user = Auth::user();
+        $auth = $this->authRepo->index('web');
 
-            //dapatkan user dengan role akademik
-            $panitia = $this->panitiaRepo->index();
-
-            // Generate token JWT
-            $token = $this->generateSanctumToken($user);
-            $user->token = $token;
-
-            //pengecekan login / jika login diarahkan ke hal profile
-            if ($panitia && $user) {
-                //ke halaman daftar data mahasiswa lolos
-                return view('dashboard.panitia.datalolos')->with([
-                    'token' => $token,
-                    'panitia' => $panitia,
-                    'user' => $user,
-                ]);
-            }
-        }
-        else {
-            // Buat alert untuk belum login
-            Alert::danger('Anda Belum Login !');
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the academic dashboard and pass the data using compact()
+            return view('dashboard.mahasiswa.formbebastanggungan', compact('auth'));
+        } else {
             return view('auth');
         }
     }

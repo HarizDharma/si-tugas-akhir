@@ -99,6 +99,22 @@ class WebPanitiaController extends Controller
         }
     }
 
+    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
+    public function gagalsidang()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datagagalsidang and pass the data using compact()
+            return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
     protected function generateSanctumToken($user)
     {
         $token = $user->createToken('api-token')->plainTextToken;

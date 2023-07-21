@@ -9,6 +9,11 @@
                 <div class="text-left text-sm">
                     <p>Catatan : Disini data mahasiswa yang gagal sidang dan mengulangi</p>
                 </div>
+                <div class="mt-5">
+                    <button data-modal-target="aturUlangSidang" data-modal-toggle="aturUlangSidang" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        Atur Ulang Jadwal Sidang
+                    </button>
+                </div>
             </caption>
 
             <tbody>
@@ -91,14 +96,6 @@
 
                             {{--panggil modal detail mahasiswa component--}}
                             <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
-
-                            {{--tombol untuk ganti status dan set hasil sidang data mahasiswa--}}
-                            <button type="button" data-modal-target="detailMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="detailMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onclick="event.preventDefault(); deleteConfirmation('{{ $datamahasiswa['id'] }}');">
-                                <i class="fas fa-check fa-lg inline-block p-1 transform hover:scale-105"></i> Hasil Sidang
-                            </button>
-
-                            {{--panggil modal untuk hasil sidang mahasiswa component--}}
-                            <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
                         </td>
                     </tr>
                 @endif
@@ -107,4 +104,3 @@
         </table>
     </div>
 </div>
-
