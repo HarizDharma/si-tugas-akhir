@@ -7,6 +7,7 @@ use App\Http\Requests\Akademik\CreateAkademikRequest;
 use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Http\Requests\Mahasiswa\CreateMahasiswaRequest;
 use App\Http\Requests\Mahasiswa\UpdateMahasiswaRequest;
+use App\Http\Requests\Mahasiswa\UpdateUserMahasiswaRequest;
 use App\Http\Requests\Panitia\CreatePanitiaRequest;
 use App\Http\Requests\Panitia\UpdatePanitiaRequest;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
@@ -294,13 +295,13 @@ class WebAkademikController extends Controller
                 Alert::success("Berhasil", "Create User Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswa');
+                return redirect()->route('datamahasiswaakademik');
             } else {
                 // Buat session flash untuk notifikasi gagal
                 Alert::error("Gagal", "Create User Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswa');
+                return redirect()->route('datamahasiswaakademik');
             }
         } else {
             return view('auth');
@@ -308,29 +309,29 @@ class WebAkademikController extends Controller
     }
 
     //edit data mahasiswa method
-    public function updateMahasiswa(UpdateMahasiswaRequest $request, $id)
+    public function updateMahasiswa(UpdateUserMahasiswaRequest $request, $id)
     {
         //ambil data siapa yang login
         $auth = $this->authRepo->index('web');
 
         // Jika status true
         if ($auth['status']) {
-            //ambil dataakademik update dari repository
-            $akademik = $this->akademikRepo->update('api',$request, $id);
+            //ambil datamahsiswa update dari repository
+            $mahasiswa = $this->mahasiswaRepo->updateSelf('api',$request, $id);
 
             // Pengecekan apakah data berhasil di update
-            if ($akademik) {
-                // Buat session flash untuk notifikasi sukses delete
-                Alert::success("Berhasil", "Update User Akademik");
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses update
+                Alert::success("Berhasil", "Update User Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('dataakademik');
+                return redirect()->route('datamahasiswaakademik');
             } else {
                 // Buat session flash untuk notifikasi sukses
-                Alert::error("Gagal", "Update User Akademik");
+                Alert::error("Gagal", "Update User Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('dataakademik');
+                return redirect()->route('datamahasiswaakademik');
             }
         } else {
             return view('auth');
@@ -354,13 +355,13 @@ class WebAkademikController extends Controller
                 Alert::success("Berhasil", "Delete User Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswa');
+                return redirect()->route('datamahasiswaakademik');
             } else {
                 // Buat session flash untuk notifikasi sukses
                 Alert::error("Gagal", "Delete User Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswa');
+                return redirect()->route('datamahasiswaakademik');
             }
         } else {
             return view('auth');
@@ -413,6 +414,66 @@ class WebAkademikController extends Controller
         }
     }
 
+    //method edit status data mahasiswa lolos sempro
+    public function editstatusmahasiswa($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $mahasiswa = $this->mahasiswaRepo->store('api', $id);
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Ubah Status Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataverifikasimahasiswa');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Berhasil Ubah Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataverifikasimahasiswa');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method tambah hasil sidang
+    public function tambahhasilsidang($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $mahasiswa = $this->mahasiswaRepo->store('api', $id);
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Tambah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataverifikasimahasiswa');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Tambah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataverifikasimahasiswa');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
     //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
     public function datagagalsidang()
     {
@@ -424,6 +485,36 @@ class WebAkademikController extends Controller
         if ($auth['status']) {
             // Redirect to the datagagalsidang and pass the data using compact()
             return view('dashboard.akademik.datagagalsidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method ubah hasil sidang yang gagal sidang mengulangi
+    public function ubahhasilsidang($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $mahasiswa = $this->mahasiswaRepo->store('api', $id);
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Ubah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsidang');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Ubah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsidang');
+            }
         } else {
             return view('auth');
         }
@@ -456,6 +547,66 @@ class WebAkademikController extends Controller
         if ($auth['status']) {
             // Redirect to the datamahasiswa and pass the data using compact()
             return view('dashboard.akademik.datapengambilanijazah', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method set jadwal pengambilan ijazah
+    public function pengambilanijazah($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $mahasiswa = $this->mahasiswaRepo->store('api', $id);
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses tambah jadwal ijazah
+                Alert::success("Berhasil", "Set Jadwal Pengambilan Ijazah");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapengambilanijazah');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Set Jadwal Pengambilan Ijazah");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapengambilanijazah');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method delete data jadwal ijazah
+    public function deleteJadwalIjazah($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa delete dari repository
+            $mahasiswa = $this->mahasiswaRepo->store('api', $id);
+
+            // Pengecekan apakah data berhasil didelete
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Hapus Jadwal Pengambilan Ijazah");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapengambilanijazah');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Hapus Jadwal Pengambilan Ijazah");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datapengambilanijazah');
+            }
         } else {
             return view('auth');
         }

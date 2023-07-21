@@ -92,13 +92,21 @@
                         {{--panggil modal detail mahasiswa component--}}
                         <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
 
+                        {{--tombol untuk ganti status data mahasiswa--}}
+                        <button type="button" data-modal-target="editStatusMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="editStatusMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800">
+                            <i class="fas fa-edit fa-lg inline-block p-1 transform hover:scale-105"></i> Edit Status
+                        </button>
+
+                        {{--panggil modal untuk edit status mahasiswa component--}}
+                        <x-modal.editstatusmahasiswa :datamahasiswa="$datamahasiswa" />
+
                         {{--tombol untuk ganti status dan set hasil sidang data mahasiswa--}}
-                        <button type="button" data-modal-target="detailMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="detailMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" onclick="event.preventDefault(); deleteConfirmation('{{ $datamahasiswa['id'] }}');">
+                        <button type="button" data-modal-target="hasilSidangMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="hasilSidangMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
                             <i class="fas fa-check fa-lg inline-block p-1 transform hover:scale-105"></i> Hasil Sidang
                         </button>
 
                         {{--panggil modal untuk hasil sidang mahasiswa component--}}
-                        <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
+                        <x-modal.hasilsidangmahasiswa :datamahasiswa="$datamahasiswa" />
                     </td>
                 </tr>
             @endif

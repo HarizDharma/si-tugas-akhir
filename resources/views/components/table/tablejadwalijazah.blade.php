@@ -82,12 +82,12 @@
                         </td>
                         <td class="px-6 py-4 text-center">
                             {{--jadwalkan pengambilan ijazah mahasiswa--}}
-                            <button data-modal-target="detailMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="detailMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button">
+                            <button data-modal-target="tambahJadwalIjazah{{ $datamahasiswa['id'] }}" data-modal-toggle="tambahJadwalIjazah{{ $datamahasiswa['id'] }}" class="text-white w-full bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button">
                                 <i class="fas fa-book fa-lg inline-block p-1 transform hover:scale-105"></i> Jadwalkan
                             </button>
 
                             {{--panggil modal detail mahasiswa component--}}
-                            <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
+                            <x-modal.tambahjadwalijazah :datamahasiswa="$datamahasiswa" />
                         </td>
                     </tr>
                 @endif
@@ -177,13 +177,8 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 text-center">
-                            {{--jadwalkan pengambilan ijazah mahasiswa--}}
-                            <button data-modal-target="detailMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="detailMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800" type="button">
-                                <i class="fas fa-book fa-lg inline-block p-1 transform hover:scale-105"></i> <br>Hapus Jadwal
-                            </button>
-
-                            {{--panggil modal detail mahasiswa component--}}
-                            <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
+                            {{--panggil modal delete jadwal ijazah mahasiswa component--}}
+                            <x-delete.deletejadwalijazah :datamahasiswa="$datamahasiswa" />
                         </td>
                     </tr>
                 @endif

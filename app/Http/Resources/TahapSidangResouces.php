@@ -14,6 +14,10 @@ class TahapSidangResouces extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->sidang_id,
+            'nama_sidang' => $this->nama_sidang,
+            'tanggal_sidang' => $this->tanggal_sidang
+        ];
     }
 }

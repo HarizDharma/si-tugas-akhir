@@ -57,19 +57,27 @@ Route::delete('/datamahasiswa/{id}', [WebAkademikController::class, 'deleteMahas
 
 //Data Verifikasi Mahasiswa
 Route::get('/dataverifikasimahasiswa', [WebAkademikController::class, 'dataverifikasimahasiswa'])->name('dataverifikasimahasiswa');
-//Action Verifikasi Mahasiswa
-Route::post('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
+//Action ubah status Mahasiswa
+Route::put('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'editstatusmahasiswa'])->name('editStatusMahasiswa');
+//action untuk tambah hasil sidang
+Route::post('/tambahhasilsidang/{id}', [WebAkademikController::class, 'tambahhasilsidang'])->name('tambahHasilSidangMahasiswa');
 
 //Data Gagal Sidang Mahasiswa
 Route::get('/datagagalsidang', [WebAkademikController::class, 'datagagalsidang'])->name('datagagalsidang');
+//action jika hasil sudang sudah ada khusus untuk mahasiswa yang gagalsidang
+Route::get('/datagagalsidang/{id}', [WebAkademikController::class, 'ubahhasilsidang'])->name('ubahHasilSidangMahasiswa');
 
 //Data Lolos Sidang Mahasiswa
 Route::get('/datalolossidang', [WebAkademikController::class, 'datalolossidang'])->name('datalolossidang');
+//Action Verifikasi Mahasiswa
+Route::post('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
 
 //Data Pengambilan Ijazah Mahasiswa
 Route::get('/pengambilanijazah', [WebAkademikController::class, 'datapengambilanijazah'])->name('datapengambilanijazah');
 //Action jadwal pengambilan ijazah Mahasiswa
 Route::post('/pengambilanijazah/{id}', [WebAkademikController::class, 'pengambilanijazah'])->name('pengambilanijazah');
+//action delete jadwalijazah
+Route::delete('/deletejadwalijazah/{id}', [WebAkademikController::class, 'deleteJadwalIjazah'])->name('deletejadwalijazah');
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
