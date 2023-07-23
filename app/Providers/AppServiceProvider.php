@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Panitia\PanitiaRepositoryInterface',
             'App\Repositories\Panitia\PanitiaRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Dashboard\DashboardRepositoryInterface',
+            'App\Repositories\Dashboard\DashboardRepository'
+        );
     }
 
     /**
