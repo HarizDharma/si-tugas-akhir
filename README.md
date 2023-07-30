@@ -26,12 +26,54 @@
 12. php artisan serve
 
 [Frontend]
-1. npm install
-2. npm run hot atau npm run dev 
+1. npm install --force
+2. npm run dev 
+3. npm run build
 
 - CSS Framework
   - Tailwind
 
+[REVISI 1]
+- Akademik Hanya Ijazah Saja
+- GANTI Table Tahap Sidang Sempro dan Tahap Sidang Akhir
+- Hasil Sidang Setiap Penguji Ada Catatan (SEMPRO sama AKHIR)
+- Tahap Sidang Bisa Di Tambahkan
+- Mahasiswa Dasboard/Status Ada Tampilan Hasil Sidang Sempro dan Akhir
+
+-- FILE [SEMPRO]
+PROPOSAL LAPORAN SEMPRO
+FORMULIR PERSETUJUAN SEMINAR
+
+-- FILE [SIDANG AKHIR]
+TABLE YANG LAMA
+
+
+-- STATUS MAHASISWA
+[AWAL]
+Belum Progress
+Sempro
+Sudah Sempro
+Sudah Sidang dan Mengulangi
+Sudah Sidang dan Tidak Mengulangi
+
+[NEW]
+(CREATE READ UPDATE => PANITIA SEMUA)
+Belum Progress / Lagi Daftar Sempro  => MAHASISWA UPLOAD FILE KEBUTUHAN MAJU SEMPRO
+Sudah Daftar Sempro  => VERIFIKASI PANITA SEMPRO :TRUE, TANGGAL SIDANG SEMPRO 
+Sudah Sidang Sempro dan Mengulangi => TANGGAL SIDANG SEMPRO
+Sudah Sidang Sempro dan Tidak Mengulangi - => Lagi Daftar Sidang Akhir MAHASISWA UPLOAD FILE KEBUTUHAN MAJU SIDANG
+
+Sudah Daftar Akhir => Sudah Sidang Akhir => VERIFIKASI PANITA SIDANG AKHIR  :TRUE, TANGGAL SIDANG AKHIR
+Sudah Sidang Akhir dan Mengulangi => TANGGAL SIDANG AKHIR
+Sudah Sidang Akhir dan Tidak Mengulangi => MAHASISWA UPLOAD KEBUTUHAN VERIF AKADEMIK (AMBIL IJAZAH)
+
+Ambil Ijazah
+SUDAH MENGAMBIL IJAZAH
+
+
+[KEBUTUHAN]
+- UML (DIAGRAM ACTIVITY)
+- FRONT-END - API - DATABASE
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
