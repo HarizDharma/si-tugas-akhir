@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\ApiMahasiswaController;
+use App\Http\Controllers\Api\ApiDashboardController;
 use App\Http\Controllers\Api\ApiPanitiaController;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\ApiAkademikController;
+use App\Http\Controllers\Api\ApiVerifikasiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,22 +32,73 @@ Route::middleware('auth:sanctum')
     ->post('/logout', [ApiAuthController::class, 'logout'])
     ->name('api.logout');
 
-
-//
 Route::middleware('auth:sanctum')->group(function () {
-    //  api/mahasiswa
+
+    // Dashboard
+    Route::get('dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard.index');
+    Route::prefix('verifikasi')->group(function () {
+        Route::get('/', [ApiVerifikasiController::class, 'index'])->name('api.verifikasi.index');
+        Route::get('/{idUser}', [ApiVerifikasiController::class, 'show'])->name('api.verifikasi.show');
+
+    });
+
+
+        //  api/mahasiswa
     // TODO : COUNTING MAHASISWA
         // TODO : COUNTING PANITIA
         // TODO : COUNTING AKADEMIK
-    Route::get('mahasiswa/self', [ApiMahasiswaController::class, 'getSelf'])->name('api.mahasiswa.get.self');
-    Route::put('mahasiswa/self', [ApiMahasiswaController::class, 'updateSelf'])->name('api.mahasiswa.update.self');
     Route::apiResource('mahasiswa', ApiMahasiswaController::class)->names([
         'index' => 'api.mahasiswa.index',
-        'getSelf' => 'api.mahasiswa.getSelf',
+        'show' => 'api.mahasiswa.show',
         'store' => 'api.mahasiswa.store',
         'update' => 'api.mahasiswa.update',
         'destroy' => 'api.mahasiswa.destroy',
     ]);
+
+    Route::prefix('mahasiswa')->group(function () {
+        Route::get('self', [ApiMahasiswaController::class, 'getSelf'])->name('api.mahasiswa.get.self');
+        Route::put('self', [ApiMahasiswaController::class, 'updateSelf'])->name('api.mahasiswa.update.self');
+        Route::get('count', [ApiMahasiswaController::class, 'countMahasiswa'])->name('api.mahasiswa.count');
+
+        // Status Mahasiswa
+        Route::prefix('status')->group(function () {
+            Route::get('{idMhs}', []);
+            Route::get('self', []);
+            Route::put('{idMhs}', []);
+            Route::put('self', []);
+        });
+
+        // File Mahasiswa
+        Route::prefix('file')->group(function () {
+            Route::get('{idMhs}', []);
+            Route::get('self', []);
+            Route::put('{idMhs}', []);
+            Route::put('self', []);
+        });
+
+        // Tahap Sidang Mahasiswa
+        Route::prefix('tahapSidang')->group(function () {
+            Route::get('{idMhs}', []);
+            Route::get('self', []);
+            Route::post('{idMhs}', []);
+            Route::post('self', []);
+            Route::put('{idMhs}', []);
+            Route::put('self', []);
+        });
+
+        // Hasil Sidang Mahasiswa
+        Route::prefix('hasilSidang')->group(function () {
+            Route::get('{idMhs}', []);
+            Route::get('self', []);
+            Route::post('{idMhs}', []);
+            Route::post('self', []);
+            Route::put('{idMhs}', []);
+            Route::put('self', []);
+        });
+
+
+    });
+
 
     //  api/akademik
     Route::get('akademik/self', [ApiAkademikController::class, 'getSelf'])->name('api.akademik.get.self');
