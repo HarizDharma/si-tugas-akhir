@@ -7,15 +7,21 @@ use App\Http\Requests\Akademik\CreateAkademikRequest;
 use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Models\User;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
+use App\Repositories\Verifikasi\VerifikasiRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ApiAkademikController extends Controller
 {
     private $akademikRepo;
-    public function __construct(AkademikRepositoryInterface $akademikRepo)
+
+
+    public function __construct(AkademikRepositoryInterface $akademikRepo,
+                                VerifikasiRepositoryInterface $verifikasiRepo)
     {
         $this->akademikRepo = $akademikRepo;
+        $this->verifikasiRepo = $verifikasiRepo;
+
         $this->middleware('auth:sanctum');
     }
 
