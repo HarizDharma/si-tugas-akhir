@@ -10,6 +10,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## CARA RUN
+``php artisan serve --port=80 --host=0.0.0.0``
+
 ## Instalasi
 [Backend]
 1. Create/ Copy BUAT DATABASE si_tugasakhir .Env file
