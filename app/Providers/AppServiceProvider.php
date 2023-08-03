@@ -34,6 +34,18 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Dashboard\DashboardRepositoryInterface',
             'App\Repositories\Dashboard\DashboardRepository'
         );
+        $this->app->bind(
+            'App\Repositories\Verifikasi\VerifikasiRepositoryInterface',
+            'App\Repositories\Verifikasi\VerifikasiRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\File\FileRepositoryInterface',
+            'App\Repositories\File\FileRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\TahapSidang\TahapSidangRepositoryInterface',
+            'App\Repositories\TahapSidang\TahapSidangRepository'
+        );
     }
 
     /**

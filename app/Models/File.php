@@ -20,7 +20,8 @@ class File extends Model
         'bukti_jurnal',
         'sertifikat_toeic',
         'skkm',
-        'pengumpulan_alat'
+        'pengumpulan_alat',
+        'laporan_skripsi'
     ];
 
     public function mahasiswa() {

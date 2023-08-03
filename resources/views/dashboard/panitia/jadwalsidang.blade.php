@@ -4,6 +4,7 @@
 @section('main')
     <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
     <x-sidebar.sidebarpanitia/>
-    <x-jadwal.jadwalsidang/>
+
+    <x-jadwal.jadwalsidang :jadwal="$jadwal"/>
 
 @endsection

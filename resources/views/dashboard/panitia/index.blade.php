@@ -1,15 +1,17 @@
 @extends('layout.app')
 @section('title', 'Halaman Dashboard Panitia')
 
+
+
 @section('main')
     {{--  isi props dfengan data user yang dilempar ke halaman ini  --}}
-    <x-common.navbar :nama="$data['nama']" :role="$data['role']"/>
+    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
     <x-sidebar.sidebarpanitia/>
 
     {{--    isi content main--}}
     <div class="p-4 sm:ml-64">
         <div class="rounded-lg dark:border-gray-700 mt-14">
-            <x-cardview.cardviewpanitia/>
+            <x-cardview.cardviewpanitia :data="$panitia['data']" />
         </div>
     </div>
 

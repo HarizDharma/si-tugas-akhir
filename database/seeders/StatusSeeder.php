@@ -19,6 +19,9 @@ class StatusSeeder extends Seeder
             'nama_status' => 'Belum Progress'
         ]);
         $status = Status::create([
+            'nama_status' => 'Sempro'
+        ]);
+        $status = Status::create([
             'nama_status' => 'Sudah Sempro'
         ]);
         $status = Status::create([

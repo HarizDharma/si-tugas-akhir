@@ -1,4 +1,6 @@
+@props(['datamahasiswalolos'])
 <!-- Main modal -->
+
 <div id="aturJadwalSidang" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-md max-h-full">
         <!-- Modal content -->
@@ -15,17 +17,24 @@
 
                     {{--atur ulang jadwal sidang--}}
                     <div>
-                        <form action="" method="POST">
+                        @foreach ($datamahasiswalolos as $datamahasiswa)
+                            {{--                jika status mahasiswa sudah verifikasi panitia dan status sudah sempro  ditampikan--}}
+                            @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sempro' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] != 0)
+                                {{$datamahasiswa['id']}}
+                            @endif
+                        @endforeach
+                        <form action="{{route('updateMahasiswaJadwalSidang', ['idMhs' => 1])}}" method="POST">
+                            @method('PUT')
                             @csrf
                             <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <div class="mt-4">
                                     <label for="jadwal_sidang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Waktu Sidang</label>
                                     <select id="jadwal_sidang" name="jadwal_sidang" class="w-full px-3 py-2 text-sm text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                                         <option value="" disabled selected>Pilih waktu sidang</option>
-                                        <option value="1">Tahap 1 - </option>
-                                        <option value="2">Tahap 2 - </option>
-                                        <option value="3">Tahap 3 - </option>
-                                        <option value="4">Tahap 4 - </option>
+                                        <option value="1">Tahap 1 </option>
+                                        <option value="2">Tahap 2 </option>
+                                        <option value="3">Tahap 3 </option>
+                                        <option value="4">Tahap 4 </option>
                                         <!-- Tambahkan pilihan waktu sidang lainnya sesuai kebutuhan Anda -->
                                     </select>
                                 </div>

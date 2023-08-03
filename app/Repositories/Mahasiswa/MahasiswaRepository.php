@@ -31,9 +31,9 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                     : new ResponseResource(false, 'Unauthorized, Please Login');
             }
 
-            $mahasiswa = User::whereHas('roles', function ($query) {
-                $query->where('role', 'mahasiswa');
-            })->get();
+                $mahasiswa = User::whereHas('roles', function ($query) {
+                    $query->where('role', 'mahasiswa');
+                })->get();
 
             return $platform == 'web' ?
                 formatResponseResource(true, 'List User Mahasiswa',  formatMahasiswaResource($mahasiswa), $user->token )
@@ -73,7 +73,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                     : new ResponseResource(false, 'Pengguna tidak ditemukan');
             }
             return $platform == 'web' ?
-                formatResponseResource(true, 'Detail User Mahasiswa ',  formatMahasiswaResource($mahasiswa), $user->token)
+                formatResponseResource(true, 'Detail User Mahasiswa ',  formatMahasiswaResource($mahasiswa))
                 : new ResponseResource(true, 'Detail User Mahasiswa ', UserResouces::make($mahasiswa));
         }
         else {
@@ -208,7 +208,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
 
                 // Validasi input telah dilakukan oleh UpdateAkademikRequest
 
-                $mahasiswa = User::findOrFail($id);
+                $user = User::findOrFail($id);
 
 //                $mahasiswa->username = $request->username;
 //                $mahasiswa->password = bcrypt($request->password);
@@ -354,10 +354,25 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                 : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }
+
+    public function VerifikasiPanitia($id, $val, $platform = 'web')
+    {
+        $user = User::findOrFail($id);
+        $mahasiswa = Mahasiswa::findOrFail($user->mahasiswa_id);
+        $verif = Verifikasi::findOrFail($mahasiswa->verifikasi_id);
+
+        $verif->update(['verifikasi_panitia' => $val]);
+
+        return true;
+    }
+
+
     protected function generateSanctumToken($user)
     {
         $token = $user->createToken('api-token')->plainTextToken;
         return $token;
     }
+
+
 
 }

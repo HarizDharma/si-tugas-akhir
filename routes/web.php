@@ -83,10 +83,12 @@ Route::delete('/deletejadwalijazah/{id}', [WebAkademikController::class, 'delete
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
 Route::get('/datakonfirmasi', [WebPanitiaController::class, 'konfirmasipanitia'])->name('konfirmasipanitia');
 Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
+Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class, 'updateMahasiswaJadwalSidang'])->name('updateMahasiswaJadwalSidang');
 Route::get('/datamahasiswapanitia', [WebPanitiaController::class, 'datamahasiswa'])->name('datamahasiswapanitia');
 
 //jadwal tahap sidang
 Route::get('/jadwalsidang', [WebPanitiaController::class, 'jadwalsidang'])->name('jadwalsidang');
+Route::put('/jadwalsidang/{id}', [WebPanitiaController::class, 'updateJadwalSidang'])->name('update.jadwalsidang');
 //Panitia lihat maahsiswa yang gagal sidang
 Route::get('/gagalsidang', [WebPanitiaController::class, 'gagalsidang'])->name('panitiagagalsidang');
 
@@ -97,3 +99,5 @@ Route::get('/mahasiswa', [WebMahasiswaController::class, 'index'])->name('mahasi
 Route::get('/pendaftaranmahasiswa', [WebMahasiswaController::class, 'pendaftaranmahasiswa'])->name('pendaftaranmahasiswa');
 //get halaman form bebas tanggungan
 Route::get('/formbebastanggungan', [WebMahasiswaController::class, 'bebastanggungan'])->name('bebastanggungan');
+
+Route::put('/file/{id}', [WebMahasiswaController::class, 'uploadFile'])->name('uploadFile');

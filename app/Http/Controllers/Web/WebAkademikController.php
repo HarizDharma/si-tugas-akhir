@@ -12,6 +12,7 @@ use App\Http\Requests\Panitia\CreatePanitiaRequest;
 use App\Http\Requests\Panitia\UpdatePanitiaRequest;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
 use App\Repositories\Auth\AuthRepositoryInterface;
+use App\Repositories\Dashboard\DashboardRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
 //use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use App\Repositories\Panitia\PanitiaRepositoryInterface;
@@ -26,24 +27,31 @@ class WebAkademikController extends Controller
     private $authRepo;
     private $mahasiswaRepo;
 
-    public function __construct(AkademikRepositoryInterface $akademikRepo, PanitiaRepositoryInterface $panitiaRepo, MahasiswaRepositoryInterface $mahasiswaRepo, AuthRepositoryInterface $authRepo)
+    private $dasboardRepo;
+
+    public function __construct(AkademikRepositoryInterface $akademikRepo,
+                                PanitiaRepositoryInterface $panitiaRepo,
+                                MahasiswaRepositoryInterface $mahasiswaRepo,
+                                AuthRepositoryInterface $authRepo,
+                                DashboardRepositoryInterface  $dashboardRepository)
     {
         //manggil repo lalu dimasukkan ke var private diatas
         $this->akademikRepo = $akademikRepo;
         $this->panitiaRepo = $panitiaRepo;
         $this->mahasiswaRepo = $mahasiswaRepo;
         $this->authRepo = $authRepo;
+        $this->dasboardRepo = $dashboardRepository;
     }
 
     //index plus pengecekan login
     public function index()
     {
         $auth = $this->authRepo->index('web');
-
+        $dashboard = $this->dasboardRepo->index('web');
         // Jika status true
         if ($auth['status']) {
             // Redirect to the academic dashboard
-            return view('dashboard.akademik.index')->with($auth);
+            return view('dashboard.akademik.index', compact('auth', 'dashboard'));
         } else {
             return view('auth');
         }
@@ -389,11 +397,10 @@ class WebAkademikController extends Controller
     {
         //ambil data siapa yang login
         $auth = $this->authRepo->index('web');
-
         // Jika status true
         if ($auth['status']) {
             //ambil datamahasiswa verifikasi dari repository
-            $mahasiswa = $this->mahasiswaRepo->destroy('api', $id);
+            $mahasiswa = $this->mahasiswaRepo->VerifikasiPanitia( $id, 1, 'web');
 
             // Pengecekan apakah data berhasil di verifikasi
             if ($mahasiswa) {

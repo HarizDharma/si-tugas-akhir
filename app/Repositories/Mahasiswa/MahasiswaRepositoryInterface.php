@@ -15,4 +15,7 @@ interface MahasiswaRepositoryInterface
     public function destroy($platform = 'api', $id);
     public function getSelf($platform = 'api');
     public function updateSelf($platform = 'api', UpdateMahasiswaRequest $request);
+
+
+    public function VerifikasiPanitia($id, $val, $platform='web');
 }

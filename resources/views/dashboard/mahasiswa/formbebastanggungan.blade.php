@@ -12,26 +12,63 @@
             <div class="text-3xl font-bold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                 <h2>Form Bebas Tanggungan Mahasiswa</h2>
             </div>
-            <div class="space-y-4 w-1/2" action="" method="POST">
-                @csrf
+            <form class="space-y-4 w-1/2" action="{{ route('uploadFile', ['id' => $auth['data']['id']]) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+                @method('PUT')
                 <div>
                     <label for="toeic" class="block text-md font-medium text-gray-900">Upload Sertifikat TOEIC</label>
-                    <input type="file" name="toeic" id="toeic" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                    <input type="file" name="toeic" id="toeic" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" >
+                    @if(isset($upload->sertifikat_toeic))
+                        <x-alert.alert type="success">
+                            Sudah Upload File -
+                            <a href="/storage/uploads/mahasiswa/{{ $upload->sertifikat_toeic }}" >
+                                <x-button.button type="primary"> Cek File</x-button.button>
+                            </a>
+                        </x-alert.alert>
+                    @else
+                        <x-alert.alert type="danger">
+                            Belum Upload File
+                        </x-alert.alert>
+                    @endif
                 </div>
 
                 <div>
                     <label for="pengumpulan_alat" class="block text-md font-medium text-gray-900">Upload Pengumpulan Alat</label>
-                    <input type="file" name="pengumpulan_alat" id="pengumpulan_alat" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                    <input type="file" name="pengumpulan_alat" id="pengumpulan_alat" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" >
+                    @if(isset($upload->pengumpulan_alat))
+                        <x-alert.alert type="success">
+                            Sudah Upload File -
+                            <a href="/storage/uploads/mahasiswa/{{ $upload->pengumpulan_alat }}" >
+                                <x-button.button type="primary"> Cek File</x-button.button>
+                            </a>
+                        </x-alert.alert>
+                    @else
+                        <x-alert.alert type="danger">
+                            Belum Upload File
+                        </x-alert.alert>
+                    @endif
                 </div>
 
-                <div>
-                    <label for="skkm" class="block text-md font-medium text-gray-900">Upload SKKM</label>
-                    <input type="file" name="skkm" id="skkm" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
-                </div>
+{{--                <div>--}}
+{{--                    <label for="skkm" class="block text-md font-medium text-gray-900">Upload SKKM</label>--}}
+{{--                    <input type="file" name="skkm" id="skkm" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" >--}}
+{{--                </div>--}}
 
                 <div>
                     <label for="laporan_pkl" class="block text-md font-medium text-gray-900">Upload Laporan PKL</label>
-                    <input type="file" name="laporan_pkl" id="laporan_pkl" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                    <input type="file" name="laporan_pkl" id="laporan_pkl" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" >
+                    @if(isset($upload->laporan_pkl))
+                        <x-alert.alert type="success">
+                            Sudah Upload File -
+                            <a href="/storage/uploads/mahasiswa/{{ $upload->laporan_pkl }}" >
+                                <x-button.button type="primary"> Cek File</x-button.button>
+                            </a>
+                        </x-alert.alert>
+                    @else
+                        <x-alert.alert type="danger">
+                            Belum Upload File
+                        </x-alert.alert>
+                    @endif
                 </div>
 
                 <div class="flex items-center justify-between">

@@ -36,7 +36,7 @@ class Mahasiswa extends Model
 
     public function status()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'status_id');
     }
     public function tahapsidang()
     {
@@ -52,6 +52,6 @@ class Mahasiswa extends Model
     }
     public function verif()
     {
-        return $this->belongsTo(Verifikasi::class);
+        return $this->belongsTo(Verifikasi::class, 'verifikasi_id');
     }
 }

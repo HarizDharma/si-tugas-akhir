@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Repositories\Auth\AuthRepositoryInterface;
+use App\Repositories\File\FileRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
 use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,13 +21,19 @@ class WebMahasiswaController extends Controller
     private $panitiaRepo;
     private $authRepo;
     private $mahasiswaRepo;
-    public function __construct(AkademikRepositoryInterface $akademikRepo, PanitiaRepositoryInterface $panitiaRepo, MahasiswaRepositoryInterface $mahasiswaRepo, AuthRepositoryInterface $authRepo)
+    private $fileRepo;
+    public function __construct(AkademikRepositoryInterface $akademikRepo,
+                                PanitiaRepositoryInterface $panitiaRepo,
+                                FileRepositoryInterface $fileRepository,
+                                MahasiswaRepositoryInterface $mahasiswaRepo,
+                                AuthRepositoryInterface $authRepo)
     {
         //manggil repo lalu dimasukkan ke var private diatas
         $this->akademikRepo = $akademikRepo;
         $this->panitiaRepo = $panitiaRepo;
         $this->mahasiswaRepo = $mahasiswaRepo;
         $this->authRepo = $authRepo;
+        $this->fileRepo = $fileRepository;
     }
 
     //index plus pengecekan login
@@ -45,11 +54,21 @@ class WebMahasiswaController extends Controller
     public function pendaftaranmahasiswa()
     {
         $auth = $this->authRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->getSelf( 'api');
+        $upload = File::find($mahasiswa->mahasiswa->file_id);
+
+        if($upload) {
+            if($upload->skkm && $upload->skla && $upload->kartu_kendali_skripsi
+                && $upload->bukti_jurnal && $upload->bebas_pkl && $upload->laporan_skripsi ) {
+                $mahasiswa->mahasiswa->update(['status_id' => 2]);
+            }
+        }
+        $upload = File::find($mahasiswa->mahasiswa->file_id);
 
         // Jika status true
         if ($auth['status']) {
             // Redirect to the academic dashboard and pass the data using compact()
-            return view('dashboard.mahasiswa.pendaftaranmahasiswa', compact('auth'));
+            return view('dashboard.mahasiswa.pendaftaranmahasiswa', compact('auth', 'upload'));
         } else {
             return view('auth');
         }
@@ -69,10 +88,25 @@ class WebMahasiswaController extends Controller
         }
     }
 
+    public function uploadFile($id, Request $request) {
+        $auth = $this->authRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->getSelf( 'api');
+
+
+        $upload = $this->fileRepo->update($mahasiswa->mahasiswa->file_id,  $request);
+        if($upload) {
+            if($upload->skkm && $upload->skla && $upload->kartu_kendali_skripsi
+                && $upload->bukti_jurnal && $upload->bebas_pkl && $upload->laporan_skripsi ) {
+                $mahasiswa->mahasiswa->update(['status_id' => 2]);
+            }
+        }
+        return view('dashboard.mahasiswa.pendaftaranmahasiswa', compact('auth','upload'));
+    }
     protected function generateSanctumToken($user)
     {
         $token = $user->createToken('api-token')->plainTextToken;
         return $token;
     }
+
 
 }
