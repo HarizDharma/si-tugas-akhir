@@ -20,6 +20,7 @@ class MahasiswaResources extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'prodi' => $this->prodi,
             'judul_skripsi' => $this->judul_skripsi,
             'nama_dosen1' => $this->nama_dosen1,

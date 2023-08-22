@@ -33,6 +33,7 @@ if (!function_exists('formatLoginResource')) {
                 // Pastikan $user disertakan dalam fungsi closure dengan use ($user)
                 $mhs = Mahasiswa::find($user->mahasiswa_id);
                 return [
+                    'id' => $mhs->id,
                     'prodi' => $mhs->prodi,
                     'judul_skripsi' => $mhs->judul_skripsi,
                     'nama_dosen1' => $mhs->nama_dosen1,
@@ -84,6 +85,7 @@ if (!function_exists('formatMahasiswaResource')) {
                 'mahasiswa_id' => $userData->when($userData->role == 'mahasiswa', function () use ($userData) {
                     $mhs = Mahasiswa::find($userData->mahasiswa_id);
                     return ($mhs) ? [
+                        'id' => $mhs->id,
                         'prodi' => $mhs->prodi,
                         'judul_skripsi' => $mhs->judul_skripsi,
                         'nama_dosen1' => $mhs->nama_dosen1,
@@ -126,6 +128,7 @@ if (!function_exists('formatPanitiaResource')) {
                 'mahasiswa_id' => $userData->when($userData->role == 'mahasiswa', function () use ($userData) {
                     $mhs = Mahasiswa::find($userData->mahasiswa_id);
                     return ($mhs) ? [
+                        'id' => $mhs->id,
                         'prodi' => $mhs->prodi,
                         'judul_skripsi' => $mhs->judul_skripsi,
                         'nama_dosen1' => $mhs->nama_dosen1,
@@ -171,6 +174,7 @@ if (!function_exists('formatAkademikResource')) {
                 'mahasiswa_id' => $userData->when($userData->role == 'mahasiswa', function () use ($userData) {
                     $mhs = Mahasiswa::find($userData->mahasiswa_id);
                     return ($mhs) ? [
+                        'id' => $mhs->id,
                         'prodi' => $mhs->prodi,
                         'judul_skripsi' => $mhs->judul_skripsi,
                         'nama_dosen1' => $mhs->nama_dosen1,
