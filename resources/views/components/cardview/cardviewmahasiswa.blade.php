@@ -49,9 +49,9 @@
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Verifikasi Panitia : </h5>
         {{--        pengecekan untuk verifikasi panitia--}}
         @if($auth['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == 0)
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-red-900  dark:text-white">Belum Verifikasi</h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900  dark:text-white">Belum Verifikasi</h5>
         @elseif($auth['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == 1)
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-green-900 dark:text-white">Sudah Verifikasi</h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Sudah Verifikasi</h5>
         @endif
     </div>
 
@@ -59,9 +59,9 @@
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Verifikasi Akademik  : </h5>
         {{--        pengecekan untuk verifikasi akademik--}}
         @if($auth['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 0)
-            <h5 class="mb-2 text-2xl font-bold  text-red-900">Belum Verifikasi</h5>
+            <h5 class="mb-2 text-2xl font-bold  text-gray-900">Belum Verifikasi</h5>
         @elseif($auth['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 1)
-            <h5 class="mb-2 text-2xl font-bold  text-red-900">Sudah Verifikasi</h5>
+            <h5 class="mb-2 text-2xl font-bold  text-gray-900">Sudah Verifikasi</h5>
         @endif
     </div>
 
