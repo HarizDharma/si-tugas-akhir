@@ -3,6 +3,7 @@
 namespace App\Http\Requests\HasilSidang;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateHasilSidangRequest extends FormRequest
 {
@@ -24,7 +25,8 @@ class CreateHasilSidangRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'dosen_penguji' => 'required',
+            'hasil_sidang' => 'required',
         ];
     }
 }
