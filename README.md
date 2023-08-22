@@ -26,7 +26,8 @@
 9. php artisan key:generate
 10. php artisan migrate:refresh
 11. php artisan db:seed
-12. php artisan serve
+12. php artisan storage:link (untuk index file yang diupload mahasiswa)
+13. php artisan serve
 
 [Frontend]
 1. npm install --force
