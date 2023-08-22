@@ -46,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\TahapSidang\TahapSidangRepositoryInterface',
             'App\Repositories\TahapSidang\TahapSidangRepository'
         );
+        $this->app->bind(
+            'App\Repositories\HasilSidang\HasilSidangRepositoryInterface',
+            'App\Repositories\HasilSidang\HasilSidangRepository'
+        );
     }
 
     /**
