@@ -23,6 +23,7 @@ class CreateTableFile extends Migration
             $table->string('sertifikat_toeic')->nullable();
             $table->string('skkm')->nullable();
             $table->string('pengumpulan_alat')->nullable();
+            $table->string('laporan_skripsi')->nullable();
             $table->timestamps();
         });
     }

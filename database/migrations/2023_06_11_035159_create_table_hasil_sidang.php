@@ -14,7 +14,7 @@ class CreateTableHasilSidang extends Migration
     public function up()
     {
         Schema::create('table_hasil_sidang', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary(); // Menggunakan unsigned big integer sebagai primary key
             $table->string('dosen_penguji')->nullable();
             $table->string('hasil_sidang')->nullable();
             $table->timestamps();
