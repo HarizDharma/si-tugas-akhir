@@ -14,16 +14,6 @@
                 <h3 class="mb-4 text-xl font-medium text-center text-gray-900 dark:text-white">Cek File Form Pendaftaran Sidang <br>{{ $datamahasiswa['nama'] }}</h3>
                 <div class="space-y-6 text-center">
 
-                    {{--Show data data file laporan pkl--}}
-                    <!-- <div>
-                        <label for="file" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">File Laporan PKL</label>
-                        <div class="flex items-center justify-center m-5">
-                            <img src="https://icon-library.com/images/files-icon-png/files-icon-png-10.jpg" class="w-20 mx-auto">
-                        </div>
-                        <a href="" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
-                            Download</a>
-                    </div> -->
-
                     {{--Show data data file SKKM--}}
                     <div>
                         <label for="file" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">File SKKM</label>
