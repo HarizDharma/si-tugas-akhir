@@ -225,7 +225,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                 //      'message' => $this->message,
                 //      'data' => $data,
                 //  ];
-                return new ResponseResource(true, 'Update User Mahasiswa ',$mahasiswa );
+                return new ResponseResource(true, 'Update User Mahasiswa ',$user );
 
             } catch (\Exception $e) {
                 DB::rollback();
@@ -360,6 +360,8 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
         $user = User::findOrFail($id);
         $mahasiswa = Mahasiswa::findOrFail($user->mahasiswa_id);
         $verif = Verifikasi::findOrFail($mahasiswa->verifikasi_id);
+        //ubah status nya untuk dirubah ke sudah sempro
+        $mahasiswa->update(['status_id' => 3]);
 
         $verif->update(['verifikasi_panitia' => $val]);
 
