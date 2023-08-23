@@ -81,7 +81,7 @@
                     {{--panggil modal cek file mahasiswa component--}}
                     <x-modal.cekfilepanitia :datamahasiswa="$datamahasiswa" />
 
-                    <x-verifikasi.verifikasiakademik :datamahasiswa="$datamahasiswa"/>
+                    <x-verifikasi.verifikasipanitia :datamahasiswa="$datamahasiswa"/>
                 </td>
             </tr>
             @endif
