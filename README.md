@@ -44,6 +44,9 @@
 - Tahap Sidang Bisa Di Tambahkan
 - Mahasiswa Dasboard/Status Ada Tampilan Hasil Sidang Sempro dan Akhir
 
+[YANG KURANG DIKERJAKAN]
+- Fix Tambah Jadwal Ambil Ijazah
+
 -- FILE [SEMPRO]
 PROPOSAL LAPORAN SEMPRO
 FORMULIR PERSETUJUAN SEMINAR

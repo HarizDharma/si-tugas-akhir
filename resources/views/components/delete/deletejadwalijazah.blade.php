@@ -7,7 +7,6 @@
     <span class="text-sm font-medium">Hapus Jadwal</span>
 </a>
 
-
 {{--form untuk metgod ketika di klik hapus data--}}
 <form id="delete-form-{{ $datamahasiswa['id'] }}" action="{{ route('deletejadwalijazah', ['id' => $datamahasiswa['id']]) }}" method="POST" style="display: none;">
     @csrf

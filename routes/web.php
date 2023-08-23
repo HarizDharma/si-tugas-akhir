@@ -55,22 +55,10 @@ Route::put('/datamahasiswa/{id}', [WebAkademikController::class, 'updateMahasisw
 //deleteMahasiswa
 Route::delete('/datamahasiswa/{id}', [WebAkademikController::class, 'deleteMahasiswa'])->name('deleteMahasiswa');
 
-//Data Verifikasi Mahasiswa
-Route::get('/dataverifikasimahasiswa', [WebAkademikController::class, 'dataverifikasimahasiswa'])->name('dataverifikasimahasiswa');
-//Action ubah status Mahasiswa
-Route::put('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'editstatusmahasiswa'])->name('editStatusMahasiswa');
-//action untuk tambah hasil sidang
-Route::post('/tambahhasilsidang/{id}', [WebAkademikController::class, 'tambahhasilsidang'])->name('tambahHasilSidangMahasiswa');
-
-//Data Gagal Sidang Mahasiswa
-Route::get('/datagagalsidang', [WebAkademikController::class, 'datagagalsidang'])->name('datagagalsidang');
-//action jika hasil sudang sudah ada khusus untuk mahasiswa yang gagalsidang
-Route::get('/datagagalsidang/{id}', [WebAkademikController::class, 'ubahhasilsidang'])->name('ubahHasilSidangMahasiswa');
-
-//Data Lolos Sidang Mahasiswa
-Route::get('/datalolossidang', [WebAkademikController::class, 'datalolossidang'])->name('datalolossidang');
-//Action Verifikasi Mahasiswa
-Route::post('/dataverifikasimahasiswa/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
+//Data Lolos Sidang Mahasiswa Akademik
+Route::get('/datalolossidangakademik', [WebAkademikController::class, 'datalolossidang'])->name('datalolossidangakademik');
+//Action Verifikasi Mahasiswa Akademik
+Route::post('/dataverifikasimahasiswaakademik/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswaakademik');
 
 //Data Pengambilan Ijazah Mahasiswa
 Route::get('/pengambilanijazah', [WebAkademikController::class, 'datapengambilanijazah'])->name('datapengambilanijazah');
@@ -81,23 +69,52 @@ Route::delete('/deletejadwalijazah/{id}', [WebAkademikController::class, 'delete
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
-Route::get('/datakonfirmasi', [WebPanitiaController::class, 'konfirmasipanitia'])->name('konfirmasipanitia');
-Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
-Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class, 'updateMahasiswaJadwalSidang'])->name('updateMahasiswaJadwalSidang');
+
+//halaman data mahasiswa dan get all mahasiswa
 Route::get('/datamahasiswapanitia', [WebPanitiaController::class, 'datamahasiswa'])->name('datamahasiswapanitia');
+
+//ke halaman data mahasiswa yang sempro di dashboard panitia
+Route::get('/datakonfirmasi', [WebPanitiaController::class, 'konfirmasipanitia'])->name('konfirmasipanitia');
+//Action Verifikasi Mahasiswa Panitia
+Route::post('/dataverifikasimahasiswa/{id}', [WebPanitiaController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
+
+//ke halaman data mahasiswa yang sudah di acc panitia
+Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
+//atur jadwal sidang pada halaman data lolos sempro
+Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class, 'updateMahasiswaJadwalSidang'])->name('updateMahasiswaJadwalSidang');
+//action untuk tambah hasil sidang
+Route::post('/tambahhasilsidang/{id}', [WebPanitiaController::class, 'tambahhasilsidang'])->name('tambahHasilSidangMahasiswa');
+//action untuk ubah status mahasiswa di halaman lolos sempro
+Route::put('/editstatusmahasiswa/{id}', [WebPanitiaController::class, 'editstatusmahasiswa'])->name('editStatusMahasiswa');
+
+//Data Gagal Sidang Mahasiswa
+Route::get('/datagagalsidang', [WebPanitiaController::class, 'datagagalsidang'])->name('datagagalsidang');
+//action jika mau atur ulangjadwal sidang
+Route::put('/jadwalsidangulang/{id}', [WebPanitiaController::class, 'ubahJadwalSidang'])->name('ubahJadwalSidang');
+//action jika hasil sudang sudah ada khusus untuk mahasiswa yang gagalsidang
+Route::put('/datagagalsidang/{id}', [WebPanitiaController::class, 'ubahhasilsidang'])->name('ubahHasilSidangMahasiswa');
+
+//Data Lolos Sidang Mahasiswa Panitia
+Route::get('/datalolossidang', [WebPanitiaController::class, 'datalolossidang'])->name('datalolossidang');
 
 //jadwal tahap sidang
 Route::get('/jadwalsidang', [WebPanitiaController::class, 'jadwalsidang'])->name('jadwalsidang');
 Route::put('/jadwalsidang/{id}', [WebPanitiaController::class, 'updateJadwalSidang'])->name('update.jadwalsidang');
+
 //Panitia lihat maahsiswa yang gagal sidang
-Route::get('/gagalsidang', [WebPanitiaController::class, 'gagalsidang'])->name('panitiagagalsidang');
+//Route::get('/gagalsidang', [WebPanitiaController::class, 'gagalsidang'])->name('panitiagagalsidang');
 
 
 //Dashboard Mahasiswa
 Route::get('/mahasiswa', [WebMahasiswaController::class, 'index'])->name('mahasiswa');
+
 //get halaman pendaftaran sidang
 Route::get('/pendaftaranmahasiswa', [WebMahasiswaController::class, 'pendaftaranmahasiswa'])->name('pendaftaranmahasiswa');
+
 //get halaman form bebas tanggungan
 Route::get('/formbebastanggungan', [WebMahasiswaController::class, 'bebastanggungan'])->name('bebastanggungan');
-
+//upload form pendaftaran
 Route::put('/file/{id}', [WebMahasiswaController::class, 'uploadFile'])->name('uploadFile');
+
+//upload form bebas tanggungan
+Route::put('/filebebastanggungan/{id}', [WebMahasiswaController::class, 'uploadFileBebasTanggungan'])->name('uploadFileBebasTanggungan');

@@ -71,7 +71,13 @@
 {{--show data hasil_sidang_id--}}
                     <div>
                         <label for="hasil_sidang_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasil Sidang</label>
-                        <span class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}</span>
+                        @if($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] == 'Belum Ada Hasil Sidang')
+                            <span class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}</span>
+                        @elseif($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] != 'Belum Ada Hasil Sidang')
+                            <span style="margin-bottom: 10px;" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['dosen_penguji'] }}</span>
+                            <span class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}</span>
+                        @endif
+
                     </div>
 {{--show data verifikasi_id panitia--}}
                     <div>

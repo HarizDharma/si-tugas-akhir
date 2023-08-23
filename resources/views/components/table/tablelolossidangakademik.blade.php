@@ -83,8 +83,8 @@
                             </span>
                             @endif
                         </td>
-
                         <td class="px-6 py-4 text-center">
+
                             {{--tombol detail data mahasiswa--}}
                             <button data-modal-target="detailMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="detailMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button">
                                 <i class="fas fa-info-circle fa-lg inline-block p-1 transform hover:scale-105"></i> Detail
@@ -92,6 +92,18 @@
 
                             {{--panggil modal detail mahasiswa component--}}
                             <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
+
+
+                            {{--tombol cek file mahasiswa--}}
+                            <button data-modal-target="cekFile{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFile{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">
+                                <i class="fas fa-file fa-lg inline-block p-1 transform hover:scale-105"></i> Cek File
+                            </button>
+
+                            {{--panggil modal cek file mahasiswa component--}}
+                            <x-modal.cekfile :datamahasiswa="$datamahasiswa" />
+
+                            <x-verifikasi.verifikasiakademik :datamahasiswa="$datamahasiswa"/>
+
                         </td>
 
                     </tr>

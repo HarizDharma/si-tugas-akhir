@@ -40,7 +40,7 @@
             @endphp
             @foreach ($datakonfirmasi as $datamahasiswa)
             {{--                jika status mahasiswa belum progrss tidak usah ditampikan hanya tampil yang sudah sempro--}}
-            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null AND $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sempro')
+            @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sempro')
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="px-6 py-4">
                     {{ $counter++ }}
@@ -55,12 +55,21 @@
                     {{ $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+                    @if($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] != "Belum Ada Hasil Sidang")
+                        {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}
+
+                    @elseif($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] == "Belum Ada Hasil Sidang")
+                        {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+                    @endif
                 </td>
                 <td class="px-6 py-4">
                     @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasipanitia'] == null)
                         <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
                                 Belum Verifikasi
+                        </span>
+                    @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasipanitia'] == 1)
+                        <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
+                                Sudah Verifikasi
                         </span>
                     @endif
                 </td>

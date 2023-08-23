@@ -5,7 +5,7 @@
 </button>
 
 {{--                            form untuk metgod ketika di klik verifikasi akademik data--}}
-<form id="delete-form-{{ $datamahasiswa['id'] }}" action="{{ route('verifikasimahasiswa', ['id' => $datamahasiswa['id']]) }}" method="POST" style="display: none;">
+<form id="delete-form-{{ $datamahasiswa['id'] }}" action="{{ route('verifikasimahasiswaakademik', ['id' => $datamahasiswa['id']]) }}" method="POST" style="display: none;">
     @csrf
     @method('POST')
 </form>

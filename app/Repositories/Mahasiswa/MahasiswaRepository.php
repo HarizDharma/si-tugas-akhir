@@ -11,6 +11,7 @@ use App\Models\HasilSidang;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Models\Verifikasi;
+use http\Env\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -368,6 +369,59 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
         return true;
     }
 
+    public function VerifikasiAkademik($id, $val, $platform = 'web')
+    {
+        $user = User::findOrFail($id);
+        $mahasiswa = Mahasiswa::findOrFail($user->mahasiswa_id);
+        $verif = Verifikasi::findOrFail($mahasiswa->verifikasi_id);
+
+        $verif->update(['verifikasi_akademik' => $val]);
+
+        return true;
+    }
+
+    public function jadwalambilijazah($platform = 'api', UpdateMahasiswaRequest $request, $id)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            // Return Jika Role bukan akademik (Panitia/Mahasiswa)
+            if($user->hasRole('mahasiswa')) {
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Tidak Mempunyai Hak Akses' )
+                    : new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
+            }
+            try {
+                DB::beginTransaction();
+
+                // Validasi input telah dilakukan oleh CreateMahasiswaRequest
+
+                $mahasiswa = Mahasiswa::update([
+                    'jadwal_pengambilan_ijazah' => $request->jadwal_pengambilan_ijazah,
+                ]);
+
+                DB::commit();
+
+                return $platform == 'web' ?
+                    formatResponseResource(true, 'Create User Mahasiswa', formatMahasiswaResource($user))
+                    : new ResponseResource(true, 'Create User Mahasiswa', UserResouces::make($user));
+
+            } catch (\Exception $e) {
+                DB::rollback();
+
+                return $platform == 'web' ?
+                    formatResponseResource(false, 'Gagal membuat user Mahasiswa: ' . $e->getMessage())
+                    : new ResponseResource(false, 'Gagal membuat user Mahasiswa: ' . $e->getMessage());
+
+            }
+        }
+        else {
+            // Jika pengguna belum terautentikasi, kirim respons error
+            return $platform == 'web' ?
+                formatResponseResource(false, 'Unauthorized, Please Login' )
+                : new ResponseResource(false, 'Unauthorized, Please Login');
+        }
+    }
 
     protected function generateSanctumToken($user)
     {

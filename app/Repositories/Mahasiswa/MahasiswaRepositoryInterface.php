@@ -18,4 +18,6 @@ interface MahasiswaRepositoryInterface
 
 
     public function VerifikasiPanitia($id, $val, $platform='web');
+    public function VerifikasiAkademik($id, $val, $platform='web');
+    public function jadwalambilijazah($platform = 'api', UpdateMahasiswaRequest $request, $id);
 }
