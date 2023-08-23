@@ -4,8 +4,6 @@
 @section('main')
     <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
     <x-sidebar.sidebarpanitia/>
-    <x-table.tablegagalsidangpanitia :mahasiswa="$mahasiswa['data']"/>
+    <x-table.tablegagalsidang :mahasiswa="$mahasiswa['data']"/>
 
-{{--    tambahkan modal untuk atur ulang sidang--}}
-    <x-modal.aturulangsidang/>
 @endsection

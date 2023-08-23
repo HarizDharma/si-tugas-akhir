@@ -11,18 +11,18 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ubah Hasil Sidang Mahasiswa</h3>
-                <form class="space-y-6" action="{{ route('ubahHasilSidangMahasiswa', ['id' => $datamahasiswa['id']]) }}" method="POST">
+                <form class="space-y-6" action="{{ route('ubahHasilSidangMahasiswa', ['id' => $datamahasiswa['mahasiswa_id']['id']]) }}" method="POST">
+                    @method('PUT')
                     @csrf
                     <div>
-                        <input type="hidden" name="id"value="{{ $datamahasiswa['id'] }}">
                         <label for="dosen_penguji" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Dosen penguji</label>
-                        <input type="text" name="dosen_penguji" id="dosen_penguji" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                        <input type="text" value="{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['dosen_penguji'] }}" name="dosen_penguji" id="dosen_penguji" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                     </div>
 
                     <div>
                         <div>
                             <label for="hasil_sidang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasil Sidang</label>
-                            <textarea name="hasil_sidang" id="hasil_sidang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required></textarea>
+                            <textarea name="hasil_sidang" id="hasil_sidang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}</textarea>
                         </div>
                     </div>
 

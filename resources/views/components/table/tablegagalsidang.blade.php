@@ -59,7 +59,12 @@
                             {{ $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+                            @if($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] != "Belum Ada Hasil Sidang")
+                                {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}
+
+                            @elseif($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] == "Belum Ada Hasil Sidang")
+                                {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+                            @endif
                         </td>
                         <td class="px-6 py-4">
                             @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null)
@@ -91,6 +96,14 @@
 
                             {{--panggil modal detail mahasiswa component--}}
                             <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
+
+                            {{--tombol untuk ganti sidang mahasiswa--}}
+                            <button type="button" data-modal-target="aturUlangSidang{{ $datamahasiswa['id'] }}" data-modal-toggle="aturUlangSidang{{ $datamahasiswa['id'] }}" class="text-white w-full bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                                <i class="fas fa-edit fa-lg inline-block p-1 transform hover:scale-105"></i> Atur Ulang Sidang
+                            </button>
+
+                            {{--panggil modal untuk edit status mahasiswa component--}}
+                            <x-modal.aturulangsidang :datamahasiswa="$datamahasiswa" />
 
                             {{--tombol untuk ganti status data mahasiswa--}}
                             <button type="button" data-modal-target="editStatusMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="editStatusMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800">
