@@ -50,8 +50,32 @@ class HasilSidangRepository implements HasilSidangRepositoryInterface
         // TODO: Implement show() method.
     }
 
-    public function update($idUser, $platform = 'api')
+    public function update($platform = 'api', $id, $request)
     {
-        // TODO: Implement update() method.
+        try {
+            DB::beginTransaction();
+
+            // Cari mahasiswa berdasarkan id
+            $mahasiswa = Mahasiswa::find($id);
+
+            // Buat atau update HasilSidang
+            $hasilSidang = $mahasiswa->hasilSidang ?: new HasilSidang();
+            $hasilSidang->fill([
+                'dosen_penguji' => $request->dosen_penguji,
+                'hasil_sidang' => $request->hasil_sidang,
+            ]);
+            $hasilSidang->save();
+
+            // Update data mahasiswa dengan hasil sidang id
+            $mahasiswa->update(['hasil_sidang_id' => $hasilSidang->id]);
+
+            DB::commit();
+
+            return $hasilSidang;
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }
