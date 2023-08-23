@@ -1,5 +1,5 @@
 {{--isi props yang dilempar dari hal utama dataakademik di view--}}
-@props(['mahasiswa'])
+@props(['mahasiswa', 'auth'])
 
 <div class="p-4 sm:ml-64">
     <div class="p-4 rounded-lg mt-14 bg-gray-50">
@@ -7,7 +7,7 @@
             <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                 Data Mahasiswa Yang Lolos Sidang
                 <div class="text-left text-sm">
-                    <p>Catatan : Disini data mahasiswa yang sudah lolos sidang yang akan di cek file form bebas tanggungan dan akan diverifikasi akademik</p>
+                    <p>Catatan : Disini data mahasiswa yang sudah lolos sidang dan ada hasil sidang yang akan di cek file form bebas tanggungan dan akan diverifikasi akademik</p>
                 </div>
             </caption>
 
@@ -59,7 +59,7 @@
                             {{ $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+                            {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}
                         </td>
                         <td class="px-6 py-4">
                             @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null)
@@ -92,6 +92,9 @@
                             {{--panggil modal detail mahasiswa component--}}
                             <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
 
+{{--                            jika role bukan akademik maka tidak usah tampilkan opsi verifikasi dan cek file--}}
+                            @if($auth['role'] == 1)
+
                             {{--tombol cek file mahasiswa--}}
                             <button data-modal-target="cekFile{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFile{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">
                                 <i class="fas fa-file fa-lg inline-block p-1 transform hover:scale-105"></i> Cek File
@@ -101,6 +104,8 @@
                             <x-modal.cekfile :datamahasiswa="$datamahasiswa" />
 
                             <x-verifikasi.verifikasiakademik :datamahasiswa="$datamahasiswa"/>
+
+                            @endif
                         </td>
                     </tr>
                 @endif

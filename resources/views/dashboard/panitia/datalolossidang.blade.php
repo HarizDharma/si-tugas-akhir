@@ -3,7 +3,7 @@
 
 @section('main')
     <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
-    <x-sidebar.sidebarakademik/>
-    <x-table.tablelolossidang :mahasiswa="$mahasiswa['data']"/>
+    <x-sidebar.sidebarpanitia/>
+    <x-table.tablelolossidang :mahasiswa="$mahasiswa['data']" :auth="$auth['data']"/>
 
 @endsection
