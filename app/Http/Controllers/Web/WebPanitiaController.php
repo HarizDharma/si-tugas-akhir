@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HasilSidang\CreateHasilSidangRequest;
 use App\Models\Mahasiswa;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Dashboard\DashboardRepositoryInterface;
+use App\Repositories\HasilSidang\HasilSidangRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
 use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use App\Repositories\Akademik\AkademikRepositoryInterface;
@@ -22,17 +24,20 @@ class WebPanitiaController extends Controller
     private $authRepo;
     private $dashboardRepo;
     private $jadwalSidangRepo;
+    private $hasilSidangRepo;
     public function __construct(AuthRepositoryInterface $authRepo,
                                 AkademikRepositoryInterface $panitiaRepo,
                                 MahasiswaRepositoryInterface $mahasiswaRepo,
                                 DashboardRepositoryInterface $dashboardRepository,
-                                TahapSidangRepositoryInterface $jadwalSidangRepo)
+                                TahapSidangRepositoryInterface $jadwalSidangRepo,
+                                HasilSidangRepositoryInterface $hasilSidangRepo)
     {
         $this->panitiaRepo = $panitiaRepo;
         $this->mahasiswaRepo = $mahasiswaRepo;
         $this->authRepo = $authRepo;
         $this->dashboardRepo = $dashboardRepository;
         $this->jadwalSidangRepo = $jadwalSidangRepo;
+        $this->hasilSidangRepo = $hasilSidangRepo;
     }
 
     //index plus pengecekan login
@@ -82,6 +87,35 @@ class WebPanitiaController extends Controller
         }
     }
 
+    //method verifikasi data mahasiswa
+    public function verifikasimahasiswa($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository jadi sudah sempro jika sudah di acc panitia
+            $mahasiswa = $this->mahasiswaRepo->VerifikasiPanitia( $id, 1, 'web');
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Verifikasi Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Verifikasi Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
     //getall data mahasiswa yang sudah verifikasi panitia
     public function mahasiswalolos()
     {
@@ -100,6 +134,222 @@ class WebPanitiaController extends Controller
         }
     }
 
+    //function untuk atur jadwal sidang
+    public function updateMahasiswaJadwalSidang($id, Request $request){
+        $mahasiswa = Mahasiswa::find($id);
+
+        if (!$mahasiswa) {
+            // Buat session flash untuk notifikasi gagal
+            Alert::error("Gagal", "Mahasiswa tidak ditemukan");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datamahasiswalolos');
+        }
+
+        // If Mahasiswa is found, proceed to update the record
+        $mahasiswa->update(['sidang_id' => $request->jadwal_sidang]);
+
+        // Pengecekan apakah waktu berhasil di tambahkan
+        if ($mahasiswa) {
+            // Buat session flash untuk notifikasi sukses
+            Alert::success("Berhasil", "Atur Jadwal Sidang");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datamahasiswalolos');
+        } else {
+            // Buat session flash untuk notifikasi gagal
+            Alert::error("Gagal", "Atur Jadwal Sidang");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datamahasiswalolos');
+        }
+    }
+
+    //method tambah hasil sidang
+    public function tambahhasilsidang($id, Request $request)
+    {
+        // Ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            try {
+                // Create data di database dengan repository hasil sidang
+                $hasilSidang = $this->hasilSidangRepo->store('api', $id, $request);
+
+                // Pengecekan apakah data berhasil di create
+                if ($hasilSidang) {
+                    // Buat session flash untuk notifikasi sukses
+                    Alert::success("Berhasil", "Tambah Hasil Sidang Mahasiswa");
+                } else {
+                    // Buat session flash untuk notifikasi gagal
+                    Alert::error("Gagal", "Tambah Hasil Sidang Mahasiswa");
+                }
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            } catch (\Exception $e) {
+                // Buat session flash untuk notifikasi gagal
+                Alert::error("Gagal", "Tambah Hasil Sidang Mahasiswa: " . $e->getMessage());
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method halaman lolos sempro dan merubah status setelah sidang ke yang sesuai
+    public function editstatusmahasiswa($id, Request $request)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa by id yang sudah di lempar dari form action
+            $mahasiswa = Mahasiswa::find($id);
+
+            if (!$mahasiswa) {
+                // Buat session flash untuk notifikasi gagal
+                Alert::error("Gagal", "Mahasiswa tidak ditemukan");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            }
+
+            // If Mahasiswa ada, update data status
+            $mahasiswa->update(['status_id' => $request->status_id]);
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Ubah Status Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Berhasil Ubah Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
+    public function datagagalsidang()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datagagalsidang and pass the data using compact()
+            return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //function untuk atur jadwal sidang
+    public function ubahJadwalSidang($id, Request $request){
+        $mahasiswa = Mahasiswa::find($id);
+
+        if (!$mahasiswa) {
+            // Buat session flash untuk notifikasi gagal
+            Alert::error("Gagal", "Mahasiswa tidak ditemukan");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datagagalsidang');
+        }
+
+        // If Mahasiswa is found, proceed to update the record
+        $mahasiswa->update(['sidang_id' => $request->jadwal_sidang_ulang]);
+
+        // Pengecekan apakah waktu berhasil di tambahkan
+        if ($mahasiswa) {
+            // Buat session flash untuk notifikasi sukses
+            Alert::success("Berhasil", "Atur Jadwal Sidang");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datagagalsidang');
+        } else {
+            // Buat session flash untuk notifikasi gagal
+            Alert::error("Gagal", "Atur Jadwal Sidang");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datagagalsidang');
+        }
+    }
+
+    //method ubah hasil sidang yang gagal sidang mengulangi
+    public function ubahhasilsidang($id, Request $request)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $hasilSidang = $this->hasilSidangRepo->update('api', $id, $request);
+
+            // Pengecekan apakah data berhasil di ubah
+            if ($hasilSidang) {
+                // Buat session flash untuk notifikasi sukses ubah
+                Alert::success("Berhasil", "Ubah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsidang');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Ubah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsidang');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa untuk halaman data lolos sidang mahasiswa
+    public function datalolossidang()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datagagalsidang and pass the data using compact()
+            return view('dashboard.panitia.datalolossidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+//    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
+//    public function gagalsidang()
+//    {
+//        $auth = $this->authRepo->index('web');
+//        //ambil datamahasiswa get all dari repository
+//        $mahasiswa = $this->mahasiswaRepo->index('web');
+//
+//        // Jika status login true
+//        if ($auth['status']) {
+//            // Redirect to the datagagalsidang and pass the data using compact()
+//            return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
+//        } else {
+//            return view('auth');
+//        }
+//    }
+
     //get halaman untuk set jadwal sidang
     public function jadwalsidang()
     {
@@ -113,37 +363,30 @@ class WebPanitiaController extends Controller
             return view('auth');
         }
     }
-    public function updateMahasiswaJadwalSidang($id, Request $request){
-        $mahasiswa = Mahasiswa::find($id);
-        $mahasiswa->update(['sidang_id' => $request->jadwal_sidang]);
 
-
-        return route('datamahasiswalolos');
-    }
-
+    //set jadwal sidang
     public function updateJadwalSidang($id, Request $request){
         $auth = $this->authRepo->index('web');
-        $tahap = $this->jadwalSidangRepo->update($id, $request);
-        $jadwal = $this->jadwalSidangRepo->index('web');
 
+        // Jika status true
         if ($auth['status']) {
-            // Redirect to the panitia data mahasiswa yang belum verifikasi and pass the data using compact()
-            return view('dashboard.panitia.jadwalsidang', compact('auth', 'jadwal'));
-        } else {
-            return view('auth');
-        }
-    }
-    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
-    public function gagalsidang()
-    {
-        $auth = $this->authRepo->index('web');
-        //ambil datamahasiswa get all dari repository
-        $mahasiswa = $this->mahasiswaRepo->index('web');
+            //ambil data
+            $tahap = $this->jadwalSidangRepo->update($id, $request);
 
-        // Jika status login true
-        if ($auth['status']) {
-            // Redirect to the datagagalsidang and pass the data using compact()
-            return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
+            // Pengecekan apakah data berhasil di ubah
+            if ($tahap) {
+                // Buat session flash untuk notifikasi sukses ubah
+                Alert::success("Berhasil", "Ubah Hasil Tanggal Sidang");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('jadwalsidang');
+            } else {
+                // Buat session flash untuk notifikasi gagal ubah
+                Alert::error("Gagal", "Ubah Hasil Tanggal Sidang");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('jadwalsidang');
+            }
         } else {
             return view('auth');
         }
