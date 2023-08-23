@@ -11,7 +11,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Status Mahasiswa</h3>
-                <form class="space-y-6" action="{{ route('editStatusMahasiswa', ['id' => $datamahasiswa['id']]) }}" method="POST">
+                <form class="space-y-6" action="{{ route('editStatusMahasiswa', ['id' => $datamahasiswa['mahasiswa_id']['id']]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div>

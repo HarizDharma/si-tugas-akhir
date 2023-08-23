@@ -9,18 +9,14 @@
                 <div class="text-left text-sm">
                     <p>Catatan : Disini data mahasiswa yang sudah sempro dan diberikan jadwal sidang</p>
                 </div>
-                <div class="mt-5">
-                    <button data-modal-target="aturJadwalSidang" data-modal-toggle="aturJadwalSidang" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                        Atur Jadwal Sidang
-                    </button>
-                </div>
+
             </caption>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-3 py-3">
                     No
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-4 py-3">
                     Nama
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -36,6 +32,9 @@
                     Verifikasi Panitia
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Verifikasi Akademik
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
                     Aksi
                 </th>
             </tr>
@@ -47,7 +46,7 @@
             @endphp
             @foreach ($datamahasiswalolos as $datamahasiswa)
                 {{--                jika status mahasiswa sudah verifikasi panitia dan status sudah sempro  ditampikan--}}
-                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sempro' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] != 0)
+                @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] != 0 AND $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == "Sudah Sempro")
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-6 py-4">
                             {{ $counter++ }}
@@ -62,12 +61,36 @@
                             {{ $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+
+                            @if($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] != "Belum Ada Hasil Sidang")
+                                {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}
+
+                            @elseif($datamahasiswa['mahasiswa_id']['hasil_sidang_id'] == "Belum Ada Hasil Sidang")
+                                {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id'] }}
+                            @endif
+
                         </td>
                         <td class="px-6 py-4">
-                            <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
+                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null)
+                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
+                                Belum Verifikasi
+                            </span>
+                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] !== null)
+                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
                                 Sudah Verifikasi
                             </span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4">
+                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == null)
+                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
+                                Belum Verifikasi
+                            </span>
+                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] !== null)
+                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
+                                Sudah Verifikasi
+                            </span>
+                            @endif
                         </td>
                         <td class="px-6 py-4">
                             {{--tombol detail data mahasiswa--}}
@@ -78,13 +101,36 @@
                             {{--panggil modal detail mahasiswa component--}}
                             <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
 
-                            {{--tombol cek file mahasiswa--}}
-                            <button data-modal-target="cekFile{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFile{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">
-                                <i class="fas fa-file fa-lg inline-block p-1 transform hover:scale-105"></i> Cek File
+                            <button data-modal-target="aturJadwalSidang{{ $datamahasiswa['id'] }}" data-modal-toggle="aturJadwalSidang{{ $datamahasiswa['id'] }}" class="text-white w-full bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-bray-600 dark:hover:bg-bray-700 focus:outline-none dark:focus:ring-bray-800" type="button">
+                                <i class="fas fa-edit fa-lg inline-block p-1 transform hover:scale-105"></i> Atur Jadwal Sidang
                             </button>
 
+                            <x-modal.aturjadwalsidang :datamahasiswa="$datamahasiswa"/>
+
+                            {{--tombol cek file mahasiswa--}}
+{{--                            <button data-modal-target="cekFile{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFile{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">--}}
+{{--                                <i class="fas fa-file fa-lg inline-block p-1 transform hover:scale-105"></i> Cek File--}}
+{{--                            </button>--}}
+
                             {{--panggil modal cek file mahasiswa component--}}
-                            <x-modal.cekfilepanitia :datamahasiswa="$datamahasiswa" />
+{{--                            <x-modal.cekfilepanitia :datamahasiswa="$datamahasiswa" />--}}
+
+                            {{--tombol untuk ganti status data mahasiswa--}}
+
+                            {{--tombol untuk ganti status dan set hasil sidang data mahasiswa--}}
+                            <button type="button" data-modal-target="hasilSidangMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="hasilSidangMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
+                                <i class="fas fa-check fa-lg inline-block p-1 transform hover:scale-105"></i> Hasil Sidang
+                            </button>
+
+                            {{--panggil modal untuk hasil sidang mahasiswa component--}}
+                            <x-modal.hasilsidangmahasiswa :datamahasiswa="$datamahasiswa" />
+
+                            <button type="button" data-modal-target="editStatusMahasiswa{{ $datamahasiswa['id'] }}" data-modal-toggle="editStatusMahasiswa{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800">
+                                <i class="fas fa-edit fa-lg inline-block p-1 transform hover:scale-105"></i> Edit Status
+                            </button>
+
+                            {{--panggil modal untuk edit status mahasiswa component--}}
+                            <x-modal.editstatusmahasiswa :datamahasiswa="$datamahasiswa" />
                         </td>
                     </tr>
                 @endif
