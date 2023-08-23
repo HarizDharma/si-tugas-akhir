@@ -19,8 +19,8 @@
                         <div class="flex items-center justify-center m-5">
                             <img src="https://icon-library.com/images/files-icon-png/files-icon-png-10.jpg" class="w-20 mx-auto">
                         </div>
-                        <a href="#" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
                     </div>
+                    <a href="/storage/uploads/mahasiswa/{{$datamahasiswa['mahasiswa_id']['file_id']['laporan_pkl']}}" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
 
                     {{--Show data data file sertifikat TOEIC--}}
                     <div>
@@ -28,7 +28,7 @@
                         <div class="flex items-center justify-center m-5">
                             <img src="https://icon-library.com/images/files-icon-png/files-icon-png-10.jpg" class="w-20 mx-auto">
                         </div>
-                        <a href="#" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
+                        <a href="/storage/uploads/mahasiswa/{{$datamahasiswa['mahasiswa_id']['file_id']['sertifikat_toeic']}}" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
                     </div>
 
                     {{--Show data data file SKKM--}}
@@ -37,7 +37,7 @@
                         <div class="flex items-center justify-center m-5">
                             <img src="https://icon-library.com/images/files-icon-png/files-icon-png-10.jpg" class="w-20 mx-auto">
                         </div>
-                        <a href="#" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
+                        <a href="/storage/uploads/mahasiswa/{{$datamahasiswa['mahasiswa_id']['file_id']['skkm']}}" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
                     </div>
 
                     {{--Show data pengumpulan alat--}}
@@ -46,7 +46,7 @@
                         <div class="flex items-center justify-center m-5">
                             <img src="https://icon-library.com/images/files-icon-png/files-icon-png-10.jpg" class="w-20 mx-auto">
                         </div>
-                        <a href="#" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
+                        <a href="/storage/uploads/mahasiswa/{{$datamahasiswa['mahasiswa_id']['file_id']['pengumpulan_alat']}}" class="m-5 text-white w-full bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Download</a>
                     </div>
 
                 </div>
