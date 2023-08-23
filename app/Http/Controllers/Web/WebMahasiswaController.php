@@ -100,7 +100,24 @@ class WebMahasiswaController extends Controller
                 $mahasiswa->mahasiswa->update(['status_id' => 2]);
             }
         }
+        Alert::success("Berhasil", "Upload File Pendaftaran");
         return view('dashboard.mahasiswa.pendaftaranmahasiswa', compact('auth','upload'));
+    }
+
+    //method uploadfile bebas tanggungan
+    public function uploadFileBebasTanggungan($id, Request $request) {
+        $auth = $this->authRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->getSelf( 'api');
+
+
+        $upload = $this->fileRepo->update($mahasiswa->mahasiswa->file_id,  $request);
+        if($upload) {
+            if($upload->laporan_pkl && $upload->sertifikat_toeic && $upload->pengumpulan_alat ) {
+                // Buat session flash untuk notifikasi sukses upload
+                Alert::success("Berhasil", "Upload File Bebas Tanggungan");
+            }
+        }
+        return view('dashboard.mahasiswa.formbebastanggungan', compact('auth','upload'));
     }
     protected function generateSanctumToken($user)
     {

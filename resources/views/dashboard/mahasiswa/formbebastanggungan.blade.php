@@ -12,8 +12,8 @@
             <div class="text-3xl font-bold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                 <h2>Form Bebas Tanggungan Mahasiswa</h2>
             </div>
-            <form class="space-y-4 w-1/2" action="{{ route('uploadFile', ['id' => $auth['data']['id']]) }}" method="POST" enctype="multipart/form-data">
-            @csrf
+            <form class="space-y-4 w-1/2" action="{{ route('uploadFileBebasTanggungan', ['id' => $auth['data']['id']]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 @method('PUT')
                 <div>
                     <label for="toeic" class="block text-md font-medium text-gray-900">Upload Sertifikat TOEIC</label>
