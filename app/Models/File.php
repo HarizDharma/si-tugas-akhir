@@ -21,7 +21,11 @@ class File extends Model
         'sertifikat_toeic',
         'skkm',
         'pengumpulan_alat',
-        'laporan_skripsi'
+        'laporan_skripsi',
+        'proposal_laporan_sempro',
+        'form_perstujuan_sempro'
+
+
     ];
 
     public function mahasiswa() {

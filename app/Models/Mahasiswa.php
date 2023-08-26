@@ -20,7 +20,8 @@ class Mahasiswa extends Model
         'status_id',
         'sidang_id',
         'file_id',
-        'hasil_sidang_id'
+        'hasil_sidang_akhir_id',
+        'hasil_sidang_sempro_id'
 
     ];
     protected $hidden = [
