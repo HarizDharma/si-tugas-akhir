@@ -40,24 +40,47 @@ class DashboardRepository implements DashboardRepositoryInterface
                     }])
                     ->count();
 
-                $mahasiswaBelumVerifPanitia = User::where('role', 'mahasiswa')
+                $mahasiswaBelumVerifSemproPanitia = User::where('role', 'mahasiswa')
                     ->whereHas('mahasiswa', function ($query) {
                         $query->whereHas('verif', function ($query) {
-                            $query->where('verifikasi_panitia', 0);
+                            $query->where('verifikasi_panitia_sempro', 0);
                         });
                     })
                     ->with(['mahasiswa.verif' => function ($query) {
-                        $query->where('verifikasi_panitia', 0);
+                        $query->where('verifikasi_panitia_sempro', 0);
                     }])
                     ->count();
-                $mahasiswaSudahVerifPanitia = User::where('role', 'mahasiswa')
+
+                $mahasiswaSudahVerifSemproPanitia = User::where('role', 'mahasiswa')
                     ->whereHas('mahasiswa', function ($query) {
                         $query->whereHas('verif', function ($query) {
-                            $query->where('verifikasi_panitia', 1);
+                            $query->where('verifikasi_panitia_sempro', 1);
                         });
                     })
                     ->with(['mahasiswa.verif' => function ($query) {
-                        $query->where('verifikasi_panitia', 1);
+                        $query->where('verifikasi_panitia_sempro', 1);
+                    }])
+                    ->count();
+
+                $mahasiswaBelumVerifSidangAkhirPanitia = User::where('role', 'mahasiswa')
+                    ->whereHas('mahasiswa', function ($query) {
+                        $query->whereHas('verif', function ($query) {
+                            $query->where('verifikasi_panitia_sidang_akhir', 0);
+                        });
+                    })
+                    ->with(['mahasiswa.verif' => function ($query) {
+                        $query->where('verifikasi_panitia_sidang_akhir', 0);
+                    }])
+                    ->count();
+
+                $mahasiswaSudahVerifSidangAkhirPanitia = User::where('role', 'mahasiswa')
+                    ->whereHas('mahasiswa', function ($query) {
+                        $query->whereHas('verif', function ($query) {
+                            $query->where('verifikasi_panitia_sidang_akhir', 1);
+                        });
+                    })
+                    ->with(['mahasiswa.verif' => function ($query) {
+                        $query->where('verifikasi_panitia_sidang_akhir', 1);
                     }])
                     ->count();
 
@@ -110,8 +133,12 @@ class DashboardRepository implements DashboardRepositoryInterface
                     'total_mahasiswa' => $mahasiswa,
                     'total_panitia' => $panitia,
 
-                    'mahasiswa_verif_panitia' => $mahasiswaSudahVerifPanitia,
-                    'mahasiswa_belum_verif_panitia' => $mahasiswaBelumVerifPanitia,
+                    'mahasiswa_verif_panitia_sempro' => $mahasiswaSudahVerifSemproPanitia,
+                    'mahasiswa_verif_panitia_sidang_akhir' => $mahasiswaSudahVerifSidangAkhirPanitia,
+
+                    'mahasiswa_belum_verif_panitia_sempro' => $mahasiswaBelumVerifSemproPanitia,
+                    'mahasiswa_belum_verif_panitia_sidang_akhir' => $mahasiswaBelumVerifSidangAkhirPanitia,
+
                     'mahasiswa_belum_progress' => $mahasiswaBelumProgress,
                     'mahasiswa_belum_sempro' =>$mahasiswaBelumSempro,
                     'mahasiswa_lulus_sempro' => $mahasiswaLulusSempro,
@@ -139,47 +166,47 @@ class DashboardRepository implements DashboardRepositoryInterface
                     }])
                     ->count();
 
-                $mahasiswaBelumVerifPanitia = User::where('role', 'mahasiswa')
-                    ->whereHas('mahasiswa', function ($query) {
-                        $query->whereHas('verif', function ($query) {
-                            $query->where('verifikasi_panitia', 0);
-                        });
-                    })
-                    ->with(['mahasiswa.verif' => function ($query) {
-                        $query->where('verifikasi_panitia', 0);
-                    }])
-                    ->count();
+//                $mahasiswaBelumVerifPanitia = User::where('role', 'mahasiswa')
+//                    ->whereHas('mahasiswa', function ($query) {
+//                        $query->whereHas('verif', function ($query) {
+//                            $query->where('verifikasi_panitia', 0);
+//                        });
+//                    })
+//                    ->with(['mahasiswa.verif' => function ($query) {
+//                        $query->where('verifikasi_panitia', 0);
+//                    }])
+//                    ->count();
 
-                $mahasiswaBelumProgress = User::with('mahasiswa')
-                    ->whereHas('mahasiswa', function ($querry){
-                        $querry->whereHas('status', function ($querry) {
-                            $querry->where('id', 1);
-                        });
-                    })
-                    ->count();
-
-                $mahasiswaBelumSempro = User::with('mahasiswa')
-                    ->whereHas('mahasiswa', function ($querry){
-                        $querry->whereHas('status', function ($querry) {
-                            $querry->where('id', 2);
-                        });
-                    })
-                    ->count();
-
-                $mahasiswaLulusSempro = User::with('mahasiswa')
-                    ->whereHas('mahasiswa', function ($querry){
-                        $querry->whereHas('status', function ($querry) {
-                            $querry->where('id', 3);
-                        });
-                    })
-                    ->count();
-                $mahasiswaSudahSidang_Ulang = User::with('mahasiswa')
-                    ->whereHas('mahasiswa', function ($querry){
-                        $querry->whereHas('status', function ($querry) {
-                            $querry->where('id', 5);
-                        });
-                    })
-                    ->count();
+//                $mahasiswaBelumProgress = User::with('mahasiswa')
+//                    ->whereHas('mahasiswa', function ($querry){
+//                        $querry->whereHas('status', function ($querry) {
+//                            $querry->where('id', 1);
+//                        });
+//                    })
+//                    ->count();
+//
+//                $mahasiswaBelumSempro = User::with('mahasiswa')
+//                    ->whereHas('mahasiswa', function ($querry){
+//                        $querry->whereHas('status', function ($querry) {
+//                            $querry->where('id', 2);
+//                        });
+//                    })
+//                    ->count();
+//
+//                $mahasiswaLulusSempro = User::with('mahasiswa')
+//                    ->whereHas('mahasiswa', function ($querry){
+//                        $querry->whereHas('status', function ($querry) {
+//                            $querry->where('id', 3);
+//                        });
+//                    })
+//                    ->count();
+//                $mahasiswaSudahSidang_Ulang = User::with('mahasiswa')
+//                    ->whereHas('mahasiswa', function ($querry){
+//                        $querry->whereHas('status', function ($querry) {
+//                            $querry->where('id', 5);
+//                        });
+//                    })
+//                    ->count();
                 $mahasiswaSudahSidang_Done = User::with('mahasiswa')
                     ->whereHas('mahasiswa', function ($querry){
                         $querry->whereHas('status', function ($querry) {
@@ -200,11 +227,11 @@ class DashboardRepository implements DashboardRepositoryInterface
                     'total_panitia' => $panitia,
                     'total_akademik' => $akademik,
                     'mahasiswa_belum_verif_akademik' => $mahasiswaBelumVerifAkademik ,
-                    'mahasiswa_belum_verif_panitia' => $mahasiswaBelumVerifPanitia,
-                    'mahasiswa_belum_progress' => $mahasiswaBelumProgress,
-                    'mahasiswa_belum_sempro' =>$mahasiswaBelumSempro,
-                    'mahasiswa_lulus_sempro' => $mahasiswaLulusSempro,
-                    'mahasiswa_sidang_ulang' => $mahasiswaSudahSidang_Ulang,
+//                    'mahasiswa_belum_verif_panitia' => $mahasiswaBelumVerifPanitia,
+//                    'mahasiswa_belum_progress' => $mahasiswaBelumProgress,
+//                    'mahasiswa_belum_sempro' =>$mahasiswaBelumSempro,
+//                    'mahasiswa_lulus_sempro' => $mahasiswaLulusSempro,
+//                    'mahasiswa_sidang_ulang' => $mahasiswaSudahSidang_Ulang,
                     'mahasiswa_sidang_lulus' => $mahasiswaSudahSidang_Done,
 //                    'mahasiswa_sudah_lulus' => $mahasiswaSudahSidang_Done,
                 ];
