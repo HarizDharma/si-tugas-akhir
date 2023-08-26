@@ -31,10 +31,14 @@ class UserSeeder extends Seeder
                 'sertifikat_toeic' => null,
                 'skkm' => null,
                 'pengumpulan_alat' => null,
+                'laporan_skripsi' => null,
+                'proposal_laporan_sempro' => null,
+                'form_perstujuan_sempro' => null,
             ]);
 
             $verifikasi = Verifikasi::create([
-               'verifikasi_panitia' => false,
+               'verifikasi_panitia_sempro' => false,
+               'verifikasi_panitia_sidang_akhir' => false,
                 'verifikasi_akademik' => false
             ]);
             $mahasiswa = Mahasiswa::create([
@@ -46,7 +50,8 @@ class UserSeeder extends Seeder
                 'status_id' => 1,
                 'sidang_id' => null,
                 'file_id' => $file->id,
-                'hasil_sidang_id' => null,
+                'hasil_sidang_akhir_id' => null,
+                'hasil_sidang_sempro_id' => null,
                 'verifikasi_id' => $verifikasi->id,
             ]);
 
@@ -126,10 +131,15 @@ class UserSeeder extends Seeder
             'sertifikat_toeic' => null,
             'skkm' => null,
             'pengumpulan_alat' => null,
+            'laporan_skripsi' => null,
+            'proposal_laporan_sempro' => null,
+            'form_perstujuan_sempro' => null,
+
         ]);
 
         $verifikasi = Verifikasi::create([
-            'verifikasi_panitia' => false,
+            'verifikasi_panitia_sempro' => false,
+            'verifikasi_panitia_sidang_akhir' => false,
             'verifikasi_akademik' => false
         ]);
         $mahasiswa = Mahasiswa::create([
@@ -141,7 +151,8 @@ class UserSeeder extends Seeder
             'status_id' => 1,
             'sidang_id' => null,
             'file_id' => $file->id,
-            'hasil_sidang_id' => null,
+            'hasil_sidang_akhir_id' => null,
+            'hasil_sidang_sempro_id' => null,
             'verifikasi_id' => $verifikasi->id,
         ]);
 

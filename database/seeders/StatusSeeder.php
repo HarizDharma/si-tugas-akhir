@@ -16,19 +16,28 @@ class StatusSeeder extends Seeder
     {
         //
         $status = Status::create([
-            'nama_status' => 'Belum Progress'
+            'nama_status' => 'Belum Progress/Proses Mendaftar Sempro'
         ]);
         $status = Status::create([
-            'nama_status' => 'Sempro'
+            'nama_status' => 'Sudah Daftar Sempro'
         ]);
         $status = Status::create([
-            'nama_status' => 'Sudah Sempro'
+            'nama_status' => 'Sudah Sidang Sempro dan Mengulangi'
+        ]);
+        $status = Status::create([
+            'nama_status' => 'Sudah Sidang Sempro dan Tidak Mengulangi'
+        ]);
+        $status = Status::create([
+            'nama_status' => 'Sudah Daftar Sidang Akhir'
         ]);
         $status = Status::create([
             'nama_status' => 'Sudah Sidang dan Mengulangi'
         ]);
         $status = Status::create([
             'nama_status' => 'Sudah Sidang dan Tidak Mengulangi'
+        ]);
+        $status = Status::create([
+            'nama_status' => 'Sudah Mengambil Ijazah'
         ]);
     }
 }
