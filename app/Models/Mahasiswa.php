@@ -18,7 +18,7 @@ class Mahasiswa extends Model
         'jadwal_pengambilan_ijazah',
         'verifikasi_id',
         'status_id',
-        'sidang_id',
+//        'sidang_id',
         'file_id',
         'hasil_sidang_akhir_id',
         'hasil_sidang_sempro_id'
@@ -26,7 +26,7 @@ class Mahasiswa extends Model
     ];
     protected $hidden = [
         'status_id',
-        'sidang_id',
+//        'sidang_id',
         'file_id',
         'hasil_sidang_id'
     ];
