@@ -95,7 +95,7 @@ class WebPanitiaController extends Controller
         // Jika status true
         if ($auth['status']) {
             //ambil datamahasiswa verifikasi dari repository jadi sudah sempro jika sudah di acc panitia
-            $mahasiswa = $this->mahasiswaRepo->VerifikasiPanitia( $id, 1, 'web');
+            $mahasiswa = $this->mahasiswaRepo->VerifikasiPanitiaSempro( $id, 1, 'web');
 
             // Pengecekan apakah data berhasil di verifikasi
             if ($mahasiswa) {
@@ -103,32 +103,30 @@ class WebPanitiaController extends Controller
                 Alert::success("Berhasil", "Verifikasi Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswalolos');
+                return redirect()->route('konfirmasipanitia');
             } else {
                 // Buat session flash untuk notifikasi sukses
                 Alert::error("Gagal", "Verifikasi Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswalolos');
+                return redirect()->route('konfirmasipanitia');
             }
         } else {
             return view('auth');
         }
     }
 
-    //getall data mahasiswa yang sudah verifikasi panitia
-    public function mahasiswalolos()
+    //getall data mahasiswa yang sudah verifikasi sempro
+    public function dataterverifikasisempro()
     {
         $auth = $this->authRepo->index('web');
-        //ambil datamahasiswa dari repository
-
-        $jadwal = $this->jadwalSidangRepo->index('web');
+        //ambil dataakademik get all dari repository
         $mahasiswa = $this->mahasiswaRepo->index('web');
 
         // Jika status true
         if ($auth['status']) {
             // Redirect to the panitia data mahasiswa yang belum verifikasi and pass the data using compact()
-            return view('dashboard.panitia.datalolos', compact('auth', 'mahasiswa', 'jadwal'));
+            return view('dashboard.panitia.dataterverifikasisempro', compact('auth', 'mahasiswa'));
         } else {
             return view('auth');
         }
@@ -143,7 +141,7 @@ class WebPanitiaController extends Controller
             Alert::error("Gagal", "Mahasiswa tidak ditemukan");
 
             // Redirect ke halaman yang diinginkan
-            return redirect()->route('datamahasiswalolos');
+            return redirect()->route('dataterverifikasisempro');
         }
 
         // If Mahasiswa is found, proceed to update the record
@@ -155,13 +153,13 @@ class WebPanitiaController extends Controller
             Alert::success("Berhasil", "Atur Jadwal Sidang");
 
             // Redirect ke halaman yang diinginkan
-            return redirect()->route('datamahasiswalolos');
+            return redirect()->route('dataterverifikasisempro');
         } else {
             // Buat session flash untuk notifikasi gagal
             Alert::error("Gagal", "Atur Jadwal Sidang");
 
             // Redirect ke halaman yang diinginkan
-            return redirect()->route('datamahasiswalolos');
+            return redirect()->route('dataterverifikasisempro');
         }
     }
 
@@ -187,20 +185,20 @@ class WebPanitiaController extends Controller
                 }
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswalolos');
+                return redirect()->route('dataterverifikasisempro');
             } catch (\Exception $e) {
                 // Buat session flash untuk notifikasi gagal
                 Alert::error("Gagal", "Tambah Hasil Sidang Mahasiswa: " . $e->getMessage());
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswalolos');
+                return redirect()->route('dataterverifikasisempro');
             }
         } else {
             return view('auth');
         }
     }
 
-    //method halaman lolos sempro dan merubah status setelah sidang ke yang sesuai
+    //method halaman terverifikasi untuk merubah status setelah tambah hasil sidang
     public function editstatusmahasiswa($id, Request $request)
     {
         //ambil data siapa yang login
@@ -216,7 +214,7 @@ class WebPanitiaController extends Controller
                 Alert::error("Gagal", "Mahasiswa tidak ditemukan");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswalolos');
+                return redirect()->route('dataterverifikasisempro');
             }
 
             // If Mahasiswa ada, update data status
@@ -228,10 +226,136 @@ class WebPanitiaController extends Controller
                 Alert::success("Berhasil", "Ubah Status Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
-                return redirect()->route('datamahasiswalolos');
+                return redirect()->route('dataterverifikasisempro');
             } else {
                 // Buat session flash untuk notifikasi sukses
                 Alert::error("Gagal", "Berhasil Ubah Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('dataterverifikasisempro');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa yang gagal sempro
+    public function datagagalsempro()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa dari repository
+
+        $jadwal = $this->jadwalSidangRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the panitia data mahasiswa yang belum verifikasi and pass the data using compact()
+            return view('dashboard.panitia.datagagalsempro', compact('auth', 'mahasiswa', 'jadwal'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //function untuk atur jadwal sidang
+    public function ubahJadwalSidang($id, Request $request){
+        $mahasiswa = Mahasiswa::find($id);
+
+        if (!$mahasiswa) {
+            // Buat session flash untuk notifikasi gagal
+            Alert::error("Gagal", "Mahasiswa tidak ditemukan");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datagagalsempro');
+        }
+
+        // If Mahasiswa is found, proceed to update the record
+        $mahasiswa->update(['sidang_id' => $request->jadwal_sidang_ulang]);
+
+        // Pengecekan apakah waktu berhasil di tambahkan
+        if ($mahasiswa) {
+            // Buat session flash untuk notifikasi sukses
+            Alert::success("Berhasil", "Atur Jadwal Sidang");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datagagalsempro');
+        } else {
+            // Buat session flash untuk notifikasi gagal
+            Alert::error("Gagal", "Atur Jadwal Sidang");
+
+            // Redirect ke halaman yang diinginkan
+            return redirect()->route('datagagalsempro');
+        }
+    }
+
+    //method ubah hasil sidang yang gagal sidang sempro mengulangi
+    public function ubahhasilsidang($id, Request $request)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository
+            $hasilSidang = $this->hasilSidangRepo->update('api', $id, $request);
+
+            // Pengecekan apakah data berhasil di ubah
+            if ($hasilSidang) {
+                // Buat session flash untuk notifikasi sukses ubah
+                Alert::success("Berhasil", "Ubah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsempro');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Ubah Hasil Sidang Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsempro');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa yang sudah verifikasi panitia
+    public function mahasiswalolos()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa dari repository
+
+        $jadwal = $this->jadwalSidangRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the panitia data mahasiswa yang belum verifikasi and pass the data using compact()
+            return view('dashboard.panitia.datalolos', compact('auth', 'mahasiswa', 'jadwal'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method verifikasi mahasiswa daftar sidang akhir
+    public function verifikasisidangakhir($id)
+    {
+        //ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+        // Jika status true
+        if ($auth['status']) {
+            //ambil datamahasiswa verifikasi dari repository jadi sudah sempro jika sudah di acc panitia
+            $mahasiswa = $this->mahasiswaRepo->VerifikasiPanitiaSidang( $id, 1, 'web');
+
+            // Pengecekan apakah data berhasil di verifikasi
+            if ($mahasiswa) {
+                // Buat session flash untuk notifikasi sukses delete
+                Alert::success("Berhasil", "Verifikasi Mahasiswa");
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datamahasiswalolos');
+            } else {
+                // Buat session flash untuk notifikasi sukses
+                Alert::error("Gagal", "Verifikasi Mahasiswa");
 
                 // Redirect ke halaman yang diinginkan
                 return redirect()->route('datamahasiswalolos');
@@ -252,67 +376,6 @@ class WebPanitiaController extends Controller
         if ($auth['status']) {
             // Redirect to the datagagalsidang and pass the data using compact()
             return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
-        } else {
-            return view('auth');
-        }
-    }
-
-    //function untuk atur jadwal sidang
-    public function ubahJadwalSidang($id, Request $request){
-        $mahasiswa = Mahasiswa::find($id);
-
-        if (!$mahasiswa) {
-            // Buat session flash untuk notifikasi gagal
-            Alert::error("Gagal", "Mahasiswa tidak ditemukan");
-
-            // Redirect ke halaman yang diinginkan
-            return redirect()->route('datagagalsidang');
-        }
-
-        // If Mahasiswa is found, proceed to update the record
-        $mahasiswa->update(['sidang_id' => $request->jadwal_sidang_ulang]);
-
-        // Pengecekan apakah waktu berhasil di tambahkan
-        if ($mahasiswa) {
-            // Buat session flash untuk notifikasi sukses
-            Alert::success("Berhasil", "Atur Jadwal Sidang");
-
-            // Redirect ke halaman yang diinginkan
-            return redirect()->route('datagagalsidang');
-        } else {
-            // Buat session flash untuk notifikasi gagal
-            Alert::error("Gagal", "Atur Jadwal Sidang");
-
-            // Redirect ke halaman yang diinginkan
-            return redirect()->route('datagagalsidang');
-        }
-    }
-
-    //method ubah hasil sidang yang gagal sidang mengulangi
-    public function ubahhasilsidang($id, Request $request)
-    {
-        //ambil data siapa yang login
-        $auth = $this->authRepo->index('web');
-
-        // Jika status true
-        if ($auth['status']) {
-            //ambil datamahasiswa verifikasi dari repository
-            $hasilSidang = $this->hasilSidangRepo->update('api', $id, $request);
-
-            // Pengecekan apakah data berhasil di ubah
-            if ($hasilSidang) {
-                // Buat session flash untuk notifikasi sukses ubah
-                Alert::success("Berhasil", "Ubah Hasil Sidang Mahasiswa");
-
-                // Redirect ke halaman yang diinginkan
-                return redirect()->route('datagagalsidang');
-            } else {
-                // Buat session flash untuk notifikasi sukses
-                Alert::error("Gagal", "Ubah Hasil Sidang Mahasiswa");
-
-                // Redirect ke halaman yang diinginkan
-                return redirect()->route('datagagalsidang');
-            }
         } else {
             return view('auth');
         }

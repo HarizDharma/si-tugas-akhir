@@ -70,29 +70,50 @@ Route::delete('/deletejadwalijazah/{id}', [WebAkademikController::class, 'delete
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
 
+
 //halaman data mahasiswa dan get all mahasiswa
 Route::get('/datamahasiswapanitia', [WebPanitiaController::class, 'datamahasiswa'])->name('datamahasiswapanitia');
+
 
 //ke halaman data mahasiswa yang sempro di dashboard panitia
 Route::get('/datakonfirmasi', [WebPanitiaController::class, 'konfirmasipanitia'])->name('konfirmasipanitia');
 //Action Verifikasi Mahasiswa Panitia
 Route::post('/dataverifikasimahasiswa/{id}', [WebPanitiaController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswa');
 
-//ke halaman data mahasiswa yang sudah di acc panitia
-Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
-//atur jadwal sidang pada halaman data lolos sempro
-Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class, 'updateMahasiswaJadwalSidang'])->name('updateMahasiswaJadwalSidang');
+
+//ke halaman data mahasiswa yang sudah verifikasi panitia sempro di dashboard panitia
+Route::get('/dataterverifikasisempro', [WebPanitiaController::class, 'dataterverifikasisempro'])->name('dataterverifikasisempro');
 //action untuk tambah hasil sidang
 Route::post('/tambahhasilsidang/{id}', [WebPanitiaController::class, 'tambahhasilsidang'])->name('tambahHasilSidangMahasiswa');
+
+
+//ke halaman data mahasiswa yang gagal sempro
+Route::get('/datagagalsempro', [WebPanitiaController::class, 'datagagalsempro'])->name('datagagalsempro');
+//action jika hasil sudang sudah ada khusus untuk mahasiswa yang gagalsidang
+Route::put('/datagagalsidang/{id}', [WebPanitiaController::class, 'ubahhasilsidang'])->name('ubahHasilSidangMahasiswa');
+
+
+//ke halaman data mahasiswa yang sudah lolos sempro
+Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->name('datamahasiswalolos');
+//Action Verifikasi Mahasiswa Panitia
+Route::post('/verifikasisidangakhir/{id}', [WebPanitiaController::class, 'verifikasisidangakhir'])->name('verifikasisidangakhir');
+
+
+//atur jadwal sidang pada halaman data lolos sempro
+Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class, 'updateMahasiswaJadwalSidang'])->name('updateMahasiswaJadwalSidang');
+
+
+
 //action untuk ubah status mahasiswa di halaman lolos sempro
 Route::put('/editstatusmahasiswa/{id}', [WebPanitiaController::class, 'editstatusmahasiswa'])->name('editStatusMahasiswa');
+
+
 
 //Data Gagal Sidang Mahasiswa
 Route::get('/datagagalsidang', [WebPanitiaController::class, 'datagagalsidang'])->name('datagagalsidang');
 //action jika mau atur ulangjadwal sidang
 Route::put('/jadwalsidangulang/{id}', [WebPanitiaController::class, 'ubahJadwalSidang'])->name('ubahJadwalSidang');
-//action jika hasil sudang sudah ada khusus untuk mahasiswa yang gagalsidang
-Route::put('/datagagalsidang/{id}', [WebPanitiaController::class, 'ubahhasilsidang'])->name('ubahHasilSidangMahasiswa');
+
 
 //Data Lolos Sidang Mahasiswa Panitia
 Route::get('/datalolossidang', [WebPanitiaController::class, 'datalolossidang'])->name('datalolossidang');

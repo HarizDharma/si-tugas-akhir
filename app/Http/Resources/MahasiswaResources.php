@@ -29,8 +29,9 @@ class MahasiswaResources extends JsonResource
             'sidang_id' =>  $this->sidang_id  == null ? 'Belum Di Jadwalkan' : TahapSidang::find( $this->sidang_id ),
             'file_id' =>  $this->file_id  == null ?  'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT' : File::find( $this->file_id ),
             'status_id' =>  $this->status_id  == null ? 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT' : Status::find( $this->status_id ),
-            'hasil_sidang_id' =>  $this->hasil_sidang_id  == null ? 'Belum Ada Hasil Sidang' : HasilSidang::find( $this->hasil_sidang_id ),
             'verifikasi_id' =>  $this->verifikasi_id  == null ?  'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT' : Verifikasi::find( $this->verifikasi_id ),
+            'hasil_sidang_sempro_id' =>  $this->hasil_sidang_sempro_id  == null ? 'Belum Ada Hasil Sidang Sempro' : HasilSidangSempro::find($this->hasil_sidang_sempro_id),
+            'hasil_sidang_akhir_id' =>  $this->hasil_sidang_akhir_id  == null ? 'Belum Ada Hasil Sidang Akhir' : HasilSidangAkhir::find($this->hasil_sidang_akhir_id),
         ];
     }
 }

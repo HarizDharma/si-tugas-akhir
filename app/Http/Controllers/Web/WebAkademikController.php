@@ -523,7 +523,7 @@ class WebAkademikController extends Controller
         // Jika status true
         if ($auth['status']) {
             //ambil datamahasiswa verifikasi dari repository
-            $mahasiswa = $this->mahasiswaRepo->jadwalambilijazah('api', $id);
+            $mahasiswa = $this->mahasiswaRepo->jadwalambilijazah('web', $id);
 
             // Pengecekan apakah data berhasil di verifikasi
             if ($mahasiswa) {

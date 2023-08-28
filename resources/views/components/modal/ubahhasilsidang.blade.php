@@ -15,14 +15,36 @@
                     @method('PUT')
                     @csrf
                     <div>
-                        <label for="dosen_penguji" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Dosen penguji</label>
-                        <input type="text" value="{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['dosen_penguji'] }}" name="dosen_penguji" id="dosen_penguji" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                        <label for="dosen_penguji1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Dosen penguji 1</label>
+                        <input type="text" value="{{$datamahasiswa['mahasiswa_id']['hasil_sidang_sempro_id']['dosen_penguji1']}}" name="dosen_penguji1" id="dosen_penguji1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="dosen_penguji2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Dosen penguji 2</label>
+                        <input type="text" value="{{$datamahasiswa['mahasiswa_id']['hasil_sidang_sempro_id']['dosen_penguji2']}}" name="dosen_penguji2" id="dosen_penguji2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="dosen_penguji3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Dosen penguji 3</label>
+                        <input type="text" value="{{$datamahasiswa['mahasiswa_id']['hasil_sidang_sempro_id']['dosen_penguji3']}}" name="dosen_penguji3" id="dosen_penguji3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                     </div>
 
                     <div>
                         <div>
-                            <label for="hasil_sidang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasil Sidang</label>
-                            <textarea name="hasil_sidang" id="hasil_sidang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>{{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}</textarea>
+                            <label for="hasil_sidang_penguji1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasil Sidang Penguji 1</label>
+                            <textarea name="hasil_sidang_penguji1" id="hasil_sidang_penguji1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>{{$datamahasiswa['mahasiswa_id']['hasil_sidang_sempro_id']['hasil_sidang_penguji1']}}</textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label for="hasil_sidang_penguji2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasil Sidang Penguji 2</label>
+                            <textarea name="hasil_sidang_penguji2" id="hasil_sidang_penguji2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>{{$datamahasiswa['mahasiswa_id']['hasil_sidang_sempro_id']['hasil_sidang_penguji2']}}</textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label for="hasil_sidang_penguji3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasil Sidang Penguji 3</label>
+                            <textarea name="hasil_sidang_penguji3" id="hasil_sidang_penguji3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>{{$datamahasiswa['mahasiswa_id']['hasil_sidang_sempro_id']['hasil_sidang_penguji3']}}</textarea>
                         </div>
                     </div>
 

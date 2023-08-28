@@ -17,7 +17,8 @@ interface MahasiswaRepositoryInterface
     public function updateSelf($platform = 'api', UpdateMahasiswaRequest $request);
 
 
-    public function VerifikasiPanitia($id, $val, $platform='web');
+    public function VerifikasiPanitiaSempro($id, $val, $platform='web');
+    public function VerifikasiPanitiaSidang($id, $val, $platform='web');
     public function VerifikasiAkademik($id, $val, $platform='web');
     public function jadwalambilijazah($platform = 'api', UpdateMahasiswaRequest $request, $id);
 }

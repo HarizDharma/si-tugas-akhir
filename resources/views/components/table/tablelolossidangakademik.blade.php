@@ -5,9 +5,9 @@
     <div class="p-4 rounded-lg mt-14 bg-gray-50">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                Data Mahasiswa Yang Lolos Sidang
+                Data Mahasiswa Yang Lolos Sidang Akhir
                 <div class="text-left text-sm">
-                    <p>Catatan : Disini data mahasiswa yang sudah lolos sidang dan ada hasil sidang yang akan di cek file form bebas tanggungan dan akan diverifikasi akademik</p>
+                    <p>Catatan : Disini data mahasiswa yang sudah lolos sidang akhir dan ada hasil sidang akhir yang akan di cek file form bebas tanggungan dan akan diverifikasi akademik</p>
                 </div>
             </caption>
 
@@ -44,7 +44,7 @@
             @endphp
             @foreach ($mahasiswa as $datamahasiswa)
                 {{--                tampilkan data mahasiswa yang sudah sidang lolos dan akan di acc akademik ditampikan--}}
-                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sidang dan Tidak Mengulangi' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == null)
+                @if($datamahasiswa['mahasiswa_id']['status_id'] == 7 AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == null)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-3 py-4">
                             {{ $counter++ }}

@@ -8,6 +8,8 @@ use App\Http\Resources\ResponseResource;
 use App\Http\Resources\UserResouces;
 use App\Models\File;
 use App\Models\HasilSidang;
+use App\Models\HasilSidangAkhir;
+use App\Models\HasilSidangSempro;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Models\Verifikasi;
@@ -17,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 
 class MahasiswaRepository implements MahasiswaRepositoryInterface
 {
-
 
     public function index($platform = 'api')
     {
@@ -149,6 +150,7 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                     'verifikasi_panitia' => false,
                     'verifikasi_akademik' => false
                 ]);
+
                 $mahasiswa = Mahasiswa::create([
                     'prodi' => $request->prodi,
                     'judul_skripsi' =>  $request->judul_skripsi,
@@ -158,9 +160,9 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                     'status_id' => (string) 1,
                     'sidang_id' => null,
                     'file_id' => (string) $file->id,
-                    'hasil_sidang_id' => null,
                     'verifikasi_id' => $verifikasi->id,
-
+                    'hasil_sidang_sempro_id' => null,
+                    'hasil_sidang_akhir_id' => null,
                 ]);
 
                 $user = User::create([
@@ -325,9 +327,11 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
                 $mahasiswa = Mahasiswa::findOrFail($user->mahasiswa_id);
                 $verif = Verifikasi::findOrFail($mahasiswa->verifikasi_id);
                 $file = File::findOrFail($mahasiswa->file_id);
-                $hasil_sidang = HasilSidang::find($mahasiswa->hasil_sidang_id);
+                $hasil_sidang_sempro = HasilSidangSempro::find($mahasiswa->hasil_sidang_sempro_id);
+                $hasil_sidang_akhir = HasilSidangAkhir::find($mahasiswa->hasil_sidang_akhir_id);
 
-                if ($hasil_sidang)   $hasil_sidang->delete();
+                if ($hasil_sidang_sempro)   $hasil_sidang_sempro->delete();
+                if ($hasil_sidang_akhir)   $hasil_sidang_akhir->delete();
                 if ($file)          $file->delete();
                 if ($verif) $verif->delete();
                 if ($mahasiswa)  $mahasiswa->delete();
@@ -356,15 +360,26 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
         }
     }
 
-    public function VerifikasiPanitia($id, $val, $platform = 'web')
+    public function VerifikasiPanitiaSempro($id, $val, $platform = 'web')
     {
         $user = User::findOrFail($id);
         $mahasiswa = Mahasiswa::findOrFail($user->mahasiswa_id);
         $verif = Verifikasi::findOrFail($mahasiswa->verifikasi_id);
-        //ubah status nya untuk dirubah ke sudah sempro
-        $mahasiswa->update(['status_id' => 3]);
 
-        $verif->update(['verifikasi_panitia' => $val]);
+        //verifikasi panitia sempro
+        $verif->update(['verifikasi_panitia_sempro' => $val]);
+
+        return true;
+    }
+
+    public function VerifikasiPanitiaSidang($id, $val, $platform = 'web')
+    {
+        $user = User::findOrFail($id);
+        $mahasiswa = Mahasiswa::findOrFail($user->mahasiswa_id);
+        $verif = Verifikasi::findOrFail($mahasiswa->verifikasi_id);
+
+        //verifikasi panitia sidang akhir
+        $verif->update(['verifikasi_panitia_sidang_akhir' => $val]);
 
         return true;
     }
@@ -386,39 +401,39 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
             $user = Auth::user();
 
             // Return Jika Role bukan akademik (Panitia/Mahasiswa)
-            if($user->hasRole('mahasiswa')) {
-                return $platform == 'web' ?
-                    formatResponseResource(false, 'Tidak Mempunyai Hak Akses' )
+            if ($user->hasRole('mahasiswa')) {
+                return $platform == 'web'
+                    ? formatResponseResource(false, 'Tidak Mempunyai Hak Akses')
                     : new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
             }
             try {
                 DB::beginTransaction();
 
-                // Validasi input telah dilakukan oleh CreateMahasiswaRequest
+                // Validasi input telah dilakukan oleh UpdateMahasiswaRequest
 
-                $mahasiswa = Mahasiswa::update([
+                $mahasiswa = Mahasiswa::findOrFail($id); // Ubah: gunakan findOrFail
+                $mahasiswa->update([
                     'jadwal_pengambilan_ijazah' => $request->jadwal_pengambilan_ijazah,
                 ]);
 
                 DB::commit();
 
-                return $platform == 'web' ?
-                    formatResponseResource(true, 'Create User Mahasiswa', formatMahasiswaResource($user))
-                    : new ResponseResource(true, 'Create User Mahasiswa', UserResouces::make($user));
+                return $platform == 'web'
+                    ? formatResponseResource(true, 'Update Jadwal Pengambilan Ijazah Mahasiswa', formatMahasiswaResource($mahasiswa))
+                    : new ResponseResource(true, 'Update Jadwal Pengambilan Ijazah Mahasiswa', UserResources::make($mahasiswa));
 
             } catch (\Exception $e) {
                 DB::rollback();
 
-                return $platform == 'web' ?
-                    formatResponseResource(false, 'Gagal membuat user Mahasiswa: ' . $e->getMessage())
-                    : new ResponseResource(false, 'Gagal membuat user Mahasiswa: ' . $e->getMessage());
+                return $platform == 'web'
+                    ? formatResponseResource(false, 'Gagal mengupdate jadwal pengambilan ijazah mahasiswa: ' . $e->getMessage())
+                    : new ResponseResource(false, 'Gagal mengupdate jadwal pengambilan ijazah mahasiswa: ' . $e->getMessage());
 
             }
-        }
-        else {
+        } else {
             // Jika pengguna belum terautentikasi, kirim respons error
-            return $platform == 'web' ?
-                formatResponseResource(false, 'Unauthorized, Please Login' )
+            return $platform == 'web'
+                ? formatResponseResource(false, 'Unauthorized, Please Login')
                 : new ResponseResource(false, 'Unauthorized, Please Login');
         }
     }

@@ -39,12 +39,22 @@
     </div>
 
     <div class="bg-gray-50 dark:bg-gray-800 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hasil Sidang : </h5>
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hasil Sidang Sempro : </h5>
 {{--        pengecekan untuk jika ada hasil sidang tampilkan hasil jika tidak tampilkan null--}}
-        @if($auth['mahasiswa_id']['hasil_sidang_id'] == 'Belum Ada Hasil Sidang')
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $auth['mahasiswa_id']['hasil_sidang_id'] }}</h5>
-        @elseif($auth['mahasiswa_id']['hasil_sidang_id'] != 'Belum Ada Hasil Sidang')
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $auth['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}</h5>
+        @if($auth['mahasiswa_id']['hasil_sidang_sempro_id'] == 'Belum Ada Hasil Sidang Sempro')
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $auth['mahasiswa_id']['hasil_sidang_sempro_id'] }}</h5>
+        @elseif($auth['mahasiswa_id']['hasil_sidang_sempro_id'] != 'Belum Ada Hasil Sidang Sempro')
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $auth['mahasiswa_id']['hasil_sidang_sempro_id']['hasil_sidang_penguji1'] }}</h5>
+        @endif
+    </div>
+
+    <div class="bg-gray-50 dark:bg-gray-800 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hasil Sidang Akhir : </h5>
+        {{--        pengecekan untuk jika ada hasil sidang akhir tampilkan hasil jika tidak tampilkan null--}}
+        @if($auth['mahasiswa_id']['hasil_sidang_akhir_id'] == 'Belum Ada Hasil Sidang Akhir')
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $auth['mahasiswa_id']['hasil_sidang_akhir_id'] }}</h5>
+        @elseif($auth['mahasiswa_id']['hasil_sidang_akhir_id'] != 'Belum Ada Hasil Sidang Akhir')
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $auth['mahasiswa_id']['hasil_sidang_akhir_id']['hasil_sidang_penguji1'] }}</h5>
         @endif
     </div>
 

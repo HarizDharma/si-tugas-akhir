@@ -23,11 +23,14 @@
                         <label for="status_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ubah Status</label>
                         <select name="status_id" id="status_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                             <option>Pilih status</option>
-                            <option value="1">Belum Progress</option>
-                            <option value="2">Sempro</option>
-                            <option value="3">Sudah Sempro</option>
-                            <option value="4">Sudah Sidang dan Mengulangi</option>
-                            <option value="5">Sudang Sidang dan Tidak Mengulangi</option>
+                            <option value="1">Belum Progress/Proses Mendaftar Sempro</option>
+                            <option value="2">Sudah Daftar Sempro</option>
+                            <option value="3">Sudah Sidang Sempro dan Mengulangi</option>
+                            <option value="4">Sudah Sidang Sempro dan Tidak Mengulangi</option>
+                            <option value="5">Sudah Daftar Sidang Akhir</option>
+                            <option value="6">Sudah Sidang dan Mengulangi</option>
+                            <option value="7">Sudah Sidang dan Tidak Mengulangi</option>
+                            <option value="8">Sudah Mengambil Ijazah</option>
                         </select>
                     </div>
 

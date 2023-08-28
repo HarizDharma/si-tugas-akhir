@@ -3,6 +3,8 @@
 use App\Http\Resources\MahasiswaResources;
 use App\Models\File;
 use App\Models\HasilSidang;
+use App\Models\HasilSidangAkhir;
+use App\Models\HasilSidangSempro;
 use App\Models\Mahasiswa;
 use App\Models\Status;
 use App\Models\TahapSidang;
@@ -42,8 +44,9 @@ if (!function_exists('formatLoginResource')) {
                     'sidang_id' =>  $mhs->sidang_id  == null ? 'Belum Di Jadwalkan' : TahapSidang::find($mhs->sidang_id),
                     'file_id' =>  $mhs->file_id  == null ?  'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT' : File::find($mhs->file_id),
                     'status_id' =>  $mhs->status_id  == null ? 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT' : Status::find($mhs->status_id),
-                    'hasil_sidang_id' =>  $mhs->hasil_sidang_id  == null ? 'Belum Ada Hasil Sidang' : HasilSidang::find($mhs->hasil_sidang_id),
                     'verifikasi_id' =>  $mhs->verifikasi_id  == null ?  'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT' : Verifikasi::find($mhs->verifikasi_id),
+                    'hasil_sidang_sempro_id' =>  $mhs->hasil_sidang_sempro_id  == null ? 'Belum Ada Hasil Sidang Sempro' : HasilSidangSempro::find($mhs->hasil_sidang_sempro_id),
+                    'hasil_sidang_akhir_id' =>  $mhs->hasil_sidang_akhir_id  == null ? 'Belum Ada Hasil Sidang Akhir' : HasilSidangAkhir::find($mhs->hasil_sidang_akhir_id),
                 ];
             }),
             'created_at' => $user->created_at,
@@ -94,8 +97,9 @@ if (!function_exists('formatMahasiswaResource')) {
                         'sidang_id' => $mhs->sidang_id ? TahapSidang::find($mhs->sidang_id) : 'Belum Di Jadwalkan',
                         'file_id' => $mhs->file_id ? File::find($mhs->file_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
                         'status_id' => $mhs->status_id ? Status::find($mhs->status_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
-                        'hasil_sidang_id' => $mhs->hasil_sidang_id ? HasilSidang::find($mhs->hasil_sidang_id) : 'Belum Ada Hasil Sidang',
                         'verifikasi_id' => $mhs->verifikasi_id ? Verifikasi::find($mhs->verifikasi_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
+                        'hasil_sidang_sempro_id' =>  $mhs->hasil_sidang_sempro_id  == null ? 'Belum Ada Hasil Sidang Sempro' : HasilSidangSempro::find($mhs->hasil_sidang_sempro_id),
+                        'hasil_sidang_akhir_id' =>  $mhs->hasil_sidang_akhir_id  == null ? 'Belum Ada Hasil Sidang Akhir' : HasilSidangAkhir::find($mhs->hasil_sidang_akhir_id),
                     ] : null;
                 }),
                 'created_at' => $userData->created_at,
@@ -137,8 +141,9 @@ if (!function_exists('formatPanitiaResource')) {
                         'sidang_id' => $mhs->sidang_id ? TahapSidang::find($mhs->sidang_id) : 'Belum Di Jadwalkan',
                         'file_id' => $mhs->file_id ? File::find($mhs->file_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
                         'status_id' => $mhs->status_id ? Status::find($mhs->status_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
-                        'hasil_sidang_id' => $mhs->hasil_sidang_id ? HasilSidang::find($mhs->hasil_sidang_id) : 'Belum Ada Hasil Sidang',
                         'verifikasi_id' => $mhs->verifikasi_id ? Verifikasi::find($mhs->verifikasi_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
+                        'hasil_sidang_sempro_id' =>  $mhs->hasil_sidang_sempro_id  == null ? 'Belum Ada Hasil Sidang Sempro' : HasilSidangSempro::find($mhs->hasil_sidang_sempro_id),
+                        'hasil_sidang_akhir_id' =>  $mhs->hasil_sidang_akhir_id  == null ? 'Belum Ada Hasil Sidang Akhir' : HasilSidangAkhir::find($mhs->hasil_sidang_akhir_id),
                     ] : null;
                 }),
                 'created_at' => $userData->created_at,
@@ -183,8 +188,9 @@ if (!function_exists('formatAkademikResource')) {
                         'sidang_id' => $mhs->sidang_id ? TahapSidang::find($mhs->sidang_id) : 'Belum Di Jadwalkan',
                         'file_id' => $mhs->file_id ? File::find($mhs->file_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
                         'status_id' => $mhs->status_id ? Status::find($mhs->status_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
-                        'hasil_sidang_id' => $mhs->hasil_sidang_id ? HasilSidang::find($mhs->hasil_sidang_id) : 'Belum Ada Hasil Sidang',
                         'verifikasi_id' => $mhs->verifikasi_id ? Verifikasi::find($mhs->verifikasi_id) : 'USER ERROR/TIDAK VALID - MOHON RECREATE AKUN MAHASISWA TERKAIT',
+                        'hasil_sidang_sempro_id' =>  $mhs->hasil_sidang_sempro_id  == null ? 'Belum Ada Hasil Sidang Sempro' : HasilSidangSempro::find($mhs->hasil_sidang_sempro_id),
+                        'hasil_sidang_akhir_id' =>  $mhs->hasil_sidang_akhir_id  == null ? 'Belum Ada Hasil Sidang Akhir' : HasilSidangAkhir::find($mhs->hasil_sidang_akhir_id),
                     ] : null;
                 }),
                 'created_at' => $userData->created_at,

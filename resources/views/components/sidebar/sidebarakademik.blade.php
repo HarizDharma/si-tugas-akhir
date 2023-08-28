@@ -41,7 +41,7 @@
                         <path d="M5.293 9.293a1 1 0 011.414 0L9 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z" />
                         <path fill-rule="evenodd" d="M2 4.5A2.5 2.5 0 014.5 2h11A2.5 2.5 0 0118 4.5v11a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 012 15.5v-11zM4.5 3A1.5 1.5 0 003 4.5v11A1.5 1.5 0 004.5 17h11a1.5 1.5 0 001.5-1.5v-11A1.5 1.5 0 0015.5 3h-11z" clip-rule="evenodd" />
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Data Lolos Sidang</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Data Lolos Sidang Akhir</span>
                 </a>
             </li>
             <li>
