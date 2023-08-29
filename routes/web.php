@@ -99,6 +99,27 @@ Route::get('/mahasiswalolos', [WebPanitiaController::class, 'mahasiswalolos'])->
 Route::post('/verifikasisidangakhir/{id}', [WebPanitiaController::class, 'verifikasisidangakhir'])->name('verifikasisidangakhir');
 
 
+//Data Lolos Sidang Mahasiswa Panitia
+Route::get('/datalolossidang', [WebPanitiaController::class, 'datalolossidang'])->name('datalolossidang');
+//action untuk tambah hasil sidang
+Route::post('/tambahhasilsidangakhir/{id}', [WebPanitiaController::class, 'tambahhasilsidangakhir'])->name('tambahHasilSidangAkhirMahasiswa');
+
+
+//Data Gagal Sidang Akhir Mahasiswa
+Route::get('/datagagalsidang', [WebPanitiaController::class, 'datagagalsidang'])->name('datagagalsidang');
+//action untuk tambah hasil sidang
+Route::put('/ubahhasilsidangakhir/{id}', [WebPanitiaController::class, 'ubahhasilsidangakhir'])->name('ubahHasilSidangAkhirMahasiswa');
+
+
+//Data Sudah Sidang Akhir Mahasiswa
+Route::get('/datasudahsidangakhir', [WebPanitiaController::class, 'datasudahsidangakhir'])->name('datasudahsidangakhir');
+
+
+
+//action jika mau atur ulangjadwal sidang
+Route::put('/jadwalsidangulang/{id}', [WebPanitiaController::class, 'ubahJadwalSidang'])->name('ubahJadwalSidang');
+
+
 //atur jadwal sidang pada halaman data lolos sempro
 Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class, 'updateMahasiswaJadwalSidang'])->name('updateMahasiswaJadwalSidang');
 
@@ -107,16 +128,6 @@ Route::put('/updateMahasiswaJadwalSidang/{idMhs}', [WebPanitiaController::class,
 //action untuk ubah status mahasiswa di halaman lolos sempro
 Route::put('/editstatusmahasiswa/{id}', [WebPanitiaController::class, 'editstatusmahasiswa'])->name('editStatusMahasiswa');
 
-
-
-//Data Gagal Sidang Mahasiswa
-Route::get('/datagagalsidang', [WebPanitiaController::class, 'datagagalsidang'])->name('datagagalsidang');
-//action jika mau atur ulangjadwal sidang
-Route::put('/jadwalsidangulang/{id}', [WebPanitiaController::class, 'ubahJadwalSidang'])->name('ubahJadwalSidang');
-
-
-//Data Lolos Sidang Mahasiswa Panitia
-Route::get('/datalolossidang', [WebPanitiaController::class, 'datalolossidang'])->name('datalolossidang');
 
 //jadwal tahap sidang
 Route::get('/jadwalsidang', [WebPanitiaController::class, 'jadwalsidang'])->name('jadwalsidang');

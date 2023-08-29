@@ -365,6 +365,59 @@ class WebPanitiaController extends Controller
         }
     }
 
+    //getall data mahasiswa untuk halaman data lolos sidang daftar akhir mahasiswa
+    public function datalolossidang()
+    {
+        $auth = $this->authRepo->index('web');
+        //ambil datamahasiswa get all dari repository
+        $mahasiswa = $this->mahasiswaRepo->index('web');
+
+        // Jika status login true
+        if ($auth['status']) {
+            // Redirect to the datagagalsidang and pass the data using compact()
+            return view('dashboard.panitia.datalolossidang', compact('auth', 'mahasiswa'));
+        } else {
+            return view('auth');
+        }
+    }
+
+    //method tambah hasil sidang
+    public function tambahhasilsidangakhir($id, Request $request)
+    {
+        // Ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            try {
+                // Create data di database dengan repository hasil sidang
+                $hasilSidang = $this->hasilSidangRepo->storeAkhir('api', $id, $request);
+
+                // Pengecekan apakah data berhasil di create
+                if ($hasilSidang) {
+                    // Buat session flash untuk notifikasi sukses
+                    Alert::success("Berhasil", "Tambah Hasil Sidang Akhir Mahasiswa");
+                } else {
+                    // Buat session flash untuk notifikasi gagal
+                    Alert::error("Gagal", "Tambah Hasil Sidang Akhir Mahasiswa");
+                }
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datalolossidang');
+            } catch (\Exception $e) {
+                // Buat session flash untuk notifikasi gagal
+                Alert::error("Gagal", "Tambah Hasil Sidang Akhir Mahasiswa: " . $e->getMessage());
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datalolossidang');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+
+
     //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
     public function datagagalsidang()
     {
@@ -381,8 +434,43 @@ class WebPanitiaController extends Controller
         }
     }
 
-    //getall data mahasiswa untuk halaman data lolos sidang mahasiswa
-    public function datalolossidang()
+    //method ubah hasil sidang akhir
+    public function ubahhasilsidangakhir($id, Request $request)
+    {
+        // Ambil data siapa yang login
+        $auth = $this->authRepo->index('web');
+
+        // Jika status true
+        if ($auth['status']) {
+            try {
+                // Create data di database dengan repository hasil sidang
+                $hasilSidang = $this->hasilSidangRepo->updateAkhir('api', $id, $request);
+
+                // Pengecekan apakah data berhasil di create
+                if ($hasilSidang) {
+                    // Buat session flash untuk notifikasi sukses
+                    Alert::success("Berhasil", "Ubah Hasil Sidang Akhir Mahasiswa");
+                } else {
+                    // Buat session flash untuk notifikasi gagal
+                    Alert::error("Gagal", "Ubah Hasil Sidang Akhir Mahasiswa");
+                }
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsidang');
+            } catch (\Exception $e) {
+                // Buat session flash untuk notifikasi gagal
+                Alert::error("Gagal", "Ubah Hasil Sidang Akhir Mahasiswa: " . $e->getMessage());
+
+                // Redirect ke halaman yang diinginkan
+                return redirect()->route('datagagalsidang');
+            }
+        } else {
+            return view('auth');
+        }
+    }
+
+    //getall data mahasiswa untuk halaman data sudah sidang akhir mahasiswa
+    public function datasudahsidangakhir()
     {
         $auth = $this->authRepo->index('web');
         //ambil datamahasiswa get all dari repository
@@ -391,27 +479,11 @@ class WebPanitiaController extends Controller
         // Jika status login true
         if ($auth['status']) {
             // Redirect to the datagagalsidang and pass the data using compact()
-            return view('dashboard.panitia.datalolossidang', compact('auth', 'mahasiswa'));
+            return view('dashboard.panitia.datasudahsidangakhir', compact('auth', 'mahasiswa'));
         } else {
             return view('auth');
         }
     }
-
-//    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
-//    public function gagalsidang()
-//    {
-//        $auth = $this->authRepo->index('web');
-//        //ambil datamahasiswa get all dari repository
-//        $mahasiswa = $this->mahasiswaRepo->index('web');
-//
-//        // Jika status login true
-//        if ($auth['status']) {
-//            // Redirect to the datagagalsidang and pass the data using compact()
-//            return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
-//        } else {
-//            return view('auth');
-//        }
-//    }
 
     //get halaman untuk set jadwal sidang
     public function jadwalsidang()
@@ -454,6 +526,22 @@ class WebPanitiaController extends Controller
             return view('auth');
         }
     }
+
+    //    //getall data mahasiswa untuk halaman data gagal sidang mahasiswa
+//    public function gagalsidang()
+//    {
+//        $auth = $this->authRepo->index('web');
+//        //ambil datamahasiswa get all dari repository
+//        $mahasiswa = $this->mahasiswaRepo->index('web');
+//
+//        // Jika status login true
+//        if ($auth['status']) {
+//            // Redirect to the datagagalsidang and pass the data using compact()
+//            return view('dashboard.panitia.datagagalsidang', compact('auth', 'mahasiswa'));
+//        } else {
+//            return view('auth');
+//        }
+//    }
 
     protected function generateSanctumToken($user)
     {
