@@ -26,9 +26,6 @@
                     Jadwal Pengambilan Ijazah
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Verifikasi Panitia
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Verifikasi Akademik
                 </th>
                 <th scope="col" class="px-6 py-3 text-center">
@@ -41,7 +38,7 @@
             @endphp
             @foreach ($mahasiswa as $datamahasiswa)
                 {{--                jika status mahasiswa belum progrss tidak usah ditampikan--}}
-                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sidang dan Tidak Mengulangi' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] != null AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] != null AND $datamahasiswa['mahasiswa_id']['jadwal_pengambilan_ijazah'] == 'Belum Di Jadwalkan')
+                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sidang dan Tidak Mengulangi' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 1 AND $datamahasiswa['mahasiswa_id']['jadwal_pengambilan_ijazah'] == 'Belum Di Jadwalkan')
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-3 py-4">
                             {{ $counter++ }}
@@ -58,23 +55,13 @@
                         <td class="px-6 py-4">
                             {{ $datamahasiswa['mahasiswa_id']['jadwal_pengambilan_ijazah'] }}
                         </td>
+
                         <td class="px-6 py-4">
-                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null)
+                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 0)
                                 <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
                                 Belum Verifikasi
                             </span>
-                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] !== null)
-                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
-                                Sudah Verifikasi
-                            </span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4">
-                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == null)
-                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
-                                Belum Verifikasi
-                            </span>
-                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] !== null)
+                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 1)
                                 <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
                                 Sudah Verifikasi
                             </span>
@@ -122,9 +109,6 @@
                     Jadwal Pengambilan Ijazah
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Verifikasi Panitia
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Verifikasi Akademik
                 </th>
                 <th scope="col" class="px-6 py-3 text-center">
@@ -137,7 +121,7 @@
             @endphp
             @foreach ($mahasiswa as $datamahasiswa)
                 {{--                jika status mahasiswa belum progrss tidak usah ditampikan--}}
-                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sidang dan Tidak Mengulangi' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] != null AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] != null AND $datamahasiswa['mahasiswa_id']['jadwal_pengambilan_ijazah'] != 'Belum Di Jadwalkan')
+                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Mengambil Ijazah' AND $datamahasiswa['mahasiswa_id']['jadwal_pengambilan_ijazah'] != 'Belum Di Jadwalkan')
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-3 py-4">
                             {{ $counter++ }}
@@ -154,30 +138,20 @@
                         <td class="px-6 py-4">
                             {{ $datamahasiswa['mahasiswa_id']['jadwal_pengambilan_ijazah'] }}
                         </td>
+
                         <td class="px-6 py-4">
-                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null)
+                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 0)
                                 <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
                                 Belum Verifikasi
                             </span>
-                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] !== null)
-                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
-                                Sudah Verifikasi
-                            </span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4">
-                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == null)
-                                <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
-                                Belum Verifikasi
-                            </span>
-                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] !== null)
+                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 1)
                                 <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
                                 Sudah Verifikasi
                             </span>
                             @endif
                         </td>
                         <td class="px-6 py-4 text-center">
-                            {{--panggil modal delete jadwal ijazah mahasiswa component--}}
+                            {{--panggil modal delet mahasiswa component--}}
                             <x-delete.deletejadwalijazah :datamahasiswa="$datamahasiswa" />
                         </td>
                     </tr>

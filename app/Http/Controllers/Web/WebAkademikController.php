@@ -16,6 +16,7 @@ use App\Repositories\Dashboard\DashboardRepositoryInterface;
 use App\Repositories\Mahasiswa\MahasiswaRepositoryInterface;
 //use App\Repositories\Panitia\PanitiaRepositoryInterface;
 use App\Repositories\Panitia\PanitiaRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -376,23 +377,6 @@ class WebAkademikController extends Controller
         }
     }
 
-//    //getall data mahasiswa tidak verifikasi
-//    public function dataverifikasimahasiswa()
-//    {
-//        $auth = $this->authRepo->index('web');
-//        //ambil datamahasiswa get all dari repository
-//        $mahasiswa = $this->mahasiswaRepo->index('web');
-//
-//        // Jika status true
-//        if ($auth['status']) {
-//            // Redirect to the datamahasiswa and pass the data using compact()
-//            return view('dashboard.akademik.dataverifikasi', compact('auth', 'mahasiswa'));
-//        } else {
-//            return view('auth');
-//        }
-//    }
-
-
     //getall data mahasiswa untuk halaman data lolos sidang mahasiswa
     public function datalolossidang()
     {
@@ -515,17 +499,17 @@ class WebAkademikController extends Controller
     }
 
     //method set jadwal pengambilan ijazah
-    public function pengambilanijazah($id)
+    public function pengambilanijazah($id, Request $request)
     {
         //ambil data siapa yang login
         $auth = $this->authRepo->index('web');
 
         // Jika status true
         if ($auth['status']) {
-            //ambil datamahasiswa verifikasi dari repository
-            $mahasiswa = $this->mahasiswaRepo->jadwalambilijazah('web', $id);
+            //ambil datamahasiswa by id yang di route
+            $mahasiswa = $this->mahasiswaRepo->jadwalambilijazah('web', $request, $id);
 
-            // Pengecekan apakah data berhasil di verifikasi
+            // Pengecekan apakah jadwal berhasil di set
             if ($mahasiswa) {
                 // Buat session flash untuk notifikasi sukses tambah jadwal ijazah
                 Alert::success("Berhasil", "Set Jadwal Pengambilan Ijazah");
@@ -544,7 +528,7 @@ class WebAkademikController extends Controller
         }
     }
 
-    //method delete data jadwal ijazah
+    //method delete jadwal ijazah
     public function deleteJadwalIjazah($id)
     {
         //ambil data siapa yang login
@@ -553,18 +537,18 @@ class WebAkademikController extends Controller
         // Jika status true
         if ($auth['status']) {
             //ambil datamahasiswa delete dari repository
-            $mahasiswa = $this->mahasiswaRepo->store('api', $id);
+            $mahasiswa = $this->mahasiswaRepo->deleteJadwalIjazah('api', $id);
 
             // Pengecekan apakah data berhasil didelete
             if ($mahasiswa) {
                 // Buat session flash untuk notifikasi sukses delete
-                Alert::success("Berhasil", "Hapus Jadwal Pengambilan Ijazah");
+                Alert::success("Berhasil", "Delete Jadwal Ambil Ijazah");
 
                 // Redirect ke halaman yang diinginkan
                 return redirect()->route('datapengambilanijazah');
             } else {
                 // Buat session flash untuk notifikasi sukses
-                Alert::error("Gagal", "Hapus Jadwal Pengambilan Ijazah");
+                Alert::error("Gagal", "Delete Jadwal Ambil Ijazah");
 
                 // Redirect ke halaman yang diinginkan
                 return redirect()->route('datapengambilanijazah');

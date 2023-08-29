@@ -20,5 +20,6 @@ interface MahasiswaRepositoryInterface
     public function VerifikasiPanitiaSempro($id, $val, $platform='web');
     public function VerifikasiPanitiaSidang($id, $val, $platform='web');
     public function VerifikasiAkademik($id, $val, $platform='web');
-    public function jadwalambilijazah($platform = 'api', UpdateMahasiswaRequest $request, $id);
+    public function jadwalambilijazah($platform = 'web', $request, $id);
+    public function deleteJadwalIjazah($platform = 'web', $id);
 }

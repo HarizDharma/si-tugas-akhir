@@ -55,17 +55,25 @@ Route::put('/datamahasiswa/{id}', [WebAkademikController::class, 'updateMahasisw
 //deleteMahasiswa
 Route::delete('/datamahasiswa/{id}', [WebAkademikController::class, 'deleteMahasiswa'])->name('deleteMahasiswa');
 
+
 //Data Lolos Sidang Mahasiswa Akademik
 Route::get('/datalolossidangakademik', [WebAkademikController::class, 'datalolossidang'])->name('datalolossidangakademik');
 //Action Verifikasi Mahasiswa Akademik
 Route::post('/dataverifikasimahasiswaakademik/{id}', [WebAkademikController::class, 'verifikasimahasiswa'])->name('verifikasimahasiswaakademik');
 
+
 //Data Pengambilan Ijazah Mahasiswa
 Route::get('/pengambilanijazah', [WebAkademikController::class, 'datapengambilanijazah'])->name('datapengambilanijazah');
 //Action jadwal pengambilan ijazah Mahasiswa
-Route::post('/pengambilanijazah/{id}', [WebAkademikController::class, 'pengambilanijazah'])->name('pengambilanijazah');
+Route::put('/pengambilanijazah/{id}', [WebAkademikController::class, 'pengambilanijazah'])->name('pengambilanijazah');
 //action delete jadwalijazah
-Route::delete('/deletejadwalijazah/{id}', [WebAkademikController::class, 'deleteJadwalIjazah'])->name('deletejadwalijazah');
+Route::put('/deletejadwalijazah/{id}', [WebAkademikController::class, 'deleteJadwalIjazah'])->name('deletejadwalijazah');
+
+
+
+//Ini Dashboard Panitia
+
+
 
 //Dashboard Panitia
 Route::get('/panitia', [WebPanitiaController::class, 'index'])->name('panitia');
@@ -115,7 +123,6 @@ Route::put('/ubahhasilsidangakhir/{id}', [WebPanitiaController::class, 'ubahhasi
 Route::get('/datasudahsidangakhir', [WebPanitiaController::class, 'datasudahsidangakhir'])->name('datasudahsidangakhir');
 
 
-
 //action jika mau atur ulangjadwal sidang
 Route::put('/jadwalsidangulang/{id}', [WebPanitiaController::class, 'ubahJadwalSidang'])->name('ubahJadwalSidang');
 
@@ -133,8 +140,11 @@ Route::put('/editstatusmahasiswa/{id}', [WebPanitiaController::class, 'editstatu
 Route::get('/jadwalsidang', [WebPanitiaController::class, 'jadwalsidang'])->name('jadwalsidang');
 Route::put('/jadwalsidang/{id}', [WebPanitiaController::class, 'updateJadwalSidang'])->name('update.jadwalsidang');
 
-//Panitia lihat maahsiswa yang gagal sidang
-//Route::get('/gagalsidang', [WebPanitiaController::class, 'gagalsidang'])->name('panitiagagalsidang');
+
+
+//Ini Dashboard Mahasiswa
+
+
 
 
 //Dashboard Mahasiswa

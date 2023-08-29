@@ -17,6 +17,8 @@
                     <div>
                         <form action="{{ route('pengambilanijazah', ['id' => $datamahasiswa['id']]) }}" method="POST">
                             @csrf
+                            @method('PUT')
+
                             <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <div class="mt-4">
                                     <label for="jadwal_pengambilan_ijazah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jadwal Pengambilan Ijazah</label>

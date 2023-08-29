@@ -10,7 +10,7 @@
 {{--form untuk metgod ketika di klik hapus data--}}
 <form id="delete-form-{{ $datamahasiswa['id'] }}" action="{{ route('deletejadwalijazah', ['id' => $datamahasiswa['id']]) }}" method="POST" style="display: none;">
     @csrf
-    @method('DELETE')
+    @method('PUT')
 </form>
 
 {{--sweet alert untuk konfirmasi delete atau tidak--}}

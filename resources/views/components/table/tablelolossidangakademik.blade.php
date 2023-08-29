@@ -29,7 +29,7 @@
                     Hasil Sidang
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Verifikasi Panitia
+                    Verifikasi Panitia Sidang Akhir
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Verifikasi Akademik
@@ -43,8 +43,8 @@
                 $counter = 1;
             @endphp
             @foreach ($mahasiswa as $datamahasiswa)
-                {{--                tampilkan data mahasiswa yang sudah sidang lolos dan akan di acc akademik ditampikan--}}
-                @if($datamahasiswa['mahasiswa_id']['status_id'] == 7 AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == null)
+                {{--                tampilkan data mahasiswa yang sudah sidang akhir dan akan di acc akademik ditampikan--}}
+                @if($datamahasiswa['mahasiswa_id']['status_id']['nama_status'] == 'Sudah Sidang dan Tidak Mengulangi' AND $datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_akademik'] == 0)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-3 py-4">
                             {{ $counter++ }}
@@ -59,14 +59,20 @@
                             {{ $datamahasiswa['mahasiswa_id']['status_id']['nama_status'] }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $datamahasiswa['mahasiswa_id']['hasil_sidang_id']['hasil_sidang'] }}
+                            {{--tombol detail hasil sidang sempro mahasiswa--}}
+                            <button data-modal-target="lihathasilSidangAkhir{{ $datamahasiswa['id'] }}" data-modal-toggle="lihathasilSidangAkhir{{ $datamahasiswa['id'] }}" class="text-white w-full bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button">
+                                <i class="fas fa-eye fa-lg inline-block p-1 transform hover:scale-105"></i> Lihat
+                            </button>
+
+                            {{--panggil modal detail mahasiswa component--}}
+                            <x-modal.lihathasilsidangakhir :datamahasiswa="$datamahasiswa" />
                         </td>
                         <td class="px-6 py-4">
-                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] == null)
+                            @if($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia_sidang_akhir'] == null)
                                 <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-red-500 rounded">
                                 Belum Verifikasi
                             </span>
-                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia'] !== null)
+                            @elseif($datamahasiswa['mahasiswa_id']['verifikasi_id']['verifikasi_panitia_sidang_akhir'] !== null)
                                 <span class="inline-block py-1 px-1 text-center text-sm font-semibold text-white bg-green-500 rounded">
                                 Sudah Verifikasi
                             </span>

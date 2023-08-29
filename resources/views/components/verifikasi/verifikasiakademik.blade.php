@@ -15,7 +15,7 @@
     function deleteConfirmation(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin?',
-            text: "Mahasiswa akan diverifikasi !",
+            text: "Mahasiswa akan diverifikasi Akademik !",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

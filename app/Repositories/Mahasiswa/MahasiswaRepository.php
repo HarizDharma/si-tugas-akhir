@@ -395,48 +395,54 @@ class MahasiswaRepository implements MahasiswaRepositoryInterface
         return true;
     }
 
-    public function jadwalambilijazah($platform = 'api', UpdateMahasiswaRequest $request, $id)
+    public function jadwalambilijazah($platform = 'web', $request, $id)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
+        try {
+            DB::beginTransaction();
 
-            // Return Jika Role bukan akademik (Panitia/Mahasiswa)
-            if ($user->hasRole('mahasiswa')) {
-                return $platform == 'web'
-                    ? formatResponseResource(false, 'Tidak Mempunyai Hak Akses')
-                    : new ResponseResource(false, 'Tidak Mempunyai Hak Akses');
-            }
-            try {
-                DB::beginTransaction();
+            // Cari mahasiswa berdasarkan id
+            $mahasiswa = Mahasiswa::find($id);
 
-                // Validasi input telah dilakukan oleh UpdateMahasiswaRequest
+            // Update data mahasiswa dengan jadwal_pengambilan_ijazah menggunakan STR_TO_DATE
+            $mahasiswa->update([
+                'jadwal_pengambilan_ijazah' => $request->jadwal_pengambilan_ijazah,
+                'status_id' => 8,
+            ]);
 
-                $mahasiswa = Mahasiswa::findOrFail($id); // Ubah: gunakan findOrFail
-                $mahasiswa->update([
-                    'jadwal_pengambilan_ijazah' => $request->jadwal_pengambilan_ijazah,
-                ]);
+            DB::commit();
 
-                DB::commit();
+            return $mahasiswa;
 
-                return $platform == 'web'
-                    ? formatResponseResource(true, 'Update Jadwal Pengambilan Ijazah Mahasiswa', formatMahasiswaResource($mahasiswa))
-                    : new ResponseResource(true, 'Update Jadwal Pengambilan Ijazah Mahasiswa', UserResources::make($mahasiswa));
-
-            } catch (\Exception $e) {
-                DB::rollback();
-
-                return $platform == 'web'
-                    ? formatResponseResource(false, 'Gagal mengupdate jadwal pengambilan ijazah mahasiswa: ' . $e->getMessage())
-                    : new ResponseResource(false, 'Gagal mengupdate jadwal pengambilan ijazah mahasiswa: ' . $e->getMessage());
-
-            }
-        } else {
-            // Jika pengguna belum terautentikasi, kirim respons error
-            return $platform == 'web'
-                ? formatResponseResource(false, 'Unauthorized, Please Login')
-                : new ResponseResource(false, 'Unauthorized, Please Login');
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
         }
     }
+
+    public function deleteJadwalIjazah($platform = 'web', $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Cari mahasiswa berdasarkan id
+            $mahasiswa = Mahasiswa::find($id);
+
+            // Update data mahasiswa dengan hapus jadwal_pengambilan_ijazah
+            $mahasiswa->update([
+                'jadwal_pengambilan_ijazah' => null,
+                'status_id' => 7,
+            ]);
+
+            DB::commit();
+
+            return $mahasiswa;
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+
 
     protected function generateSanctumToken($user)
     {
