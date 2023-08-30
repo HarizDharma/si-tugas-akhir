@@ -14,7 +14,7 @@ class UpdateTableMahasiswaSidang extends Migration
     public function up()
     {
         Schema::table('table_mahasiswa', function (Blueprint $table) {
-            $table->dropColumn('sidang_id');
+//            $table->dropColumn('sidang_id');
         });
     }
 

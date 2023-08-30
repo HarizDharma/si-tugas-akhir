@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
                 'judul_skripsi' =>  $faker->sentence(),
                 'nama_dosen1' => $faker->name(),
                 'nama_dosen2' => $faker->name(),
-                'sidang_id' => null,
+//                'sidang_id' => null,
                 'jadwal_pengambilan_ijazah' => null,
                 'status_id' => 1,
                 'file_id' => $file->id,

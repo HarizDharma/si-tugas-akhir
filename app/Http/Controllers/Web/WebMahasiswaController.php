@@ -60,7 +60,7 @@ class WebMahasiswaController extends Controller
         if($upload) {
             if($upload->skkm && $upload->skla && $upload->kartu_kendali_skripsi
                 && $upload->bukti_jurnal && $upload->bebas_pkl && $upload->laporan_skripsi ) {
-                $mahasiswa->mahasiswa->update(['status_id' => 2]);
+                $mahasiswa->mahasiswa->update(['status_id' => 5]);
             }
         }
         $upload = File::find($mahasiswa->mahasiswa->file_id);
@@ -69,6 +69,26 @@ class WebMahasiswaController extends Controller
         if ($auth['status']) {
             // Redirect to the academic dashboard and pass the data using compact()
             return view('dashboard.mahasiswa.pendaftaranmahasiswa', compact('auth', 'upload'));
+        } else {
+            return view('auth');
+        }
+    }
+    public function pendaftaransempro() {
+        $auth = $this->authRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->getSelf( 'api');
+        $upload = File::find($mahasiswa->mahasiswa->file_id);
+
+        if($upload) {
+            if($upload->proposal_laporan_sempro && $upload->form_perstujuan_sempro  ) {
+                $mahasiswa->mahasiswa->update(['status_id' => 2]);
+            }
+        }
+        $upload = File::find($mahasiswa->mahasiswa->file_id);
+
+        // Jika status true
+        if ($auth['status']) {
+            // Redirect to the academic dashboard and pass the data using compact()
+            return view('dashboard.mahasiswa.pendaftaranmahasiswa_sempro', compact('auth', 'upload'));
         } else {
             return view('auth');
         }
@@ -88,6 +108,21 @@ class WebMahasiswaController extends Controller
         }
     }
 
+
+    public function uploadFile_Sempro($id, Request $request) {
+        $auth = $this->authRepo->index('web');
+        $mahasiswa = $this->mahasiswaRepo->getSelf( 'api');
+
+
+        $upload = $this->fileRepo->update($mahasiswa->mahasiswa->file_id,  $request);
+        if($upload) {
+            if($upload->proposal_laporan_sempro && $upload->form_perstujuan_sempro  ) {
+                $mahasiswa->mahasiswa->update(['status_id' => 2]);
+            }
+        }
+        Alert::success("Berhasil", "Upload File Pendaftaran");
+        return view('dashboard.mahasiswa.pendaftaranmahasiswa_sempro', compact('auth','upload'));
+    }
     public function uploadFile($id, Request $request) {
         $auth = $this->authRepo->index('web');
         $mahasiswa = $this->mahasiswaRepo->getSelf( 'api');

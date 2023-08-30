@@ -225,7 +225,44 @@ class FileRepository implements FileRepositoryInterface
             $file->update(['laporan_pkl' => $fileName]);
         }
 
+        if ($request->has('proposal_laporan_sempro')) {
+            $user = $mahasiswa->users->first();
 
+            $file_upload = $request->file('proposal_laporan_sempro');
+            // Get the original file name
+            $fileName = $file_upload->getClientOriginalName();
+
+            // Remove the existing file if it exists
+            if (!empty($file->laporan_pkl) && Storage::exists('public/uploads/mahasiswa' . $file->proposal_laporan_sempro)) {
+                Storage::delete('public/uploads/mahasiswa' . $file->proposal_laporan_sempro);
+            }
+
+            // Concatenate the user's "nomor_identitas" with the file name
+            $fileName = $user->nomor_identitas . '_'.rand(0,9999). '_' . $fileName;
+            $file_upload->storeAs('public/uploads/mahasiswa', $fileName);
+
+            // Update the "skla" filename in the database record if necessary
+            $file->update(['proposal_laporan_sempro' => $fileName]);
+        }
+        if ($request->has('form_perstujuan_sempro')) {
+            $user = $mahasiswa->users->first();
+
+            $file_upload = $request->file('form_perstujuan_sempro');
+            // Get the original file name
+            $fileName = $file_upload->getClientOriginalName();
+
+            // Remove the existing file if it exists
+            if (!empty($file->laporan_pkl) && Storage::exists('public/uploads/mahasiswa' . $file->form_perstujuan_sempro)) {
+                Storage::delete('public/uploads/mahasiswa' . $file->form_perstujuan_sempro);
+            }
+
+            // Concatenate the user's "nomor_identitas" with the file name
+            $fileName = $user->nomor_identitas . '_'.rand(0,9999). '_' . $fileName;
+            $file_upload->storeAs('public/uploads/mahasiswa', $fileName);
+
+            // Update the "skla" filename in the database record if necessary
+            $file->update(['form_perstujuan_sempro' => $fileName]);
+        }
 
 
 

@@ -150,6 +150,10 @@ Route::put('/jadwalsidang/{id}', [WebPanitiaController::class, 'updateJadwalSida
 //Dashboard Mahasiswa
 Route::get('/mahasiswa', [WebMahasiswaController::class, 'index'])->name('mahasiswa');
 
+
+//get halaman pendaftaran sidang
+Route::get('/pendaftaransempro', [WebMahasiswaController::class, 'pendaftaransempro'])->name('pendaftaransempro');
+
 //get halaman pendaftaran sidang
 Route::get('/pendaftaranmahasiswa', [WebMahasiswaController::class, 'pendaftaranmahasiswa'])->name('pendaftaranmahasiswa');
 
@@ -157,6 +161,7 @@ Route::get('/pendaftaranmahasiswa', [WebMahasiswaController::class, 'pendaftaran
 Route::get('/formbebastanggungan', [WebMahasiswaController::class, 'bebastanggungan'])->name('bebastanggungan');
 //upload form pendaftaran
 Route::put('/file/{id}', [WebMahasiswaController::class, 'uploadFile'])->name('uploadFile');
+Route::put('/fileSempro/{id}', [WebMahasiswaController::class, 'uploadFile_Sempro'])->name('uploadFile_Sempro');
 
 //upload form bebas tanggungan
 Route::put('/filebebastanggungan/{id}', [WebMahasiswaController::class, 'uploadFileBebasTanggungan'])->name('uploadFileBebasTanggungan');
