@@ -74,12 +74,12 @@
                     <x-modal.detailmahasiswa :datamahasiswa="$datamahasiswa" />
 
                     {{--tombol cek file mahasiswa--}}
-                    <button data-modal-target="cekFile{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFile{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">
+                    <button data-modal-target="cekFileSempro{{ $datamahasiswa['id'] }}" data-modal-toggle="cekFileSempro{{ $datamahasiswa['id'] }}" class="text-white w-full bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800" type="button">
                         <i class="fas fa-file fa-lg inline-block p-1 transform hover:scale-105"></i> Cek File
                     </button>
 
                     {{--panggil modal cek file mahasiswa component--}}
-                    <x-modal.cekfilepanitia :datamahasiswa="$datamahasiswa" />
+                    <x-modal.cekfilesempro :datamahasiswa="$datamahasiswa" />
 
                     <x-verifikasi.verifikasipanitia :datamahasiswa="$datamahasiswa"/>
                 </td>
