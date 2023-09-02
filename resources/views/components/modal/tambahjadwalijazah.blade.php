@@ -15,7 +15,7 @@
 
                     {{--atur ulang jadwal sidang--}}
                     <div>
-                        <form action="{{ route('pengambilanijazah', ['id' => $datamahasiswa['id']]) }}" method="POST">
+                        <form action="{{ route('pengambilanijazah', ['id' => $datamahasiswa['mahasiswa_id']['id']]) }}" method="POST">
                             @csrf
                             @method('PUT')
 

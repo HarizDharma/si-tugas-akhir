@@ -6,7 +6,7 @@
 
 @section('main')
     {{--  isi props dfengan data user yang dilempar ke halaman ini  --}}
-    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']"/>
+    <x-common.navbar :nama="$auth['data']['nama']" :role="$auth['data']['role']" :datamahasiswa="$auth['data']"/>
     <x-sidebar.sidebarmahasiswa :datamahasiswa="$auth['data']"/>
 
     {{--    isi content main--}}
